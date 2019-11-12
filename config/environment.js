@@ -3,9 +3,19 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'hiring-front',
+    podModulePrefix: 'hiring-front/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',
+    'ember-simple-auth-token': {
+      identificationField: 'code',
+      passwordField: 'code',
+      tokenPropertyName: 'jwt',
+      refreshAccessTokens: true,
+      tokenExpireName: 'exp',
+      refreshLeeway: 60, //send a request for refresh_token 60sec before actual expiration
+      authorizationPrefix: 'JWT ',
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -29,6 +39,11 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.apiHost = 'http://localhost:3000'
+    // ENV.publicUrl = 'http://localhost:4200';
+    ENV.publicUrl = 'http://localhost:4200/'
+    ENV.clientId = 4190457915
+    ENV.oneauthURL = 'https://account.codingblocks.com'
   }
 
   if (environment === 'test') {
@@ -46,6 +61,11 @@ module.exports = function(environment) {
   if (environment === 'production') {
     // here you can enable a production-specific feature
   }
+
+  ENV['ember-simple-auth-token'].tokenPropertyName = 'jwt'
+  ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.apiHost}/login`
+  ENV['ember-simple-auth-token'].serverTokenRefreshEndpoint = `${ENV.apiHost}/api/refresh-token/?client=web`
+
 
   return ENV;
 };
