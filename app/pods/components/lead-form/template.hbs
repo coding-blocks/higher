@@ -1,7 +1,16 @@
-{{input type="text" value=lead.name placeholder=""}}
-{{input type="text" value=lead.email placeholder=""}}
-{{input type="text" value=lead.mobile placeholder=""}}
-{{input type="text" value=lead.companyName placeholder=""}}
-{{input type="text" value=lead.hiringPosition placeholder=""}}
+<div class="border-card">
+
+{{input type="text" value=lead.name placeholder="Name" required=true}}
+<br>
+{{input type="text" value=lead.email placeholder="Email" required=true}}
+<br>
+{{input type="text" value=lead.mobile placeholder="Mobile" required=true}}
+<br>
+{{input type="text" value=lead.companyName placeholder="Company Name" required=true}}
+<br>
+{{input type="text" value=lead.hiringPosition placeholder="Hiring Position" required=true}}
+<br>
 
 <button class="button-solid" {{action 'saveLead'}}>Send Details</button>
+
+</div>

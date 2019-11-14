@@ -4,6 +4,6 @@ import { action } from '@ember/object';
 export default class LeadFormComponent extends Component {
   @action
   saveLead() {
-
+    this.get('lead').save()
   }
 }
