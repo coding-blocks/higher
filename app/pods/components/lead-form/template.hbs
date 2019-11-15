@@ -1,16 +1,10 @@
-<div class="border-card">
 
-{{input type="text" value=lead.name placeholder="Name" required=true}}
-<br>
-{{input type="text" value=lead.email placeholder="Email" required=true}}
-<br>
-{{input type="text" value=lead.mobile placeholder="Mobile" required=true}}
-<br>
-{{input type="text" value=lead.companyName placeholder="Company Name" required=true}}
-<br>
-{{input type="text" value=lead.hiringPosition placeholder="Hiring Position" required=true}}
-<br>
-
-<button class="button-solid" {{action 'saveLead'}}>Send Details</button>
+<div class="border-card p-5 bg-white p-5 t-align-c">
+  <input type="text" value={{lead.name}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Your Name *">
+  <input type="text" value={{lead.email}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Work Email *">
+  <input type="text" value={{lead.companyName}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Company Name *">
+  <input type="text" value={{lead.mobile}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Mobile Number *">
+  <input type="text" value={{lead.hireingPosition}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Hiring Position *">
+  <button class="button-solid button-orange mx-auto" {{action 'saveLead'}}>Send Details</button>
 
 </div>

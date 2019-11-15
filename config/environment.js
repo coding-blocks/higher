@@ -39,8 +39,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.apiHost = 'http://hire-api.codingblocks.com'
-    // ENV.publicUrl = 'http://localhost:4200';
+    ENV.apiHost = 'http://localhost:3003'
     ENV.publicUrl = 'http://localhost:4200/'
     ENV.clientId = 4190457915
     ENV.oneauthURL = 'https://account.codingblocks.com'
@@ -60,6 +59,10 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
+    ENV.apiHost = 'http://hire-api.codingblocks.com'
+    ENV.publicUrl = 'http://localhost:4200/'
+    ENV.clientId = 4190457915
+    ENV.oneauthURL = 'https://account.codingblocks.com'
   }
 
   ENV['ember-simple-auth-token'].tokenPropertyName = 'jwt'
