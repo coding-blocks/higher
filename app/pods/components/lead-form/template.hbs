@@ -1,10 +1,18 @@
-
-<div class="border-card p-5 bg-white p-5 t-align-c">
-  <input type="text" value={{lead.name}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Your Name *">
-  <input type="text" value={{lead.email}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Work Email *">
-  <input type="text" value={{lead.companyName}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Company Name *">
-  <input type="text" value={{lead.mobile}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Mobile Number *">
-  <input type="text" value={{lead.hireingPosition}} class="underline-input font-sm w-100 pb-2 mb-5" placeholder="Hiring Position *">
+<div class="border-card p-5 bg-white p-5 t-align-c font-sm">
+  {{input type="text" class="underline-input border-none w-100 pb-2 mb-5" placeholder="Your Name *" required=true}}
+  {{input type="email" value=lead.email class="underline-input border-none w-100 pb-2 mb-5" placeholder="Work Email *" required=true}}
+  {{input type="text" value=lead.mobile class="underline-input border-none w-100 pb-2 mb-5" placeholder="Mobile Number *" required=true}}
+  {{input type="text" value=lead.companyName class="underline-input border-none w-100 pb-2 mb-5" placeholder="Company Name *" required=true}}
+  {{input type="text" value=lead.hiringPosition class="underline-input border-none w-100 pb-2 mb-5" placeholder="Hiring Position *" required=true}}
   <button class="button-solid button-orange mx-auto" {{action 'saveLead'}}>Send Details</button>
 
+  {{#if error}}
+    <div class="red">
+      {{error}}
+    </div>
+  {{else if showStatus}}
+    <div class="green mt-4">
+      Your details have been saved successfully. Our team will get in contact with you.
+    </div>
+  {{/if}}
 </div>
