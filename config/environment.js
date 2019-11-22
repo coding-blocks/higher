@@ -39,10 +39,10 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.apiHost = 'http://localhost:3003'
-    ENV.publicUrl = 'http://localhost:4200/'
-    ENV.clientId = 4190457915
-    ENV.oneauthURL = 'https://account.codingblocks.com'
+    ENV.API_HOST = 'http://localhost:3003'
+    ENV.PUBLIC_URL = 'http://localhost:4200/'
+    ENV.CLIENT_ID = 4190457915
+    ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
   }
 
   if (environment === 'test') {
@@ -59,16 +59,16 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-    ENV.apiHost = 'http://hire-api.codingblocks.com'
-    ENV.publicUrl = 'http://localhost:4200/'
-    ENV.clientId = 4190457915
-    ENV.oneauthURL = 'https://account.codingblocks.com'
+    ENV.API_HOST = 'http://hire-api.codingblocks.com'
+    ENV.PUBLIC_URL = 'http://localhost:4200/'
+    ENV.CLIENT_ID = 4190457915
+    ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
   }
 
   ENV['ember-simple-auth-token'].tokenPropertyName = 'jwt'
-  ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.apiHost}/login`
-  ENV['ember-simple-auth-token'].serverTokenRefreshEndpoint = `${ENV.apiHost}/api/refresh-token/?client=web`
-
+  ENV['ember-simple-auth-token'].refreshTokenPropertyName = 'refresh_token'
+  ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.API_HOST}/login`
+  ENV['ember-simple-auth-token'].serverTokenRefreshEndpoint = `${ENV.API_HOST}/refresh-token?client=web`
 
   return ENV;
 };
