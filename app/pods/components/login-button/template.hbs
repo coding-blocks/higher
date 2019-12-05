@@ -1,5 +1,3 @@
-
-{{log session.isAuthenticated}}
 {{#if session.isAuthenticated}} 
   <button class="button-solid" {{action 'invalidateSession'}}>Logout</button>
 {{else}}

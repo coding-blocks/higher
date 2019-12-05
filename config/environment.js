@@ -41,7 +41,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.API_HOST = 'http://localhost:3003'
     ENV.PUBLIC_URL = 'http://localhost:4200/'
-    ENV.CLIENT_ID = 4190457915
+    ENV.CLIENT_ID = 8986717992
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
   }
 
@@ -60,7 +60,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     // here you can enable a production-specific feature
     ENV.API_HOST = 'http://hire-api.codingblocks.com'
-    ENV.PUBLIC_URL = 'http://localhost:4200/'
+    ENV.PUBLIC_URL = 'http://hire.codingblocks.com/'
     ENV.CLIENT_ID = 4190457915
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
   }

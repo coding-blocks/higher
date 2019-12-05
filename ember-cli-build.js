@@ -5,6 +5,9 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
+    'ember-composable-helpers': {
+      only: ['inc', 'dec', 'range'],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -20,7 +23,8 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  app.import('node_modules/@coding-blocks/motley/dist/hb/app.min.css')
+  app.import('node_modules/@coding-blocks/motley/dist/hiringblocks/app.min.css')
+  app.import('node_modules/pikaday/css/pikaday.css')
 
   return app.toTree();
 };

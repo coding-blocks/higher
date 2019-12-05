@@ -1,0 +1,103 @@
+<div class="border-card p-5">
+  <div class="row">
+    <div class="col-12 col-md-3 border-right">
+      <div class="s-120x120 mb-5">
+        <img class="round wh-100" src="{{profile.user.photo}}" alt="">
+      </div>
+
+      <ul class="mb-5">
+        {{#each-in links as |site link|}}
+          <li class="mb-3">
+            {{#if (eq site "github")}}
+              <i class="fab fa-github font-mds mr-3"></i>
+            {{else if (eq site "linkedin")}}
+              <i class="fab fa-linkedin-in font-mds mr-3"></i>
+            {{else if (eq site "stackoveflow")}}
+              <i class="fab fa-stack-overflow font-mds mr-3"></i>
+            {{else if (eq site "portfolio")}}
+              <i class="fas fa-globe font-mds mr-3"></i>
+            {{/if}}
+            {{link}}
+          </li>
+        {{/each-in}}
+      </ul>
+
+      <button class="button-solid lg button-orange lg font-sm">
+        Share Profile
+        <i class="fas fa-share-alt ml-1"></i>
+      </button>
+    </div>
+    <div class="col-12 col-md-9 pl-md-5">
+      <div class="d-flex">
+        <div class="li-left">
+          <div>
+            <h2 class="mb-2">
+              {{profile.user.firstname}}
+              {{#unless profile.isReviewed}}
+                <span class="tag font-xs red ml-3">Awaiting Verification</span>
+              {{/unless}}
+            </h2>
+            {{#unless profile.isStudent}}
+              <div class="bold orange">
+                <span>Expected CTC: {{profile.expectedCtc}} LPA</span>
+              </div>
+            {{/unless}}
+          </div>
+        </div>
+        <div class="li-right">
+          {{#if userHimself}}
+            <div>
+              <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
+            </div>
+          {{/if}}
+          <div>
+            <button class="button-solid lg button-orange">Download as PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider-h my-4"></div>
+
+      <div class="d-flex">
+        <ul class="mr-4">
+          <li class="mb-4">
+            Current Location: <span class="bold">{{profile.currentLocation}}</span>
+          </li>
+          <li class="mb-4">
+            Current CTC: <span class="bold">{{profile.currentCtc}} LPA</span>
+          </li>
+        </ul>
+        <ul class="mr-4">
+          <li class="mb-4">
+            Preferred Location: 
+            <span class="bold">
+              {{#each profile.locations as |location|}}
+                {{location.name}}
+              {{/each}}
+            </span>
+          </li>
+          <li class="mb-4">
+            Earliest Joining Date: <span class="bold">{{moment-format (unix profile.joiningDate) 'MMMM YYYY'}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="divider-h mb-4"></div>
+
+      <div class="mb-4">
+        Interested Roles
+        <span class="mx-2"></span>
+        {{#each profile.jobRoles as |jobRole|}}
+          <span class="pill">{{jobRole.name}}</span>
+        {{/each}}
+      </div>
+
+      <p class="pt-2">
+        {{profile.about}}
+
+      </p>
+
+    </div>
+  </div>
+
+</div>

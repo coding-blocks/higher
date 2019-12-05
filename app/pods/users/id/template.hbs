@@ -1,0 +1,13 @@
+<div class="container mb-5">
+  {{#if (and userHimself editMode)}}
+    <Users::StudentProfileEditor 
+      @studentProfile={{studentProfile}}
+      @saveStudentProfile={{saveStudentProfileTask}}
+      @getNewRecord={{action "getNewRecord"}}
+      @currentPage={{currentPage}} />
+  {{else}}
+    <Users::StudentProfile 
+      @profile={{studentProfile}}
+      @editMode={{editMode}}/>
+  {{/if}}
+</div>

@@ -1,0 +1,195 @@
+<PagerComponent 
+  @pages={{pages}} 
+  @skippable={{false}} 
+  @callOnNext={{saveStudentProfile}}
+  @currentPage={{currentPage}} as |pager|>
+
+  <div class="border-card p-5 mb-5">
+    <div class="d-flex mb-5">
+      <div class="li-left">
+        <div>
+          <h2>
+            Hi, {{currentUser.user.firstname}}
+          </h2>
+          <div class="font-mds">
+            Start building your profile now
+          </div>
+        </div>
+      </div>
+      <div class="li-right font-sm">
+        <button class="button-dashed lg button-orange mr-3" {{action pager.setCurrentPage (dec pager.currentPage)}}>&lt; Back</button>
+        <button class="button-solid lg button-orange" {{action pager.nextPage pager.currentPage}}>Save & Continue &gt;</button>
+      </div>
+    </div>
+  
+    <div class="timeline">
+      {{#each pages as |page index|}}
+      <div class="timeline__event">
+        {{#if (lt index pager.currentPage)}}
+          <button class="s-60x60 t-align-c white font-xl round bg-gradient-green-lr" {{action pager.setCurrentPage index}}>
+            {{inc index}}
+          </button>
+        {{else if (gt index pager.currentPage)}}
+          <button class="s-60x60 t-align-c black font-xl round bg-grey" {{action pager.setCurrentPage index}}>
+            {{inc index}}
+          </button>
+        {{else}}
+          <button class="s-60x60 t-align-c white font-xl round bg-gradient-orange-lr" {{action pager.setCurrentPage index}}>
+            {{inc index}}
+          </button>
+        {{/if}}
+          
+        <div class="timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
+          {{page.title}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{#if (eq pager.currentPage 0)}}
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <div class="border-card">
+        <h3>Tell us about your job preferences</h3>
+        <div class="divider-h my-4"></div>
+
+        <div class="mb-4">
+          Select the roles that you are well-qualified for *
+          <PowerSelectMultiple 
+            @searchEnabled={{true}} 
+            @options={{jobRoles}} 
+            @selected={{studentProfile.jobRoles}}
+            @placeholder="Select Job Roles" 
+            @onChange={{action 'setJobRoles'}} as |jobRole|>
+            {{jobRole.name}}
+          </PowerSelectMultiple>
+        </div>
+
+        <div class="d-flex mb-3">
+          <div class="li-left">Where are you currently located? *</div>
+          <div class="li-right">
+            <PowerSelect 
+              @searchEnabled={{true}} 
+              @options={{locations}} 
+              @selected={{studentProfile.currentLocation}}
+              @placeholder="Select Location" 
+              @onChange={{action (mut studentProfile.currentLocation)}} as |location|>
+              {{location.name}}
+            </PowerSelect>
+          </div>
+        </div>
+        
+        <div class="d-flex mb-3">
+          <div class="li-left">Desired cities to work in? *</div>
+          <div class="li-right">
+            <PowerSelectMultiple 
+              @searchEnabled={{true}} 
+              @options={{locations}} 
+              @selected={{studentProfile.locations}}
+              @placeholder="Select Location" 
+              @onChange={{action 'setLocations'}} as |location|>
+              {{location.name}}
+            </PowerSelectMultiple>
+          </div>
+        </div>
+        <div class="d-flex mb-3">
+          <div class="li-left">Are you a student or Professional?</div>
+          <div class="li-right">
+            <input name="student-professional" 
+              type="radio"
+              checked={{studentProfile.isStudentSetter}} 
+              onclick={{action (mut studentProfile.isStudentSetter) true}} />
+            Student
+            <input name="student-professional" 
+              type="radio"
+              checked={{not studentProfile.isStudentSetter}} 
+              onclick={{action (mut studentProfile.isStudentSetter) false}} />
+            Professional
+          </div>
+        </div>
+        {{#unless studentProfile.isStudent}}
+          <div class="d-flex mb-3">
+            <div class="li-left">What is your current CTC? *</div>
+            <div class="li-right">
+              <Input @type="text" class="input-text" @value={{studentProfile.currentCtc}} />
+            </div>
+          </div>
+          <div class="d-flex mb-3">
+            <div class="li-left">What is your minimum expected CTC? *</div>
+            <div class="li-right">
+              <Input @type="text" class="input-text" @value={{studentProfile.expectedCtc}} />
+            </div>
+          </div>
+        {{/unless}}
+        <div class="d-flex mb-3">
+          <div class="li-left">What is your earliest possible joining dates? *</div>
+          <div class="li-right">
+            <PikadayInput 
+              @class="input-text" 
+              @value="{{studentProfile.joiningDateString}}"
+              @onSelection={{action (mut studentProfile.joiningDateString)}} />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="border-card">
+
+      </div>
+    </div>
+  </div>
+  {{else if (eq pager.currentPage 1)}}
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <EducationalQualificationsList 
+        @allowEdit="true" 
+        @getNewRecord={{action getNewRecord}}
+        @educationalQualifications={{studentProfile.educationalQualifications}} />
+      
+      <WorkExperience 
+        @allowEdit="true" 
+        @getNewRecord={{action getNewRecord}}
+        @workExperiences={{studentProfile.workExperiences}} />
+
+      <ProjectsList 
+        @allowEdit="true" 
+        @getNewRecord={{action getNewRecord}}
+        @projects={{studentProfile.projects}} />
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="border-card">
+        <h5 class="mb-5">Social Links</h5>
+        <div class="font-sm">
+          {{#each-in links as |site link|}}
+            {{#if (eq site "github")}}
+              <i class="fab fa-github mr-3"></i>Github
+              <Input @type="text" class="input-text my-3" @value={{github}} />
+            {{else if (eq site "linkedin")}}
+              <i class="fab fa-linkedin-in mr-3"></i>Linkedin
+              <Input @type="text" class="input-text my-3" @value={{linkedin}} />
+            {{else if (eq site "stackoverflow")}}
+              <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
+              <Input @type="text" class="input-text my-3" @value={{stackoverflow}} />
+            {{else}}
+              <i class="fas fa-globe mr-3"></i>Website/Portfolio
+              <Input @type="text" class="input-text my-3" @value={{portfolio}} />
+            {{/if}}
+
+          {{/each-in}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else if (eq pager.currentPage 3)}}
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <div class="border-card">
+        <h5 class="mb-4">Tell us About Yourself *</h5>
+        <Textarea class="input-textarea w-100" @value={{studentProfile.about}} @rows="7" />
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</PagerComponent>
