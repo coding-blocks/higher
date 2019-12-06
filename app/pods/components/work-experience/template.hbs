@@ -3,9 +3,11 @@
     <div class="li-left">
       <h5>Work Experiences</h5>
     </div>
-    <div class="li-right">
-      <button class="button-solid button-orange" {{action 'getNewWorkExperience'}}>Add New +</button>
-    </div>
+    {{#if allowEdit}}
+      <div class="li-right">
+        <button class="button-solid button-orange" {{action 'getNewWorkExperience'}}>Add New +</button>
+      </div>
+    {{/if}}
   </div>
   <div class="divider-h my-4"></div>
 
@@ -21,9 +23,11 @@
               </span>
             </h5>
           </div>
-          <button class="orange" {{action 'setEditingRecord' workExperience}}>
-            <i class="fas fa-edit"></i>Edit
-          </button>
+          {{#if allowEdit}}
+            <button class="orange" {{action 'setEditingRecord' workExperience}}>
+              <i class="fas fa-edit"></i>Edit
+            </button>
+          {{/if}}
         </div>
         <div>{{workExperience.subtitle}}</div>
         <div class="dark-grey">

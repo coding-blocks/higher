@@ -31,8 +31,10 @@ export default class StudentProfileEditor extends Component {
     this.fetchLocationsTask.perform()
     this.fetchJobRolesTask.perform()
 
-    const links = JSON.parse(this.studentProfile.get('links'))
-    Object.keys(links).map(siteName => this.set(siteName, links[siteName]))
+    if(this.studentProfile.get('links')){
+      const links = JSON.parse(this.studentProfile.get('links'))
+      Object.keys(links).map(siteName => this.set(siteName, links[siteName]))
+    }
   }
 
   @restartableTask fetchLocationsTask = function* () {
@@ -62,20 +64,4 @@ export default class StudentProfileEditor extends Component {
     this.set('studentProfile.links', JSON.stringify(links))
     return links
   }
-
-  @action
-  setLocations(selectedLocations) {
-    this.set('studentProfile.locations', selectedLocations)
-  }
-
-  @action
-  setJobRoles(selectedJobRoles) {
-    this.set('studentProfile.jobRoles', selectedJobRoles)
-  }
-
-  @action 
-  setSelectedRoles(jobRole) {
-    console.log(this)
-  }
-
 }

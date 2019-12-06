@@ -27,6 +27,7 @@ export default DS.Model.extend({
       if(val) {
         this.set('currentCtc', null)
         this.set('expectedCtc', null)
+        this.set('joiningDate', null)
       }
       this.set('isStudent', val)
       return val
@@ -36,7 +37,7 @@ export default DS.Model.extend({
   isActive: DS.attr('boolean'),
   jobRoles: DS.hasMany('job-role'),
   locations: DS.hasMany('location'),
-  currentLocation: DS.belongsTo('location', { inverse: 'studentProfile' }),
+  currentLocation: DS.belongsTo('location'),
   workExperiences: DS.hasMany('work-experience'),
   projects: DS.hasMany('project'),
   educationalQualifications: DS.hasMany('educational-qualification'),

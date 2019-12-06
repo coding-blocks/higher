@@ -3,9 +3,11 @@
     <div class="li-left">
       <h5>Projects</h5>
     </div>
-    <div class="li-right">
-      <button class="button-solid button-orange" {{action 'getNewProject'}}>Add New +</button>
-    </div>
+    {{#if allowEdit}}
+      <div class="li-right">
+        <button class="button-solid button-orange" {{action 'getNewProject'}}>Add New +</button>
+      </div>
+    {{/if}}
   </div>
   <div class="divider-h my-4"></div>
 
@@ -14,9 +16,11 @@
     <div class="py-4">
       <div class="d-flex justify-content-between">
         <h5>{{project.title}}</h5>
-        <button class="orange" {{action 'setEditingRecord' project}}>
-          <i class="fas fa-edit"></i>Edit
-        </button>
+        {{#if allowEdit}}
+          <button class="orange" {{action 'setEditingRecord' project}}>
+            <i class="fas fa-edit"></i>Edit
+          </button>
+        {{/if}}
       </div>
       <div>{{project.subtitle}}</div>
       <div class="dark-grey">

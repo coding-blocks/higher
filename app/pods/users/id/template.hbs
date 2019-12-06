@@ -4,10 +4,13 @@
       @studentProfile={{studentProfile}}
       @saveStudentProfile={{saveStudentProfileTask}}
       @getNewRecord={{action "getNewRecord"}}
-      @currentPage={{currentPage}} />
+      @currentPage={{currentPage}}
+      @validationError={{validationError}}
+      @hbPerformanceStats={{hbPerformanceStats}} />
   {{else}}
     <Users::StudentProfile 
       @profile={{studentProfile}}
-      @editMode={{editMode}}/>
+      @editMode={{editMode}}
+      @hbPerformanceStats={{hbPerformanceStats}} />
   {{/if}}
 </div>

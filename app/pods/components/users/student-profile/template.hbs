@@ -1,4 +1,4 @@
-<div class="border-card p-5">
+<div class="border-card p-5 my-5">
   <div class="row">
     <div class="col-12 col-md-3 border-right">
       <div class="s-120x120 mb-5">
@@ -7,18 +7,20 @@
 
       <ul class="mb-5">
         {{#each-in links as |site link|}}
-          <li class="mb-3">
-            {{#if (eq site "github")}}
-              <i class="fab fa-github font-mds mr-3"></i>
-            {{else if (eq site "linkedin")}}
-              <i class="fab fa-linkedin-in font-mds mr-3"></i>
-            {{else if (eq site "stackoveflow")}}
-              <i class="fab fa-stack-overflow font-mds mr-3"></i>
-            {{else if (eq site "portfolio")}}
-              <i class="fas fa-globe font-mds mr-3"></i>
-            {{/if}}
-            {{link}}
-          </li>
+          {{#if link}}
+            <li class="mb-3">
+              {{#if (eq site "github")}}
+                <i class="fab fa-github font-mds mr-3"></i>
+              {{else if (eq site "linkedin")}}
+                <i class="fab fa-linkedin-in font-mds mr-3"></i>
+              {{else if (eq site "stackoveflow")}}
+                <i class="fab fa-stack-overflow font-mds mr-3"></i>
+              {{else if (eq site "portfolio")}}
+                <i class="fas fa-globe font-mds mr-3"></i>
+              {{/if}}
+              {{link}}
+            </li>
+          {{/if}}
         {{/each-in}}
       </ul>
 
@@ -61,13 +63,8 @@
       <div class="d-flex">
         <ul class="mr-4">
           <li class="mb-4">
-            Current Location: <span class="bold">{{profile.currentLocation}}</span>
+            Current Location: <span class="bold">{{profile.currentLocation.name}}</span>
           </li>
-          <li class="mb-4">
-            Current CTC: <span class="bold">{{profile.currentCtc}} LPA</span>
-          </li>
-        </ul>
-        <ul class="mr-4">
           <li class="mb-4">
             Preferred Location: 
             <span class="bold">
@@ -76,10 +73,17 @@
               {{/each}}
             </span>
           </li>
-          <li class="mb-4">
-            Earliest Joining Date: <span class="bold">{{moment-format (unix profile.joiningDate) 'MMMM YYYY'}}</span>
-          </li>
         </ul>
+        {{#unless profile.isStudent}}
+          <ul class="mr-4">
+            <li class="mb-4">
+              Current CTC: <span class="bold">{{profile.currentCtc}} LPA</span>
+            </li>
+            <li class="mb-4">
+              Earliest Joining Date: <span class="bold">{{moment-format (unix profile.joiningDate) 'MMMM YYYY'}}</span>
+            </li>
+          </ul>
+        {{/unless}}
       </div>
 
       <div class="divider-h mb-4"></div>
@@ -100,4 +104,17 @@
     </div>
   </div>
 
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-8">
+    <EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
+    
+    <WorkExperience @workExperiences={{profile.workExperiences}} />
+    
+    <ProjectsList  @projects={{profile.projects}} />
+  </div>
+  <div class="col-12 col-md-4">
+    <HackerBlocksStat @stats={{hbPerformanceStats}} />
+  </div>
 </div>

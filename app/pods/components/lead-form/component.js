@@ -12,10 +12,7 @@ export default class LeadFormComponent extends Component {
     this.set('error', null)
     this.set('showStatus', false)
     const lead = this.get('lead')
-    // console.log('is company lead filled', lead, (lead.get('name') && lead.get('mobile') && lead.get('companyName') && lead.get('hiringPosition') && lead.get('email')));
-    // if(!(lead.get('name') && lead.get('mobile') && lead.get('companyName') && lead.get('hiringPosition') && lead.get('email'))) {
-    //   return 
-    // }
+
     yield lead.save()
       .then(r => {
         this.set('showStatus', true)
