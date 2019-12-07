@@ -39,6 +39,7 @@ export default DS.Model.extend({
   locations: DS.hasMany('location'),
   currentLocation: DS.belongsTo('location'),
   workExperiences: DS.hasMany('work-experience'),
+  applicantCourses: DS.hasMany('applicant-course'),
   projects: DS.hasMany('project'),
   educationalQualifications: DS.hasMany('educational-qualification'),
   profileCompletion: DS.attr('number'),

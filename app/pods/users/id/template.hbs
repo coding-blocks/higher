@@ -1,15 +1,15 @@
-<div class="container mb-5">
+<div class="container my-5">
   {{#if (and userHimself editMode)}}
-    <Users::StudentProfileEditor 
-      @studentProfile={{studentProfile}}
-      @saveStudentProfile={{saveStudentProfileTask}}
+    <Users::ApplicantProfileEditor 
+      @applicantProfile={{applicantProfile}}
+      @saveApplicantProfile={{saveApplicantProfileTask}}
       @getNewRecord={{action "getNewRecord"}}
       @currentPage={{currentPage}}
       @validationError={{validationError}}
       @hbPerformanceStats={{hbPerformanceStats}} />
   {{else}}
-    <Users::StudentProfile 
-      @profile={{studentProfile}}
+    <Users::ApplicantProfile 
+      @profile={{applicantProfile}}
       @editMode={{editMode}}
       @hbPerformanceStats={{hbPerformanceStats}} />
   {{/if}}

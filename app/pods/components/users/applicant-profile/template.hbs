@@ -7,20 +7,20 @@
 
       <ul class="mb-5">
         {{#each-in links as |site link|}}
-          {{#if link}}
-            <li class="mb-3">
-              {{#if (eq site "github")}}
-                <i class="fab fa-github font-mds mr-3"></i>
-              {{else if (eq site "linkedin")}}
-                <i class="fab fa-linkedin-in font-mds mr-3"></i>
-              {{else if (eq site "stackoveflow")}}
-                <i class="fab fa-stack-overflow font-mds mr-3"></i>
-              {{else if (eq site "portfolio")}}
-                <i class="fas fa-globe font-mds mr-3"></i>
-              {{/if}}
-              {{link}}
-            </li>
+        {{#if link}}
+        <li class="mb-3">
+          {{#if (eq site "github")}}
+          <i class="fab fa-github font-mds mr-3"></i>
+          {{else if (eq site "linkedin")}}
+          <i class="fab fa-linkedin-in font-mds mr-3"></i>
+          {{else if (eq site "stackoverflow")}}
+          <i class="fab fa-stack-overflow font-mds mr-3"></i>
+          {{else if (eq site "portfolio")}}
+          <i class="fas fa-globe font-mds mr-3"></i>
           {{/if}}
+          {{link}}
+        </li>
+        {{/if}}
         {{/each-in}}
       </ul>
 
@@ -35,22 +35,23 @@
           <div>
             <h2 class="mb-2">
               {{profile.user.firstname}}
+              {{profile.user.lastname}}
               {{#unless profile.isReviewed}}
-                <span class="tag font-xs red ml-3">Awaiting Verification</span>
+              <span class="tag font-xs red ml-3">Awaiting Verification</span>
               {{/unless}}
             </h2>
             {{#unless profile.isStudent}}
-              <div class="bold orange">
-                <span>Expected CTC: {{profile.expectedCtc}} LPA</span>
-              </div>
+            <div class="bold orange">
+              <span>Expected CTC: {{profile.expectedCtc}} LPA</span>
+            </div>
             {{/unless}}
           </div>
         </div>
         <div class="li-right">
           {{#if userHimself}}
-            <div>
-              <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
-            </div>
+          <div>
+            <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
+          </div>
           {{/if}}
           <div>
             <button class="button-solid lg button-orange">Download as PDF</button>
@@ -66,23 +67,23 @@
             Current Location: <span class="bold">{{profile.currentLocation.name}}</span>
           </li>
           <li class="mb-4">
-            Preferred Location: 
+            Preferred Location:
             <span class="bold">
               {{#each profile.locations as |location|}}
-                {{location.name}}
+              {{location.name}}
               {{/each}}
             </span>
           </li>
         </ul>
         {{#unless profile.isStudent}}
-          <ul class="mr-4">
-            <li class="mb-4">
-              Current CTC: <span class="bold">{{profile.currentCtc}} LPA</span>
-            </li>
-            <li class="mb-4">
-              Earliest Joining Date: <span class="bold">{{moment-format (unix profile.joiningDate) 'MMMM YYYY'}}</span>
-            </li>
-          </ul>
+        <ul class="mr-4">
+          <li class="mb-4">
+            Current CTC: <span class="bold">{{profile.currentCtc}} LPA</span>
+          </li>
+          <li class="mb-4">
+            Earliest Joining Date: <span class="bold">{{moment-format (unix profile.joiningDate) 'MMMM YYYY'}}</span>
+          </li>
+        </ul>
         {{/unless}}
       </div>
 
@@ -92,7 +93,7 @@
         Interested Roles
         <span class="mx-2"></span>
         {{#each profile.jobRoles as |jobRole|}}
-          <span class="pill">{{jobRole.name}}</span>
+        <span class="pill">{{jobRole.name}}</span>
         {{/each}}
       </div>
 
@@ -109,12 +110,14 @@
 <div class="row">
   <div class="col-12 col-md-8">
     <EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
-    
+
     <WorkExperience @workExperiences={{profile.workExperiences}} />
-    
-    <ProjectsList  @projects={{profile.projects}} />
+
+    <ProjectsList @projects={{profile.projects}} />
   </div>
   <div class="col-12 col-md-4">
-    <HackerBlocksStat @stats={{hbPerformanceStats}} />
+    <HackerBlocksStat class="mb-5" @stats={{hbPerformanceStats}} />
+
+    <ApplicantCourseList class="mb-5" @courses={{profile.applicantCourses}} />
   </div>
 </div>

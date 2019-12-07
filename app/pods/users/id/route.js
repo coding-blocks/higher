@@ -8,14 +8,14 @@ export default class UsersIdRoute extends Route {
   @service api
 
   async model(params) {
-    const hbPerformanceStats = this.api.request(`/student-profiles/user/${params.user_id}/hacker-blocks-performance`)
-    let studentProfile = await this.store.queryRecord("student-profile", {
+    const hbPerformanceStats = this.api.request(`/applicant-profiles/user/${params.user_id}/hacker-blocks-performance`)
+    let applicantProfile = await this.store.queryRecord("applicant-profile", {
        custom: {
           ext: 'url', url: `user/${params.user_id}`
         }
       })
-    if (!+studentProfile.get('id') && !Ember.isEmpty(this.get('currentUser.user'))){
-      studentProfile = this.store.createRecord("student-profile", {
+    if (!+applicantProfile.get('id') && !Ember.isEmpty(this.get('currentUser.user'))){
+      applicantProfile = this.store.createRecord("applicant-profile", {
         isReviewed: false,
         isStudent: true,
         profileCompletion: 0,
@@ -25,14 +25,14 @@ export default class UsersIdRoute extends Route {
     }
 
     return RSVP.hash({
-      studentProfile,
+      applicantProfile,
       hbPerformanceStats
     })
   } 
 
   setupController(controller, model) {
-    controller.set('studentProfile', model.studentProfile)
-    const profileCompletion = model.studentProfile.get('profileCompletion')
+    controller.set('applicantProfile', model.applicantProfile)
+    const profileCompletion = model.applicantProfile.get('profileCompletion')
     controller.set('editMode', profileCompletion !== 100)
     controller.set('currentPage', profileCompletion === 100 ? 0 : profileCompletion / 25)
     controller.set('hbPerformanceStats', model.hbPerformanceStats)

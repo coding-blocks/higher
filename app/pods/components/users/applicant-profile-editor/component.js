@@ -3,7 +3,7 @@ import { restartableTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
 import { action, computed } from '@ember/object';
 
-export default class StudentProfileEditor extends Component {
+export default class ApplicantProfileEditor extends Component {
   @service store
   @service currentUser
 
@@ -31,8 +31,8 @@ export default class StudentProfileEditor extends Component {
     this.fetchLocationsTask.perform()
     this.fetchJobRolesTask.perform()
 
-    if(this.studentProfile.get('links')){
-      const links = JSON.parse(this.studentProfile.get('links'))
+    if (this.applicantProfile.get('links')) {
+      const links = JSON.parse(this.applicantProfile.get('links'))
       Object.keys(links).map(siteName => this.set(siteName, links[siteName]))
     }
   }
@@ -61,7 +61,7 @@ export default class StudentProfileEditor extends Component {
       portfolio
     }
 
-    this.set('studentProfile.links', JSON.stringify(links))
+    this.set('applicantProfile.links', JSON.stringify(links))
     return links
   }
 }

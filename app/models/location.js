@@ -2,5 +2,5 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   name: DS.attr(),
-  studentProfile: DS.belongsTo('student-profile', { inverse: 'currentLocation' })
+  applicantProfile: DS.belongsTo('applicant-profile', { inverse: 'currentLocation' })
 });

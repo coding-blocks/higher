@@ -33,5 +33,5 @@ export default DS.Model.extend({
   location:DS.attr(),
   type:DS.attr(),
   description:DS.attr(),
-  studentProfile: DS.belongsTo('student-profile')
+  applicantProfile: DS.belongsTo('applicant-profile')
 });

@@ -18,5 +18,5 @@ export default DS.Model.extend({
   oneauthId: DS.attr(),
   verifiedemail: DS.attr(),
   verifiedmobile: DS.attr(),
-  studentProfile: DS.belongsTo('student-profile')
+  applicantProfile: DS.belongsTo('applicant-profile')
 });

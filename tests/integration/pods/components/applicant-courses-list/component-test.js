@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | users/student-profile-editor', function(hooks) {
+module('Integration | Component | applicant-courses-list', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Users::StudentProfileEditor />`);
+    await render(hbs`<ApplicantCoursesList />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <Users::StudentProfileEditor>
+      <ApplicantCoursesList>
         template block text
-      </Users::StudentProfileEditor>
+      </ApplicantCoursesList>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

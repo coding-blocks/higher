@@ -9,29 +9,29 @@ export default class UserIdController extends Controller {
   @service currentUser
   @service store
 
-  @computed('studentProfile', 'currentUser')
+  @computed('applicantProfile', 'currentUser')
   get userHimself() {
-    return this.currentUser.get('user.id') === this.studentProfile.get('user.id')
+    return this.currentUser.get('user.id') === this.applicantProfile.get('user.id')
   }
 
-  @restartableTask saveStudentProfileTask = function* (currentPage) {
+  @restartableTask saveApplicantProfileTask = function* (currentPage) {
     
-    const currentLocation = yield this.studentProfile.get('currentLocation')
+    const currentLocation = yield this.applicantProfile.get('currentLocation')
     if(isEmpty(currentLocation)) {
       return { error: 'Current Location cannot be empty' }
     } else {
-      this.set('studentProfile.profileCompletion', (currentPage + 1) * 25)
-      if (this.studentProfile.get('profileCompletion') === 100) {
+      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
+      if (this.applicantProfile.get('profileCompletion') === 100) {
         this.set('editMode', false)
       }
-      yield this.studentProfile.save()
+      yield this.applicantProfile.save()
     }
   }
 
   @action
   getNewRecord(modelName, options) {
     return this.store.createRecord(modelName, {
-      studentProfile: this.studentProfile,
+      applicantProfile: this.applicantProfile,
       ...options
     }) 
   }
