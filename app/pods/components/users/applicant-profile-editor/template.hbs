@@ -3,7 +3,7 @@
     @currentPage={{currentPage}} as |pager|>
 
     <div class="border-card p-5 mb-5">
-      <div class="d-flex mb-5">
+      <div class="d-flex mb-5 px-5">
         <div class="li-left">
           <div>
             <h2>
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="timeline">
+      <div class="timeline px-5">
         {{#each pages as |page index|}}
         <div class="timeline__event">
           {{#if (lt index pager.currentPage)}}
@@ -66,8 +66,13 @@
               <p>
                 Select the roles that you are well-qualified for *
               </p>
-              <PowerSelectMultiple @searchEnabled={{true}} @options={{jobRoles}} @selected={{applicantProfile.jobRoles}}
-                @placeholder="Select Job Roles" @onChange={{action (mut applicantProfile.jobRoles)}} as |jobRole|>
+              <PowerSelectMultiple 
+                @searchEnabled={{true}} 
+                @searchField={{"name"}}
+                @options={{jobRoles}} 
+                @selected={{applicantProfile.jobRoles}}
+                @placeholder="Select Job Roles" 
+                @onChange={{action (mut applicantProfile.jobRoles)}} as |jobRole|>
                 {{jobRole.name}}
               </PowerSelectMultiple>
             </div>
@@ -75,8 +80,13 @@
             <div class="d-flex mb-4 pt-2">
               <div class="li-left">Where are you currently located? *</div>
               <div class="li-right">
-                <PowerSelect @searchEnabled={{true}} @options={{locations}} @selected={{applicantProfile.currentLocation}}
-                  @placeholder="Select Location" @onChange={{action (mut applicantProfile.currentLocation)}} as
+                <PowerSelect 
+                  @searchEnabled={{true}} 
+                  @searchField={{"name"}}
+                  @options={{locations}} 
+                  @selected={{applicantProfile.currentLocation}}
+                  @placeholder="Select Location" 
+                  @onChange={{action (mut applicantProfile.currentLocation)}} as
                   |location|>
                   {{location.name}}
                 </PowerSelect>
@@ -86,8 +96,12 @@
             <div class="d-flex mb-4 pt-2">
               <div class="li-left">Desired cities to work in? *</div>
               <div class="li-right">
-                <PowerSelectMultiple @searchEnabled={{true}} @options={{locations}}
-                  @selected={{applicantProfile.locations}} @placeholder="Select Location"
+                <PowerSelectMultiple 
+                  @searchEnabled={{true}} 
+                  @searchField={{"name"}}
+                  @options={{locations}}
+                  @selected={{applicantProfile.locations}} 
+                  @placeholder="Select Location"
                   @onChange={{action (mut applicantProfile.locations)}} as |location|>
                   {{location.name}}
                 </PowerSelectMultiple>
@@ -168,7 +182,7 @@
         <div class="col-12 col-md-4">
           <HackerBlocksStat @stats={{hbPerformanceStats}} />
           
-          <ApplicantCourseList class="mb-5" @courses={{applicantProfile.applicantCourses}} />
+          <ApplicantCoursesList class="mb-5" @courses={{applicantProfile.applicantCourses}} />
           
           <ApplicantCourseEditor @getNewRecord={{action getNewRecord}} />
         </div>

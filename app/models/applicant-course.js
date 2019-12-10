@@ -4,6 +4,7 @@ import moment from 'moment';
 
 export default DS.Model.extend({
   name: DS.attr(),
+  title: DS.attr(),
   logo: DS.attr(),
   certificateLink: DS.attr(),
   courseMode: DS.attr(),
@@ -24,6 +25,8 @@ export default DS.Model.extend({
                               break;
         case "Other": this.set('organizationType', 'other')
                       this.set('organizationName', null)
+                      this.set('name', null)
+                      this.set('logo', null)
                       break;
       }
       return val

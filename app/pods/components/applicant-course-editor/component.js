@@ -2,18 +2,19 @@ import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service'; 
+import getCourseTypes from 'hiring-front/utils/course-types';
 
 export default class ApplicantCourseEditor extends Component {
   @service store
 
   organizations = ['Coding Blocks', 'Other']
 
+  courseTypes = getCourseTypes()
+
 
   @computed('editingRecord.organizationType', 'editingRecord.courseMode')
   get isCBOnlineCourse(){
-    const organizationType = this.get('editingRecord.organizationType')
-    const courseMode = this.get('editingRecord.courseMode')
-    return courseMode === 'online' && organizationType === 'codingblocks'
+    return this.get('editingRecord.organizationType') === 'codingblocks'
   }
 
   didReceiveAttrs() {
@@ -32,7 +33,7 @@ export default class ApplicantCourseEditor extends Component {
   getNewApplicantCourse() {
     return this.get('getNewRecord')('applicant-course', {
       isVerified: false,
-      courseMode: 'online',
+      courseMode: 'offline',
     })
   }
 
@@ -47,10 +48,20 @@ export default class ApplicantCourseEditor extends Component {
 
   @action 
   setOnlineCourse(course){
-    console.log(course)
     const editingRecord = this.get('editingRecord')
     editingRecord.set('name', course.get('title'))
     editingRecord.set('logo', course.get('logo'))
     editingRecord.set('amoebaCourseId', course.get('id'))
+  }
+
+  @action 
+  setCourseType(courseType) {
+    this.set('editingRecord.logo', courseType.logo)
+    this.set('editingRecord.name', courseType.title)
+  }
+
+  willDestroyElement() {
+    this._super(...arguments)
+    this.editingRecord.destroyRecord()
   }
 }

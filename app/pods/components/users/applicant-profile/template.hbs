@@ -109,15 +109,22 @@
 
 <div class="row">
   <div class="col-12 col-md-8">
-    <EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
+    {{#if educationalQualifications.length}}
+      <EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
+    {{/if}}
+    {{#if workExperiences.length}}
+      <WorkExperience @workExperiences={{profile.workExperiences}} />
+    {{/if}}
 
-    <WorkExperience @workExperiences={{profile.workExperiences}} />
-
-    <ProjectsList @projects={{profile.projects}} />
+    {{#if projects.length}}
+      <ProjectsList @projects={{profile.projects}} />
+    {{/if}}
   </div>
   <div class="col-12 col-md-4">
     <HackerBlocksStat class="mb-5" @stats={{hbPerformanceStats}} />
 
-    <ApplicantCourseList class="mb-5" @courses={{profile.applicantCourses}} />
+    {{#if profile.applicantCourses.length}}
+      <ApplicantCoursesList class="mb-5" @courses={{profile.applicantCourses}} />
+    {{/if}}
   </div>
 </div>

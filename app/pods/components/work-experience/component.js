@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class RecordComponent extends Component {
   @action 
@@ -18,17 +19,13 @@ export default class RecordComponent extends Component {
     this.set('showEditModal', true)
   }
 
-  @action
-  saveRecord() {
+  @restartableTask saveRecordTask= function *() {
     this.set('error', null)
-    this.get('editingRecord').save()
-    .then(r => {
-      this.set('showEditModal', false)
-      this.set('newRecord', null)
-    })
-    .catch(err => {
-      this.set('error', err)
-    })
+
+    yield this.get('editingRecord').save()
+    
+    this.set('showEditModal', false)
+    this.set('newRecord', null)
   }
 
   @action
@@ -37,5 +34,12 @@ export default class RecordComponent extends Component {
       .then(r => {
         this.set('showEditModal', false)
       })
+  }
+
+  willDestroyElement() {
+    this._super(...arguments)
+    if (this.newRecord) {
+      this.newRecord.destroyRecord()
+    }
   }
 }

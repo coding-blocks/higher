@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
 import moment from 'moment';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class EducationalQualificationListComponent extends Component {
   currentYear = +moment().format('YYYY')
@@ -21,17 +22,13 @@ export default class EducationalQualificationListComponent extends Component {
     this.set('showEditModal', true)
   }
 
-  @action
-  saveRecord() {
+  @restartableTask saveRecordTask = function* () {
     this.set('error', null)
-    this.get('editingRecord').save()
-      .then(r => {
-        this.set('showEditModal', false)
-        this.set('newRecord', null)
-      })
-      .catch(err => {
-        this.set('error', err)
-      })
+
+    yield this.get('editingRecord').save()
+
+    this.set('showEditModal', false)
+    this.set('newRecord', null)
   }
 
   @action
@@ -40,5 +37,12 @@ export default class EducationalQualificationListComponent extends Component {
     .then(r => {
       this.set('showEditModal', false)
     })
+  }
+  
+  willDestroyElement() {
+    this._super(...arguments)
+    if (this.newRecord) {
+      this.newRecord.destroyRecord()
+    }
   }
 }

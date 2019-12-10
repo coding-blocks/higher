@@ -12,30 +12,34 @@
   <div class="divider-h my-4"></div>
 
   <div class="list-divided border-none">
-    {{#each educationalQualifications as |educationalQualification|}}
-    <div class="py-4">
-      <div class="d-flex justify-content-between">
-        <h5>{{educationalQualification.title}}</h5>
-        {{#if allowEdit}}
-          <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
-            <i class="fas fa-edit"></i>Edit
-          </button>
-        {{/if}}
-      </div>
-      <div>{{educationalQualification.subtitle}}</div>
-      <div class="dark-grey">
-        {{educationalQualification.startYear}} -
-        {{#if educationalQualification.isCurrent}}
-          Current
-        {{else}}
-          {{educationalQualification.endYear }}
-        {{/if}}
-      </div>
-      <p>
-        {{educationalQualification.description}}
-      </p>
-    </div>
-    {{/each}}
+    {{#if educationalQualifications.length}}
+      {{#each educationalQualifications as |educationalQualification|}}
+        <div class="py-4">
+          <div class="d-flex justify-content-between">
+            <h5>{{educationalQualification.title}}</h5>
+            {{#if allowEdit}}
+              <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
+                <i class="fas fa-edit"></i>Edit
+              </button>
+            {{/if}}
+          </div>
+          <div>{{educationalQualification.subtitle}}</div>
+          <div class="dark-grey">
+            {{educationalQualification.startYear}} -
+            {{#if educationalQualification.isCurrent}}
+              Current
+            {{else}}
+              {{educationalQualification.endYear }}
+            {{/if}}
+          </div>
+          <p>
+            {{educationalQualification.description}}
+          </p>
+        </div>
+      {{/each}}
+    {{else}}
+      No Educational Qualifications Added
+    {{/if}}
 
   </div>
 </div>
@@ -45,25 +49,25 @@
     onClose=(action (mut showEditModal) false)
     targetAttachment="center"
     translucentOverlay=true
-    containerClass='centered-scrolling-container'
+    containerClass='centered-scrolling-container w-50'
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}
 <div class="p-5">
   <h4 class="mb-5">Add Educational Qualifications</h4>
 
-  <div class="">
+  <div class="mb-4">
     <div class="font-sm">Title</div>
     <Input class="input-text" @type="text" @value={{editingRecord.title}} />
   </div>
 
-  <div class="">
+  <div class="mb-4">
     <div class="font-sm">Subtitle</div>
     <Input class="input-text" @type="text" @value={{editingRecord.subtitle}} />
   </div>
 
 
-  <div class="row">
+  <div class="row mb-4">
     <div class="col-12 col-md-6">
       <div class="font-sm">Start Year</div>
       <select name="start_year" onchange={{action (mut editingRecord.startYear) value="target.value"}}>
@@ -83,17 +87,17 @@
       {{/unless}}
     </div>
   </div>
-  <div>
+  <div class="mb-4">
     <Input @type="checkbox" @checked={{editingRecord.isCurrent}} />
     <span>Currently Working</span>
   </div>
 
-  <div>
+  <div class="mb-4">
     <div class="font-sm">Location</div>
     <Input @type="text" class="input-text" @value={{editingRecord.location}} />
   </div>
 
-  <div>
+  <div class="mb-4">
     <div class="font-sm">
       Description (if any)
     </div>
@@ -107,8 +111,8 @@
           </button>
         </div>
         <div class="li-right">
-          <button class="button-dashed button-orange" {{action (mut showEditModal) false}}>Cancel</button>
-          <button class="button-solid button-orange" {{action 'saveRecord'}}>Save Details</button>
+          <button class="button-dashed button-orange mr-3" {{action (mut showEditModal) false}}>Cancel</button>
+          <button class="button-solid button-orange" {{action (perform saveRecordTask)}}>Save Details</button>
         </div>
       </div>
       {{#if error}}

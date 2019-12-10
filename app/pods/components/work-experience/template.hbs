@@ -12,6 +12,7 @@
   <div class="divider-h my-4"></div>
 
   <div class="list-divided border-none">
+    {{#if workExperiences.length}}
     {{#each workExperiences as |workExperience|}}
       <div class="py-4">
         <div class="d-flex justify-content-between">
@@ -43,6 +44,9 @@
         </p>
       </div>
     {{/each}}
+    {{else}}
+      No Work Experience Added
+    {{/if}}
 
   </div>
 </div>
@@ -52,25 +56,25 @@
     onClose=(action (mut showEditModal) false)
     targetAttachment="center"
     translucentOverlay=true
-    containerClass='centered-scrolling-container'
+    containerClass='centered-scrolling-container w-50'
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}
     <div class="p-5">
       <h4 class="mb-5">Add Work Experience</h4>
 
-      <div class="">  
+      <div class="mb-4">  
         <div class="font-sm">Title</div>
         <Input class="input-text" @type="text" @value={{editingRecord.title}}/>
       </div>
       
-      <div class="">
+      <div class="mb-4">
         <div class="font-sm">Subtitle</div>
         <Input class="input-text" @type="text" @value={{editingRecord.subtitle}} />
       </div>
       
     
-      <div class="row">
+      <div class="row mb-4">
         <div class="col-12 col-md-6">
           <div class="font-sm">Start Date</div>
           <PikadayInput class="input-text" 
@@ -86,12 +90,12 @@
           {{/unless}}
         </div>
       </div>
-      <div>
+      <div class="mb-4">
         <Input @type="checkbox" @checked={{editingRecord.isCurrent}} />
         <span>Currently Working</span>
       </div>
 
-      <div>
+      <div class="mb-4">
         <input name="type" 
           type="radio" 
           checked={{eq editingRecord.type "intern"}}
@@ -104,12 +108,12 @@
           Full Time
       </div>
 
-      <div>
+      <div class="mb-4">
         <div class="font-sm">Location</div>
         <Input @type="text" class="input-text" @value={{editingRecord.location}} />
       </div>
     
-      <div>
+      <div class="mb-4">
         <div class="font-sm">
           Description (if any)
         </div>
@@ -123,14 +127,14 @@
           </button>
         </div>
         <div class="li-right">
-          <button class="button-dashed button-orange" {{action (mut showEditModal) false}}>Cancel</button>
-          <button class="button-solid button-orange" {{action 'saveRecord'}}>Save Details</button>
+          <button class="button-dashed button-orange mr-3" {{action (mut showEditModal) false}}>Cancel</button>
+          <button class="button-solid button-orange" {{action (perform saveRecordTask)}}>Save Details</button>
         </div>
       </div>
       {{#if error}}
-        <div class="red">
+        {{!-- <div class="red">
           {{error}}
-        </div>
+        </div> --}}
       {{/if}}
     </div>
   {{/modal-dialog}}
