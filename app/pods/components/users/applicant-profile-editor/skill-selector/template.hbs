@@ -1,0 +1,68 @@
+<PowerSelectMultiple 
+  @searchEnabled={{true}} 
+  @searchField={{"name"}} 
+  @options={{skills}}
+  @selected={{profile.skills}} 
+  @placeholder="Add Skills"
+  @onChange={{action (mut profile.skills)}} as |skill|>
+  {{skill.name}}
+</PowerSelectMultiple>
+
+<div class="row mt-5">
+  <div class="col-12 col-md-6">
+    <div class="border-card">
+      <h5>Verfied Skills</h5>
+      <div class="divider-h my-3"></div>
+
+      {{#if verifiedApplicantProfileSkills.length}}
+        <div class="list-divided border-none">
+          {{#each verifiedApplicantProfileSkills as |applicantProfileSkill|}}
+          <div class="d-flex py-4">
+            <div class="li-left">
+              <h5 class="green">
+                {{applicantProfileSkill.skill.name}}
+              </h5>
+              <span>Score: {{applicantProfileSkill.score}}</span>
+            </div>
+            <div class="li-right">
+              {{#if applicantProfileSkill.score}}
+                <button class="orange" {{action 'takeTest' applicantProfileSkill}}>Take Retest</button>
+              {{/if}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      {{else}}
+        No verified skills.
+      {{/if}}
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="border-card">
+      <h5>Non Verified Skills</h5>
+      <div class="divider-h my-3"></div>
+
+      {{#if unverifiedApplicantProfileSkills.length}}
+        <div class="list-divided border-none">
+          {{#each unverifiedApplicantProfileSkills as |applicantProfileSkill|}}
+          <div class="d-flex py-4">
+            <div class="li-left">
+              <h5>
+                {{applicantProfileSkill.skill.name}}
+              </h5>
+              {{#if (gte score 0)}}
+                <span>Score: {{applicantProfileSkill.score}}</span>
+              {{/if}}
+            </div>
+            <div class="li-right">
+              {{#if applicantProfileSkill.skill.isVerifiable}}
+                <button class="orange" {{action 'takeTest' applicantProfileSkill}}>Take Test</button>
+              {{/if}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

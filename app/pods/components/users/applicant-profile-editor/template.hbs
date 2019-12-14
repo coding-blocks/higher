@@ -187,6 +187,8 @@
           <ApplicantCourseEditor @getNewRecord={{action getNewRecord}} />
         </div>
       </div>
+    {{else if (eq pager.currentPage 2)}}
+      <Users::ApplicantProfileEditor::SkillSelector @profile={{applicantProfile}} />
     {{else if (eq pager.currentPage 3)}}
       <div class="row">
         <div class="col-12 col-md-8">

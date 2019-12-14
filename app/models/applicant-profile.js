@@ -36,6 +36,8 @@ export default DS.Model.extend({
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),
   jobRoles: DS.hasMany('job-role'),
+  skills: DS.hasMany('skill'),
+  applicantProfileSkills: DS.hasMany('applicant-profile-skill'),
   locations: DS.hasMany('location'),
   currentLocation: DS.belongsTo('location'),
   workExperiences: DS.hasMany('work-experience'),

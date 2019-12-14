@@ -66,14 +66,16 @@
           <li class="mb-4">
             Current Location: <span class="bold">{{profile.currentLocation.name}}</span>
           </li>
-          <li class="mb-4">
-            Preferred Location:
-            <span class="bold">
-              {{#each profile.locations as |location|}}
-              {{location.name}}
-              {{/each}}
-            </span>
-          </li>
+          {{#if profile.locations.length}}
+            <li class="mb-4">
+              Preferred Location:
+              <span class="bold">
+                {{#each profile.locations as |location|}}
+                {{location.name}}
+                {{/each}}
+              </span>
+            </li>
+          {{/if}}
         </ul>
         {{#unless profile.isStudent}}
         <ul class="mr-4">
@@ -89,17 +91,18 @@
 
       <div class="divider-h mb-4"></div>
 
-      <div class="mb-4">
-        Interested Roles
-        <span class="mx-2"></span>
-        {{#each profile.jobRoles as |jobRole|}}
-        <span class="pill">{{jobRole.name}}</span>
-        {{/each}}
-      </div>
+      {{#if profile.jobRoles.length}}
+        <div class="mb-4">
+          Interested Roles
+          <span class="mx-2"></span>
+          {{#each profile.jobRoles as |jobRole|}}
+            <span class="pill">{{jobRole.name}}</span>
+          {{/each}}
+        </div>
+      {{/if}}
 
       <p class="pt-2">
         {{profile.about}}
-
       </p>
 
     </div>

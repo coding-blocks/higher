@@ -7,7 +7,6 @@ export default class PagerComponent extends Component {
   pages = []
 
   didReceiveAttrs() {
-    console.log('received attrs')
     const pages = this.pages
     pages.map(p => this.skippable ? p.skippable = true : p.skippable = false)
     for(var i = 0; i < this.currentPage; i++) {
