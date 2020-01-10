@@ -64,8 +64,8 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-    ENV.API_HOST = 'http://hire-api.codingblocks.com'
-    ENV.PUBLIC_URL = 'http://hire.codingblocks.com/'
+    ENV.API_HOST = 'https://hire-api.codingblocks.com'
+    ENV.PUBLIC_URL = 'https://hire.codingblocks.com/'
     ENV.CLIENT_ID = 4190457915
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
