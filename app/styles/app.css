@@ -1,2 +1,7 @@
 @import "ember-modal-dialog/ember-modal-structure.css";
 @import "ember-modal-dialog/ember-modal-appearance.css";
+
+.s-15x15{
+  width: 15px;
+  height: 15px
+}

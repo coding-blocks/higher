@@ -1,10 +1,103 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-export default DS.Model.extend({
-  currentCtc: DS.attr('number'),
+const Validations = buildValidations({
+  currentLocation: {
+    description: 'Current Location', 
+    validators: [
+      validator('belongs-to'),
+      validator('presence', {
+        presence: true,
+        message: 'Its good to be a vagabond, but we need a location.'
+      })
+    ]
+  },
+  locations: {
+    description: 'Preferred Locations',
+    validators: [
+      validator('has-many'),
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  jobRoles: {
+    description: 'Job Roles',
+    validators: [
+      validator('has-many'),
+      validator('presence', {
+        presence: true,
+        message: 'Select a job role.'
+      })
+    ]
+  },
+  currentCtc: {
+    description: 'Current CTC',
+    validators: [
+      validator('number', {
+        gt: 0
+      }),
+      validator('presence', {
+        presence: Ember.computed('model.isStudent', function() {
+          return !this.get('model.isStudent')
+        }).volatile()
+      })
+    ]
+  },
+  expectedCtc: {
+    description: 'Expected CTC',
+    validators: [
+      validator('number', {
+        gt: 0
+      }),
+      validator('presence', {
+        presence: Ember.computed('model.isStudent', function() {
+          return !this.get('model.isStudent')
+        }).volatile()
+      })
+    ]
+  },
+  joiningDate: {
+    description: 'Joining Date',
+    validators: [
+      validator('date'),
+      validator('presence', {
+        presence: Ember.computed('model.isStudent', function() {
+          return !this.get('model.isStudent')
+        }).volatile()
+      })
+    ]
+  }
+})
+
+export default DS.Model.extend(Validations, {
+  about: DS.attr(),
+  photo: DS.attr(),
+  links: DS.attr(),
+  isReviewed: DS.attr('boolean'),
+  isActive: DS.attr('boolean'),
   expectedCtc: DS.attr('number'),
+  expectedCtcString: Ember.computed('expectedCtc', {
+    get() {
+      return this.get('expectedCtc')
+    },
+    set(key, val) {
+      this.set('expectedCtc', val ? +val : null)
+      return val
+    }
+  }),
+  currentCtc: DS.attr('number'),
+  currentCtcString: Ember.computed('currentCtc', {
+    get() {
+      return this.get('currentCtc')
+    },
+    set(key, val) {
+      this.set('currentCtc', val ? +val : null)
+      return val
+    }
+  }),
   joiningDate: DS.attr('number'),
   joiningDateString: Ember.computed('joiningDate', {
     get() {
@@ -15,9 +108,6 @@ export default DS.Model.extend({
       return val
     }
   }),
-  about: DS.attr(),
-  photo: DS.attr(),
-  links: DS.attr(),
   isStudent: DS.attr('boolean'),
   isStudentSetter: Ember.computed({
     get() {
@@ -33,8 +123,6 @@ export default DS.Model.extend({
       return val
     }
   }),
-  isReviewed: DS.attr('boolean'),
-  isActive: DS.attr('boolean'),
   jobRoles: DS.hasMany('job-role'),
   skills: DS.hasMany('skill'),
   applicantProfileSkills: DS.hasMany('applicant-profile-skill'),

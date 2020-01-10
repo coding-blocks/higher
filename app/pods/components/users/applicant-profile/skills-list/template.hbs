@@ -1,0 +1,27 @@
+<div class="border-card">
+  {{#if verifiedApplicantProfileSkills.length}}
+    <h5 class="mb-4">Verified Skills</h5>
+
+    <ul>
+      {{#each verifiedApplicantProfileSkills as |applicantProfileSkill|}}
+        <li class="float-left mr-5 mb-4">
+          <span class="green font-mds">{{applicantProfileSkill.skill.name}}</span>
+          <div class="round tick bg-gradient-green-lr s-15x15 ml-2 mt-1 float-right"></div>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if unverifiedApplicantProfileSkills.length}}
+    <h5 class="pt-2 mb-4 float-clear">Non Verified Skills</h5>
+    
+    <ul>
+      {{#each unverifiedApplicantProfileSkills as |applicantProfileSkill|}}
+      <li class="float-left mr-5 mb-4">
+        <span class="dark-grey font-mds">{{applicantProfileSkill.skill.name}}</span>
+      </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+</div>

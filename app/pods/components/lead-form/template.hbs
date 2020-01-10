@@ -7,12 +7,51 @@
     Our team will get in touch with you shortly.
   </div>
 {{else}}
-  {{input type="text" value=lead.name class="underline-input border-none w-100 pb-2 mb-5" placeholder="Your Name *" required=true}}
-  {{input type="email" value=lead.email class="underline-input border-none w-100 pb-2 mb-5" placeholder="Work Email *" required=true}}
-  {{input type="text" value=lead.mobile class="underline-input border-none w-100 pb-2 mb-5" placeholder="Mobile Number *" required=true}}
-  {{input type="text" value=lead.companyName class="underline-input border-none w-100 pb-2 mb-5" placeholder="Company Name *" required=true}}
-  {{input type="text" value=lead.hiringPosition class="underline-input border-none w-100 pb-2 mb-5" placeholder="Hiring Position *" required=true}}
-  <button class="button-solid button-orange mx-auto" {{action 'saveLead'}}>Send Details</button>
+  <div>
+    <WFormValidations class="mt-1 t-align-l" @model={{lead}} @attributeName='name' as |validation|>
+      {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+      {{/if}}
+    </WFormValidations>
+    {{input type="text" value=lead.name class="underline-input border-none w-100 pb-2 mb-5" placeholder="Your Name *" required=true}}
+  </div>
+  <div>
+    <WFormValidations class="mt-1 t-align-l" @model={{lead}} @attributeName='email' as |validation|>
+      {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+      {{/if}}
+    </WFormValidations>
+    {{input type="email" value=lead.email class="underline-input border-none w-100 pb-2 mb-5" placeholder="Work Email *" required=true}}
+  </div>
+  <div>
+    <WFormValidations class="mt-1 t-align-l" @model={{lead}} @attributeName='mobile' as |validation|>
+      {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+      {{/if}}
+    </WFormValidations>
+    {{input type="text" value=lead.mobile class="underline-input border-none w-100 pb-2 mb-5" placeholder="Mobile Number *" required=true}}
+  </div>
+  <div>
+    <WFormValidations class="mt-1 t-align-l" @model={{lead}} @attributeName='companyName' as |validation|>
+      {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+      {{/if}}
+    </WFormValidations>
+    {{input type="text" value=lead.companyName class="underline-input border-none w-100 pb-2 mb-5" placeholder="Company Name *" required=true}}
+  </div>
+  <div>
+    <WFormValidations class="mt-1 t-align-l" @model={{lead}} @attributeName='hiringPosition' as |validation|>
+      {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+      {{/if}}
+    </WFormValidations>
+    {{input type="text" value=lead.hiringPosition class="underline-input border-none w-100 pb-2 mb-5" placeholder="Hiring Position *" required=true}}
+  </div>
+  <button class="button-solid button-orange mx-auto" 
+    {{action 'saveLead'}}
+    disabled={{and (v-get lead 'isInvalid') showValidationMessages}}>
+    Send Details
+  </button>
 
   {{#if error}}
     <div class="red">

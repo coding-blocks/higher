@@ -1,0 +1,83 @@
+<div class="border-card">
+  <h5 class="mb-4">Add New Course</h5>
+
+  <PowerSelect class="mb-4" @options={{organizations}} @selected={{editingRecord.organizationTypeSetter}}
+    @placeholder={{"Select Organization *"}} @onChange={{action (mut editingRecord.organizationTypeSetter)}} as
+    |organization|>
+    {{organization}}
+  </PowerSelect>
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='organizationType' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+
+  <div class="my-4"></div>
+
+  {{#if isCBOnlineCourse}}
+  <PowerSelect class="mb-4" @options={{onlineCourses}} @searchEnabled={{true}} @searchField={{"title"}}
+    @selected={{selectedOnlineCourse}} @placeholder={{"Select Course *"}} @onChange={{action 'setOnlineCourse'}} as
+    |onlineCourse|>
+    <span onclick="{{action 'setOnlineCourse' onlineCourse}}">{{onlineCourse.title}}</span>
+  </PowerSelect>
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='name' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+  {{else}}
+  <Input class="input-text" @type="text" @value={{editingRecord.organizationName}} @required={{true}}
+    @placeholder="Organization Name *" />
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='organizationName' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+
+  <PowerSelect class="mb-4" @options={{courseTypes}} @searchEnabled={{true}} @searchField={{"title"}}
+    @selected={{editingRecord.name}} @placeholder={{"Select Course Type *"}} @onChange={{action 'setCourseType'}} as
+    |courseType|>
+    {{courseType.title}}
+  </PowerSelect>
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='name' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+
+  <div class="mt-4">
+    <span class="bold">Course Type:</span>
+
+    <input class="mb-4 ml-3" type="radio" name="course_type" checked={{eq editingRecord.courseMode 'online'}}
+      onclick={{action (mut editingRecord.courseMode) 'online'}} required={{true}} />
+    Online
+    <input class="mb-4" type="radio" name="course_type" checked={{eq editingRecord.courseMode 'offline'}}
+      onclick={{action (mut editingRecord.courseMode) 'offline'}} required={{true}} />
+    Offline
+  </div>
+  {{/if}}
+
+  <Input class="input-text my-4" @type="text" @value={{editingRecord.certificateLink}} @required={{true}}
+    @placeholder="Certificate Link" />
+
+  <PikadayInput class="input-text" @placeholder="Start Date *" @value={{editingRecord.startDateString}}
+    @onSelection={{action (mut editingRecord.startDateString)}} />
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='startDate' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+
+  <PikadayInput class="input-text" @placeholder="End Date *" @value={{editingRecord.startDateString}}
+    @onSelection={{action (mut editingRecord.endDateString)}} />
+  <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='endDate' as |validation|>
+    {{#if (and validation.isInvalid showValidationMessages)}}
+    <span class="red card-md">{{validation.message}}</span>
+    {{/if}}
+  </WFormValidations>
+
+  <button class="button-solid button-orange mt-4" {{action (perform saveRecordTask)}}
+    disabled={{and (v-get editingRecord 'isInvalid') showValidationMessages}}>
+    Add to List
+  </button>
+</div>

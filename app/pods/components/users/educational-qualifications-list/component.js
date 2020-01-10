@@ -1,12 +1,16 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import moment from 'moment';
 import { dropTask } from 'ember-concurrency-decorators';
 
-export default class ProjectListComponent extends Component {
+export default class EducationalQualificationListComponent extends Component {
+  currentYear = +moment().format('YYYY')
+  showValidationMessages = false
+
   @action
-  getNewProject() {
+  getNewEducationalQualification() {
     if (!this.newRecord) {
-      const newRecord = this.get('getNewRecord')('project')
+      const newRecord = this.get('getNewRecord')('educational-qualification')
       this.set('newRecord', newRecord)
     }
     this.set('editingRecord', this.newRecord)
@@ -20,7 +24,10 @@ export default class ProjectListComponent extends Component {
   }
 
   @dropTask saveRecordTask = function* () {
-    this.set('error', null)
+    if (this.editingRecord.validations.isInvalid) {
+      this.set('showValidationMessages', true)
+      return
+    }
 
     yield this.get('editingRecord').save()
 

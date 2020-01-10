@@ -1,17 +1,23 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency-decorators';
 
 export default class LeadFormComponent extends Component {
   error = null
   showStatus = false
   showEmptyLabels = false
+  showValidationMessages = false
 
-  @restartableTask
+  @dropTask
   saveLeadTask = function *() {
     this.set('error', null)
     this.set('showStatus', false)
     const lead = this.get('lead')
+
+    if(lead.get('validations.isInvalid')) {
+      this.set('showValidationMessages', true)
+      return 
+    }
 
     yield lead.save()
       .then(r => {

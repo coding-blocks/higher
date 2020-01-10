@@ -1,0 +1,63 @@
+<div class="border-card">
+  <div class="mb-5">
+    <h5>Enrolled Online Courses</h5>
+    <div class="divider-h mt-3 mb-4"></div>
+    {{#if onlineCBCourses.length}}
+    {{#each onlineCBCourses as |course|}}
+    <div class="img-desc mb-4">
+      <img class="round s-60x60" src="{{course.logo}}" alt="">
+      <div class="description justify-content-center pl-4">
+        <div>
+          <h5 class="mb-1">{{course.name}}</h5>
+          Batch: {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{else}}
+    Not Enrolled in any Online Courses
+    {{/if}}
+  </div>
+
+  <div class="mb-5">
+    <h5>Enrolled Offline Courses</h5>
+    <div class="divider-h mt-3 mb-4"></div>
+
+    {{#if offlineCBCourses.length}}
+    {{#each offlineCBCourses as |course|}}
+    <div class="img-desc mb-4">
+      <img class="round s-60x60" src="{{course.logo}}" alt="">
+      <div class="description justify-content-center pl-4">
+        <div>
+          <h5 class="mb-1">{{course.name}}</h5>
+          Batch: {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{else}}
+    Not Enrolled in any Offline Courses
+    {{/if}}
+  </div>
+
+  {{#if otherCourses.length}}
+  <div class="mb-5">
+    <h5>Other Courses</h5>
+    <div class="divider-h mt-3 mb-4"></div>
+    {{#each otherCourses as |course|}}
+    <div class="img-desc mb-4">
+      <img class="round s-60x60" src="{{course.logo}}" alt="">
+      <div class="description justify-content-center pl-4">
+        <div>
+          <h5 class="mb-1">{{course.name}}</h5>
+          <div class="dark-grey">{{course.organizationName}}</div>
+        </div>
+        <div>
+          {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>

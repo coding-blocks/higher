@@ -8,7 +8,6 @@ export default class UsersIdRoute extends Route {
   @service api
 
   async model(params) {
-    const hbPerformanceStats = this.api.request(`/applicant-profiles/user/${params.user_id}/hacker-blocks-performance`)
     let applicantProfile = await this.store.queryRecord("applicant-profile", {
        custom: {
           ext: 'url', url: `user/${params.user_id}`
@@ -26,7 +25,6 @@ export default class UsersIdRoute extends Route {
 
     return RSVP.hash({
       applicantProfile,
-      hbPerformanceStats
     })
   } 
 
@@ -35,6 +33,5 @@ export default class UsersIdRoute extends Route {
     const profileCompletion = model.applicantProfile.get('profileCompletion')
     controller.set('editMode', profileCompletion !== 100)
     controller.set('currentPage', profileCompletion === 100 ? 0 : profileCompletion / 25)
-    controller.set('hbPerformanceStats', model.hbPerformanceStats)
   }
 }

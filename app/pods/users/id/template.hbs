@@ -5,8 +5,7 @@
       @saveApplicantProfile={{saveApplicantProfileTask}}
       @getNewRecord={{action "getNewRecord"}}
       @currentPage={{currentPage}}
-      @validationError={{validationError}}
-      @hbPerformanceStats={{hbPerformanceStats}} />
+      @showValidationMessages={{showValidationMessages}} />
   {{else}}
     <Users::ApplicantProfile 
       @profile={{applicantProfile}}

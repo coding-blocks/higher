@@ -1,8 +1,48 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-export default DS.Model.extend({
+const Validations = buildValidations({
+  title: {
+    description: 'Title',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  subtitle: {
+    description: 'Subtitle',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  startDate: {
+    description: 'Start Date',
+    validators: [
+      validator('date'),
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  endDate: {
+    description: 'End Date',
+    validators: [
+      validator('date'),
+      validator('presence', {
+        presence: Ember.computed('model.isCurrent', function() {
+          return !this.get('model.isCurrent')
+        })
+      })
+    ]
+  }
+})
+
+export default DS.Model.extend(Validations, {
   title: DS.attr(),
   subtitle: DS.attr(),
   startDate: DS.attr(),
@@ -29,7 +69,7 @@ export default DS.Model.extend({
       return moment(val)
     }
   }),
-  isCurrent: DS.attr(),
+  isCurrent: DS.attr('boolean'),
   location:DS.attr(),
   type:DS.attr(),
   description:DS.attr(),

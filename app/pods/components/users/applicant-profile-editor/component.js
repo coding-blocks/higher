@@ -1,11 +1,15 @@
 import Component from '@ember/component';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
 import { action, computed } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default class ApplicantProfileEditor extends Component {
   @service store
   @service currentUser
+
+  @alias('fetchLocationsTask.lastSuccessful.value') locations
+  @alias('fetchJobRolesTask.lastSuccessful.value') jobRoles
 
   github = ''
   linkedin = ''
@@ -28,6 +32,8 @@ export default class ApplicantProfileEditor extends Component {
   ]
 
   didReceiveAttrs() {
+    this._super(...arguments)
+    
     this.fetchLocationsTask.perform()
     this.fetchJobRolesTask.perform()
 
@@ -37,14 +43,12 @@ export default class ApplicantProfileEditor extends Component {
     }
   }
 
-  @restartableTask fetchLocationsTask = function* () {
-    const locations = yield this.store.findAll('location')
-    this.set('locations', locations)
+  @dropTask fetchLocationsTask = function* () {
+    return yield this.store.findAll('location')
   }
 
-  @restartableTask fetchJobRolesTask = function* () {
-    const jobRoles = yield this.store.findAll('job-role')
-    this.set('jobRoles', jobRoles)
+  @dropTask fetchJobRolesTask = function* () {
+    return yield this.store.findAll('job-role')
   }
 
   @computed('github', 'linkedin', 'stackoverflow', 'portfolio')

@@ -3,6 +3,8 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
 
 export default class ProjectListComponent extends Component {
+  showValidationMessages = false
+
   @action
   getNewProject() {
     if (!this.newRecord) {
@@ -20,7 +22,10 @@ export default class ProjectListComponent extends Component {
   }
 
   @dropTask saveRecordTask = function* () {
-    this.set('error', null)
+    if (this.editingRecord.validations.isInvalid) {
+      this.set('showValidationMessages', true)
+      return
+    }
 
     yield this.get('editingRecord').save()
 

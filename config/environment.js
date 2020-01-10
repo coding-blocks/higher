@@ -14,7 +14,11 @@ module.exports = function(environment) {
       refreshAccessTokens: true,
       tokenExpireName: 'exp',
       refreshLeeway: 60, //send a request for refresh_token 60sec before actual expiration
+      authorizationHeaderName: 'Authorization',
       authorizationPrefix: 'JWT ',
+    },
+    'simple-auth': {
+      crossOriginWhitelist: ['*']
     },
     EmberENV: {
       FEATURES: {
@@ -43,6 +47,7 @@ module.exports = function(environment) {
     ENV.PUBLIC_URL = 'http://localhost:4200/'
     ENV.CLIENT_ID = 8986717992
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
+    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
   }
 
   if (environment === 'test') {
@@ -63,6 +68,7 @@ module.exports = function(environment) {
     ENV.PUBLIC_URL = 'http://hire.codingblocks.com/'
     ENV.CLIENT_ID = 4190457915
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
+    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
   }
 
   ENV['ember-simple-auth-token'].tokenPropertyName = 'jwt'

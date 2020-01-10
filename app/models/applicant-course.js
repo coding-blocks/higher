@@ -1,15 +1,70 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import moment from 'moment';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-export default DS.Model.extend({
+const Validations = buildValidations({
+  organizationType: {
+    description: 'Organization Type',
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Select an Organization'
+      })
+    ]
+  },
+  organizationName: {
+    description: 'Organization Name',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  name: {
+    description: 'Course Name',
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Select a Course'
+      })
+    ]
+  },
+  logo: {
+    description: 'Course Logo',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  startDate: {
+    description: 'Start Date',
+    validators: [
+      validator('date'),
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  endDate: {
+    description: 'End Date',
+    validators: [
+      validator('date'),
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+})
+
+export default DS.Model.extend(Validations, {
   name: DS.attr(),
-  title: DS.attr(),
   logo: DS.attr(),
   certificateLink: DS.attr(),
   courseMode: DS.attr(),
-  organizationName: DS.attr(),
   organizationType: DS.attr(),
+  organizationName: DS.attr(),
   organizationTypeSetter: Ember.computed('organizationType', {
     get() {
       const type = this.get('organizationType')
@@ -32,7 +87,7 @@ export default DS.Model.extend({
       return val
     }
   }),
-  startDate: DS.attr(),
+  startDate: DS.attr('number'),
   startDateString: Ember.computed('startDate', {
     get() {
       return moment.unix(this.get('startDate')).toDate()
@@ -42,7 +97,7 @@ export default DS.Model.extend({
       return moment(val)
     }
   }),
-  endDate: DS.attr(),
+  endDate: DS.attr('number'),
   endDateString: Ember.computed('endDate', 'isCurrent', {
     get() {
       return moment.unix(this.get('endDate')).toDate()

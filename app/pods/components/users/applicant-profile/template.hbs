@@ -23,39 +23,45 @@
         {{/if}}
         {{/each-in}}
       </ul>
-
-      <button class="button-solid lg button-orange lg font-sm">
-        Share Profile
-        <i class="fas fa-share-alt ml-1"></i>
-      </button>
+      {{!-- {{#if userHimself}}
+        <button class="button-solid lg button-orange lg font-sm">
+          Share Profile
+          <i class="fas fa-share-alt ml-1"></i>
+        </button>
+      {{/if}} --}}
     </div>
     <div class="col-12 col-md-9 pl-md-5">
       <div class="d-flex">
         <div class="li-left">
           <div>
-            <h2 class="mb-2">
+            <h2 class="mb-3">
               {{profile.user.firstname}}
               {{profile.user.lastname}}
               {{#unless profile.isReviewed}}
-              <span class="tag font-xs red ml-3">Awaiting Verification</span>
+              <span class="tag tag-orange ml-3">Awaiting Verification</span>
               {{/unless}}
             </h2>
             {{#unless profile.isStudent}}
-            <div class="bold orange">
-              <span>Expected CTC: {{profile.expectedCtc}} LPA</span>
-            </div>
+              <div class="d-flex">
+                <div class="bold orange mr-4">
+                  <span>Current CTC: {{profile.currentCtc}} LPA</span>
+                </div>
+                <div class="bold orange">
+                  <span>Expected CTC: {{profile.expectedCtc}} LPA</span>
+                </div>
+              </div>
             {{/unless}}
           </div>
         </div>
         <div class="li-right">
           {{#if userHimself}}
-          <div>
-            <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
-          </div>
+            <div>
+              <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
+            </div>
+            {{!-- <div>
+              <button class="button-solid lg button-orange">Download as PDF</button>
+            </div> --}}
           {{/if}}
-          <div>
-            <button class="button-solid lg button-orange">Download as PDF</button>
-          </div>
         </div>
       </div>
 
@@ -67,13 +73,13 @@
             Current Location: <span class="bold">{{profile.currentLocation.name}}</span>
           </li>
           {{#if profile.locations.length}}
-            <li class="mb-4">
+            <li class="mb-4 commafy">
               Preferred Location:
-              <span class="bold">
-                {{#each profile.locations as |location|}}
-                {{location.name}}
-                {{/each}}
-              </span>
+              {{#each profile.locations as |location|}}
+                <span class="bold">
+                  {{location.name}}
+                </span>
+              {{/each}}
             </li>
           {{/if}}
         </ul>
@@ -96,7 +102,7 @@
           Interested Roles
           <span class="mx-2"></span>
           {{#each profile.jobRoles as |jobRole|}}
-            <span class="pill">{{jobRole.name}}</span>
+            <span class="pill-dashed">{{jobRole.name}}</span>
           {{/each}}
         </div>
       {{/if}}
@@ -112,22 +118,27 @@
 
 <div class="row">
   <div class="col-12 col-md-8">
-    {{#if educationalQualifications.length}}
-      <EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
+    {{#if profile.educationalQualifications.length}}
+      <Users::EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
     {{/if}}
-    {{#if workExperiences.length}}
-      <WorkExperience @workExperiences={{profile.workExperiences}} />
+    {{#if profile.workExperiences.length}}
+      <Users::WorkExperiencesList @workExperiences={{profile.workExperiences}} />
     {{/if}}
 
-    {{#if projects.length}}
-      <ProjectsList @projects={{profile.projects}} />
+    {{#if profile.projects.length}}
+      <Users::ProjectsList @projects={{profile.projects}} />
     {{/if}}
   </div>
   <div class="col-12 col-md-4">
-    <HackerBlocksStat class="mb-5" @stats={{hbPerformanceStats}} />
+    <HackerBlocksStat class="mb-5" />
+
+    {{#if profile.applicantProfileSkills.length}}
+      <Users::ApplicantProfile::SkillsList class="mb-5" @skills={{profile.applicantProfileSkills}} />
+    {{/if}}
+
 
     {{#if profile.applicantCourses.length}}
-      <ApplicantCoursesList class="mb-5" @courses={{profile.applicantCourses}} />
+      <Users::ApplicantProfile::ApplicantCoursesList class="mb-5" @courses={{profile.applicantCourses}} />
     {{/if}}
   </div>
 </div>
