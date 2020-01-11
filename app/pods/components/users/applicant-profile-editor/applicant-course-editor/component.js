@@ -13,6 +13,8 @@ export default class ApplicantCourseEditor extends Component {
 
   organizations = ['Coding Blocks', 'Other']
   showValidationMessages = false
+  selectedCourseType = null
+  selectedOnlineCourse = null
 
   courseTypes = getCourseTypes()
 
@@ -62,15 +64,18 @@ export default class ApplicantCourseEditor extends Component {
   }
 
   @action
-  setOnlineCourse(course) {
+  setOnlineCourse(onlineCourse) {
+    this.set('selectedOnlineCourse', onlineCourse)
+    
     const editingRecord = this.get('editingRecord')
-    editingRecord.set('name', course.get('title'))
-    editingRecord.set('logo', course.get('logo'))
-    editingRecord.set('amoebaCourseId', course.get('id'))
+    editingRecord.set('name', onlineCourse.get('title'))
+    editingRecord.set('logo', onlineCourse.get('logo'))
+    editingRecord.set('amoebaCourseId', onlineCourse.get('id'))
   }
 
   @action
   setCourseType(courseType) {
+    this.set('selectedCourseType', courseType)
     this.set('editingRecord.logo', courseType.logo)
     this.set('editingRecord.name', courseType.title)
   }
