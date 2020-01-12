@@ -6,6 +6,7 @@ import { dropTask } from 'ember-concurrency-decorators';
 export default class UserIdController extends Controller {
   @service currentUser
   @service store
+  @service api
 
   showValidationMessages = false
 
@@ -29,6 +30,17 @@ export default class UserIdController extends Controller {
     } catch(err) {
       
     }
+  }
+
+  @dropTask syncOnlineCoursesTask = function *() {
+    let applicantCourses = yield this.store.query('applicant-course', {
+      custom: {
+        ext: 'url',
+        url: `applicant-profile/${this.applicantProfile.id}/get-onlinecb-courses`
+      }
+    })
+
+    applicantCourses.map(ac => ac.set('applicantProfile', this.applicantProfile))
   }
 
   @action

@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 
 export default class ApplicantCourseList extends Component {
+  enableSync = false
+  
   didReceiveAttrs() {
     const courses = this.get('courses')
     const onlineCBCourses = courses.filter(course => course.organizationType === 'codingblocks' && course.courseMode === 'online')

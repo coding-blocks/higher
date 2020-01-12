@@ -15,7 +15,20 @@
     </div>
     {{/each}}
     {{else}}
-    Not Enrolled in any Online Courses
+      Not Enrolled in any Online Courses
+    {{/if}}
+
+    {{#if enableSync}}
+      <br>
+      
+      <button class="button-solid button-orange mt-2" 
+        {{action (perform syncOnlineCoursesTask)}}
+        disabled={{syncOnlineCoursesTask.isRunning}}>
+        Sync Now
+      </button>
+      {{#if syncOnlineCoursesTask.isRunning}}
+        <LoadingComponent />
+      {{/if}}
     {{/if}}
   </div>
 

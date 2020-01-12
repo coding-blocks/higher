@@ -10,7 +10,7 @@
   </PowerSelect>
   <WFormValidations class="mt-1 mb-4" @model={{editingRecord}} @attributeName='organizationType' as |validation|>
     {{#if (and validation.isInvalid showValidationMessages)}}
-    <span class="red card-md">{{validation.message}}</span>
+      <span class="red card-md">{{validation.message}}</span>
     {{/if}}
   </WFormValidations>
 

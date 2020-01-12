@@ -225,7 +225,10 @@
       <div class="col-12 col-md-4">
         <HackerBlocksStat />
         
-        <Users::ApplicantProfile::ApplicantCoursesList class="mb-5" @courses={{applicantProfile.applicantCourses}} />
+        <Users::ApplicantProfile::ApplicantCoursesList class="mb-5" 
+          @courses={{applicantProfile.applicantCourses}}
+          @enableSync={{true}}
+          @syncOnlineCoursesTask={{syncOnlineCoursesTask}} />
         
         <Users::ApplicantProfileEditor::ApplicantCourseEditor @getNewRecord={{action getNewRecord}} />
       </div>
