@@ -1,5 +1,5 @@
 {{#if session.isAuthenticated}} 
-  <button class="button-solid" {{action 'invalidateSession'}}>Logout</button>
+  <button class="button-solid button-orange" {{action 'invalidateSession'}}>Logout</button>
 {{else}}
-  <button class="button-solid" {{action 'Authenticate'}}>Login</button>
+  <button class="button-solid button-orange" {{action 'Authenticate'}}>Login</button>
 {{/if }}

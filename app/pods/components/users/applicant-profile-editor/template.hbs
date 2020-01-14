@@ -132,10 +132,12 @@
           <div class="d-flex mb-4 pt-2">
             <div class="li-left">Are you a student or Professional?</div>
             <div class="li-right">
-              <input name="student-professional" type="radio" checked={{applicantProfile.isStudentSetter}}
+              <input name="student-professional" type="radio" class="mr-2"
+                checked={{applicantProfile.isStudentSetter}}
                 onclick={{action (mut applicantProfile.isStudentSetter) true}} />
               Student
-              <input name="student-professional" type="radio" checked={{not applicantProfile.isStudentSetter}}
+              <input name="student-professional" type="radio" class="ml-4 mr-2"
+                checked={{not applicantProfile.isStudentSetter}}
                 onclick={{action (mut applicantProfile.isStudentSetter) false}} />
               Professional
             </div>
@@ -223,7 +225,7 @@
       </div>
 
       <div class="col-12 col-md-4">
-        <HackerBlocksStat />
+        <Users::HackerBlocksStats />
         
         <Users::ApplicantProfile::ApplicantCoursesList class="mb-5" 
           @courses={{applicantProfile.applicantCourses}}
@@ -239,7 +241,7 @@
     <div class="row">
       <div class="col-12 col-md-8">
         <div class="border-card">
-          <h5 class="mb-4">Tell us About Yourself <span class="red">*</span></h5>
+          <h5 class="mb-4">Tell us About Yourself </h5>
           <Textarea class="input-textarea w-100" @value={{applicantProfile.about}} @rows="7" />
           </div>
         </div>

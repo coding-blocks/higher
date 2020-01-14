@@ -4,6 +4,14 @@ import { dropTask } from 'ember-concurrency-decorators';
 
 export default class ProjectListComponent extends Component {
   showValidationMessages = false
+  
+  @action
+  deleteRecord() {
+    this.get('editingRecord').destroyRecord()
+      .then(r => {
+        this.set('showEditModal', false)
+      })
+  }
 
   @action
   getNewProject() {
@@ -13,6 +21,13 @@ export default class ProjectListComponent extends Component {
     }
     this.set('editingRecord', this.newRecord)
     this.set('showEditModal', true)
+  }
+
+  @action
+  onCloseModal() {
+    this.editingRecord.rollbackAttributes()
+    this.set('newRecord', null)
+    this.set('showEditModal', false)
   }
 
   @action
@@ -31,14 +46,6 @@ export default class ProjectListComponent extends Component {
 
     this.set('showEditModal', false)
     this.set('newRecord', null)
-  }
-
-  @action
-  deleteRecord() {
-    this.get('editingRecord').destroyRecord()
-      .then(r => {
-        this.set('showEditModal', false)
-      })
   }
 
   willDestroyElement() {

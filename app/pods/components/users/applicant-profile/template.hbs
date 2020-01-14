@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-12 col-md-3 border-right">
       <div class="s-120x120 mb-5">
-        <img class="round wh-100" src="{{profile.user.photo}}" alt="">
+        <img class="round wh-100" src="{{if profile.user.photo profile.user.photo '/images/user.svg'}}" alt="">
       </div>
 
       <ul class="mb-5">
         {{#each-in links as |site link|}}
         {{#if link}}
-        <li class="mb-3">
+        <li class="mb-3 d-flex">
           {{#if (eq site "github")}}
           <i class="fab fa-github font-mds mr-3"></i>
           {{else if (eq site "linkedin")}}
@@ -18,7 +18,7 @@
           {{else if (eq site "portfolio")}}
           <i class="fas fa-globe font-mds mr-3"></i>
           {{/if}}
-          {{link}}
+          <a class="text-ellipses" href="{{link}}" target="blank">{{link}}</a>
         </li>
         {{/if}}
         {{/each-in}}
@@ -130,7 +130,7 @@
     {{/if}}
   </div>
   <div class="col-12 col-md-4">
-    <HackerBlocksStat class="mb-5" />
+    <Users::HackerBlocksStats class="mb-5" />
 
     {{#if profile.applicantProfileSkills.length}}
       <Users::ApplicantProfile::SkillsList class="mb-5" @skills={{profile.applicantProfileSkills}} />

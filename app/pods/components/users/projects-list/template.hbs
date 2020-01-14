@@ -25,11 +25,11 @@
       </div>
       <div class="my-1">{{project.subtitle}}</div>
       <div class="dark-grey">
-        {{moment-format (unix project.startDate) 'YYYY'}} -
+        {{moment-format (unix project.startDate) 'MMM YYYY'}} -
         {{#if project.isCurrent}}
         Current
         {{else}}
-        {{moment-format (unix project.endDate) 'YYYY'}}
+        {{moment-format (unix project.endDate) 'MMM YYYY'}}
         {{/if}}
       </div>
       <p>
@@ -46,10 +46,10 @@
 
 {{#if (and allowEdit showEditModal)}}
 {{#modal-dialog
-    onClose=(action (mut showEditModal) false)
+    onClose=(action "onCloseModal")
     targetAttachment="center"
     translucentOverlay=true
-    containerClass='centered-scrolling-container w-50'
+    containerClass='centered-scrolling-container w-50 mt-3'
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}
@@ -118,8 +118,11 @@
     </div>
   </div>
   <div class="mb-4">
-    <Input @type="checkbox" @checked={{editingRecord.isCurrent}} />
-    <span>Currently Working</span>
+    <label class="input-checkbox checkbox-solid pt-1">
+      <Input @type="checkbox" @checked={{editingRecord.isCurrentSetter}} />
+      Currently Working
+      <span></span>
+    </label>
   </div>
 
   <div class="mb-4">
@@ -141,7 +144,7 @@
             </button>
           </div>
           <div class="li-right">
-            <button class="button-dashed button-orange mr-3" {{action (mut showEditModal) false}}>Cancel</button>
+            <button class="button-dashed button-orange mr-3" {{action "onCloseModal"}}>Cancel</button>
             <button class="button-solid button-orange" 
               {{action (perform saveRecordTask)}} 
               disabled={{and (v-get editingRecord 'isInvalid') showValidationMessages}}>

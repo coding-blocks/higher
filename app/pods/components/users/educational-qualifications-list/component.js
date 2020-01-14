@@ -1,11 +1,30 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 import moment from 'moment';
 import { dropTask } from 'ember-concurrency-decorators';
 
 export default class EducationalQualificationListComponent extends Component {
-  currentYear = +moment().format('YYYY')
+  @service store
+
+  @alias ('fetchCollegesTask.lastSuccessful.value') colleges
+
+  maxEndYear = +moment().format('YYYY') + 6
   showValidationMessages = false
+
+  didReceiveAttrs() {
+    this._super(...arguments)
+    this.fetchCollegesTask.perform()
+  }
+
+  @action
+  deleteRecord() {
+    this.get('editingRecord').destroyRecord()
+      .then(r => {
+        this.set('showEditModal', false)
+      })
+  }
 
   @action
   getNewEducationalQualification() {
@@ -17,13 +36,25 @@ export default class EducationalQualificationListComponent extends Component {
     this.set('showEditModal', true)
   }
 
+  @action 
+  onCloseModal() {
+    this.editingRecord.rollbackAttributes()
+    this.set('newRecord', null)
+    this.set('showEditModal', false)
+  }
+
   @action
   setEditingRecord(Record) {
     this.set('editingRecord', Record)
     this.set('showEditModal', true)
   }
 
-  @dropTask saveRecordTask = function* () {
+  @dropTask fetchCollegesTask = function *() {
+    let colleges = yield this.store.findAll('college')
+    return colleges.map(c => c.name)
+  }
+
+  @dropTask saveRecordTask = function *() {
     if (this.editingRecord.validations.isInvalid) {
       this.set('showValidationMessages', true)
       return
@@ -33,14 +64,6 @@ export default class EducationalQualificationListComponent extends Component {
 
     this.set('showEditModal', false)
     this.set('newRecord', null)
-  }
-
-  @action
-  deleteRecord() {
-    this.get('editingRecord').destroyRecord()
-      .then(r => {
-        this.set('showEditModal', false)
-      })
   }
 
   willDestroyElement() {

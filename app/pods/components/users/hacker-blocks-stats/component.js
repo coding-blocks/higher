@@ -4,17 +4,17 @@ import { alias } from '@ember/object/computed';
 import { dropTask } from 'ember-concurrency-decorators';
 
 export default class HackerBlocksStatsComponent extends Component {
-  @service api 
+  @service api
   @service router
 
-  @alias ('fetchHackerBlocksStatsTask.lastSuccessful.value') stats
+  @alias('fetchHackerBlocksStatsTask.lastSuccessful.value') stats
 
   async didReceiveAttrs() {
-    this._super(...arguments) 
+    this._super(...arguments)
     this.fetchHackerBlocksStatsTask.perform()
   }
-  
-  @dropTask fetchHackerBlocksStatsTask = function *() {
+
+  @dropTask fetchHackerBlocksStatsTask = function* () {
     const route = this.router.currentRoute
     return yield this.api.request(`/applicant-profiles/user/${route.params.user_id}/hacker-blocks-performance`)
   }

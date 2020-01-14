@@ -49,9 +49,21 @@ export default DS.Model.extend(Validations, {
   subtitle: DS.attr(),
   startYear: DS.attr(),
   endYear: DS.attr(),
-  isCurrent: DS.attr(),
   location: DS.attr(),
   type: DS.attr(),
   description: DS.attr(),
+  isCurrent: DS.attr('boolean'),
+  isCurrentSetter: Ember.computed('isCurrent', {
+    get() {
+      return this.isCurrent
+    },
+    set(key, val) {
+      if (val) {
+        this.set('endYear', null)
+      }
+      this.set('isCurrent', val)
+      return val
+    }
+  }),
   applicantProfile: DS.belongsTo('applicant-profile')
 });

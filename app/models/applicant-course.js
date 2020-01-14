@@ -74,14 +74,14 @@ export default DS.Model.extend(Validations, {
       }
     },
     set(key, val) {
+      this.set('name', null)
+      this.set('logo', null)
       switch (val) {
         case "Coding Blocks": this.set('organizationType', 'codingblocks')
                               this.set('organizationName', 'Coding Blocks')
                               break;
         case "Other": this.set('organizationType', 'other')
                       this.set('organizationName', null)
-                      this.set('name', null)
-                      this.set('logo', null)
                       break;
       }
       return val

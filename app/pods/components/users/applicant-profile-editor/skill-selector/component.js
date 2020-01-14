@@ -22,6 +22,26 @@ export default class SkillSelectorComponent extends Component {
     return yield this.store.query('skill', { filter: { status: 'published' } })
   }
 
+  @dropTask takeTestTask = function *(applicantProfileSkill) {
+    try {
+      this.set('showSkillTestError', false)
+      this.set('skillTestErrorMsg', '')
+      let newApplicantProfileSkill = yield this.store.queryRecord('applicant-profile-skill', {
+        custom: {
+          ext: 'url',
+          url: `${applicantProfileSkill.get('id')}/take-test`
+        }
+      })
+
+      window.location = ENV.HACKER_BLOCKS_PUBLIC_URL + '/app/contests/' + newApplicantProfileSkill.hackerBlocksContestId
+    } catch(err) {
+      if (err.errors[0].status == '400') {
+        this.set('showSkillTestError', true)
+        this.set('skillTestErrorMsg', `You have given all tests for ${applicantProfileSkill.skill.get('name')} skill.`)
+      }
+    }
+  }
+
   @computed('profile')
   get verifiedApplicantProfileSkills() {
     return this.profile.applicantProfileSkills.filter(skill => skill.verified)
@@ -30,24 +50,5 @@ export default class SkillSelectorComponent extends Component {
   @computed('profile')
   get unverifiedApplicantProfileSkills() {
     return this.profile.applicantProfileSkills.filter(skill => !skill.verified)
-  }
-
-  @action
-  takeTest(applicantProfileSkill) {
-    this.set('showSkillTestError', false)
-    this.set('skillTestErrorMsg', '')
-    this.store.queryRecord('applicant-profile-skill', {
-      custom: {
-        ext: 'url',
-        url: `${applicantProfileSkill.get('id')}/take-test`
-      }
-    }).then(result => {
-      window.location = ENV.HACKER_BLOCKS_PUBLIC_URL + '/app/contests/' + result.hackerBlocksContestId
-    }).catch(err => {
-      if (err.errors[0].status == '400') {
-        this.set('showSkillTestError', true)
-        this.set('skillTestErrorMsg', `You have given all tests for ${applicantProfileSkill.skill.get('name')} skill.`)
-      }
-    })
   }
 }

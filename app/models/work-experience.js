@@ -53,7 +53,7 @@ export default DS.Model.extend(Validations, {
     },
     set(key, val) {
       this.set('startDate', moment(val).unix())
-      return moment(val)
+      return moment(val).toDate()
     }
   }),
   endDateString: Ember.computed('endDate','isCurrent', {
@@ -66,10 +66,22 @@ export default DS.Model.extend(Validations, {
       } else {
         this.set('endDate', moment(val).unix())
       }
-      return moment(val)
+      return moment(val).toDate()
     }
   }),
   isCurrent: DS.attr(),
+  isCurrentSetter: Ember.computed('isCurrent', {
+    get() {
+      return this.isCurrent
+    },
+    set(key, val) {
+      if (val) {
+        this.set('endDate', null)
+      }
+      this.set('isCurrent', val)
+      return val
+    }
+  }),
   location:DS.attr(),
   type:DS.attr(),
   description:DS.attr(),

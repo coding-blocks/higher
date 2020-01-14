@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { later } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import getCourseTypes from 'hiring-front/utils/course-types';
 import { dropTask } from 'ember-concurrency-decorators';
@@ -32,10 +31,6 @@ export default class ApplicantCourseEditor extends Component {
     this._super(...arguments) 
     
     this.fetchOnlineCoursesTask.perform();
-    
-    //because no two updates in a single render
-    // later(() => {
-      // }, 0)
   }
     
   getNewApplicantCourse() {
@@ -66,7 +61,7 @@ export default class ApplicantCourseEditor extends Component {
   @action
   setOnlineCourse(onlineCourse) {
     this.set('selectedOnlineCourse', onlineCourse)
-    
+
     const editingRecord = this.get('editingRecord')
     editingRecord.set('name', onlineCourse.get('title'))
     editingRecord.set('logo', onlineCourse.get('logo'))

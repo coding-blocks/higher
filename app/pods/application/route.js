@@ -22,10 +22,13 @@ export default Route.extend(ApplicationRouteMixin, {
       const { code } = transition.to.queryParams
       if (code) {
         this.get('session').authenticate('authenticator:jwt', { identification: code, password: code, code})
-        .then(r => {
-          this.currentUser.load()
-        })
       }
+    }
+  },
+
+  model() {
+    if(this.session.isAuthenticated) {
+      return this.currentUser.load()
     }
   }
 });
