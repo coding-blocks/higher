@@ -75,6 +75,24 @@ const Validations = buildValidations({
 export default DS.Model.extend(Validations, {
   about: DS.attr(),
   photo: DS.attr(),
+  githubLink: DS.attr(),
+  stackoverflowLink: DS.attr(),
+  linkedinLink: DS.attr(),
+  portfolioLink: DS.attr(),
+  // links: Ember.computed('githubLink', 'stackoverflowLink', 'linkedinLink', 'portfolioLink', {
+  //   get() {
+  //     let links = {
+  //       github: this.githubLink,
+  //       stackoverflow: this.stackoverflowLink,
+  //       linkedin: this.linkedinLink,
+  //       portfolio: this.portfolioLink,
+  //     }
+  //     return JSON.stringify(links)
+  //   },
+  //   set(key, val) {
+
+  //   }
+  // }),PGPASSWORD=udpdg9xdltmsrgs1 psql -U doadmin -h db-postgresql-blr1-do-user-2270826-0.db.ondigitalocean.com -p 25060 -d oneauthdb --set=sslmode=require
   links: DS.attr(),
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),

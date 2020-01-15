@@ -18,7 +18,7 @@ const Validations = buildValidations({
     validators: [
       validator('presence', {
         presence: true,
-        message: 'Field of Study cannot be empty'
+        message: 'Branch cannot be empty'
       })
     ]
   },
@@ -62,6 +62,17 @@ export default DS.Model.extend(Validations, {
         this.set('endYear', null)
       }
       this.set('isCurrent', val)
+      return val
+    }
+  }),
+  isOtherCollege: DS.attr(),
+  isOtherCollegeSetter: Ember.computed('isOtherCollege', {
+    get() {
+      return this.isOtherCollege
+    },
+    set(key, val) {
+      this.set('isOtherCollege', val)
+      this.set('title', null)
       return val
     }
   }),

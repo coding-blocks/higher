@@ -9,6 +9,7 @@ export default class EducationalQualificationListComponent extends Component {
   @service store
 
   @alias ('fetchCollegesTask.lastSuccessful.value') colleges
+  @alias ('fetchBranchesTask.lastSuccessful.value') branches
 
   maxEndYear = +moment().format('YYYY') + 6
   showValidationMessages = false
@@ -16,6 +17,7 @@ export default class EducationalQualificationListComponent extends Component {
   didReceiveAttrs() {
     this._super(...arguments)
     this.fetchCollegesTask.perform()
+    this.fetchBranchesTask.perform()
   }
 
   @action
@@ -47,6 +49,11 @@ export default class EducationalQualificationListComponent extends Component {
   setEditingRecord(Record) {
     this.set('editingRecord', Record)
     this.set('showEditModal', true)
+  }
+
+  @dropTask fetchBranchesTask = function *() {
+    let branches = yield this.store.findAll('branch')
+    return branches.map(c => c.name)
   }
 
   @dropTask fetchCollegesTask = function *() {
