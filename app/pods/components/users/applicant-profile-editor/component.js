@@ -39,7 +39,7 @@ export default class ApplicantProfileEditor extends Component {
 
     if (this.applicantProfile.get('links')) {
       const links = JSON.parse(this.applicantProfile.get('links'))
-      Object.keys(links).map(siteName => this.set(siteName, links[siteName]))
+      Object.keys(links).map(siteName => this.applicantProfile.set(siteName + 'Link', links[siteName]))
     }
   }
 
@@ -51,12 +51,12 @@ export default class ApplicantProfileEditor extends Component {
     return yield this.store.findAll('job-role')
   }
 
-  @computed('github', 'linkedin', 'stackoverflow', 'portfolio')
+  @computed('applicantProfile.githubLink', 'applicantProfile.linkedinLink', 'applicantProfile.stackoverflowLink', 'applicantProfile.portfolioLink')
   get links() {
-    const github = this.github
-    const linkedin = this.linkedin
-    const stackoverflow = this.stackoverflow
-    const portfolio = this.portfolio
+    const github = this.applicantProfile.githubLink
+    const linkedin = this.applicantProfile.linkedinLink
+    const stackoverflow = this.applicantProfile.stackoverflowLink
+    const portfolio = this.applicantProfile.portfolioLink
 
     const links = {
       github,

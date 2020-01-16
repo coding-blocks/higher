@@ -132,14 +132,18 @@
           <div class="d-flex mb-4 pt-2">
             <div class="li-left">Are you a student or Professional?</div>
             <div class="li-right">
-              <input name="student-professional" type="radio" class="mr-2"
-                checked={{applicantProfile.isStudentSetter}}
-                onclick={{action (mut applicantProfile.isStudentSetter) true}} />
-              Student
-              <input name="student-professional" type="radio" class="ml-4 mr-2"
-                checked={{not applicantProfile.isStudentSetter}}
-                onclick={{action (mut applicantProfile.isStudentSetter) false}} />
-              Professional
+              <label for="student">
+                <input id="student" name="student-professional" type="radio" class="mr-2"
+                  checked={{applicantProfile.isStudentSetter}}
+                  onclick={{action (mut applicantProfile.isStudentSetter) true}} />
+                Student
+              </label>
+              <label for="professional" class="pl-4">
+                <input id="professional" name="student-professional" type="radio" class="mr-2"
+                  checked={{not applicantProfile.isStudentSetter}}
+                  onclick={{action (mut applicantProfile.isStudentSetter) false}} />
+                Professional
+              </label>
             </div>
           </div>
           {{#unless applicantProfile.isStudent}}
@@ -195,16 +199,36 @@
             {{#each-in links as |site link|}}
             {{#if (eq site "github")}}
             <i class="fab fa-github mr-3"></i>Github
-            <Input @type="url" class="input-text my-3" @value={{github}} />
+            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.githubLink}} />
+            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='githubLink' as |validation|>
+              {{#if (and validation.isInvalid showValidationMessages)}}
+                <span class="red card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
             {{else if (eq site "linkedin")}}
             <i class="fab fa-linkedin-in mr-3"></i>Linkedin
-            <Input @type="url" class="input-text my-3" @value={{linkedin}} />
+            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.linkedinLink}} />
+            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='linkedinLink' as |validation|>
+              {{#if (and validation.isInvalid showValidationMessages)}}
+                <span class="red card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
             {{else if (eq site "stackoverflow")}}
             <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
-            <Input @type="url" class="input-text my-3" @value={{stackoverflow}} />
+            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.stackoverflowLink}} />
+            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='stackoverflowLink' as |validation|>
+              {{#if (and validation.isInvalid showValidationMessages)}}
+                <span class="red card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
             {{else}}
             <i class="fas fa-globe mr-3"></i>Website/Portfolio
-            <Input @type="url" class="input-text my-3" @value={{portfolio}} />
+            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.portfolioLink}} />
+            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='portfolioLink' as |validation|>
+              {{#if (and validation.isInvalid showValidationMessages)}}
+                <span class="red card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
             {{/if}}
       
             {{/each-in}}
