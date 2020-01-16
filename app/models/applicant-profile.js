@@ -74,7 +74,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -82,7 +83,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -90,7 +92,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -98,7 +101,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
