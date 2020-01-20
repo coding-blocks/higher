@@ -11,6 +11,7 @@ export default class SkillSelectorComponent extends Component {
   @alias ('fetchSkillsTask.lastSuccessful.value') skills
 
   showSkillTestError = false
+  showSkillSelectorModal = false
   skillTestErrorMsg = ''
   
   didReceiveAttrs() {
@@ -18,8 +19,46 @@ export default class SkillSelectorComponent extends Component {
     this.fetchSkillsTask.perform()
   }
 
+  @action
+  preventDefault(e) {
+    e.preventDefault()
+  }
+
+  @action 
+  removeSkill(skill) {
+    this.profile.skills.removeObject(skill);
+  }
+
+  @computed('profile.applicantProfileSkills')
+  get verifiedApplicantProfileSkills() {
+    return this.profile.applicantProfileSkills.filter(aps => aps.verified && aps.skill.get('isVerifiable'))
+  }
+
+  @computed('profile.applicantProfileSkills')
+  get unverifiedApplicantProfileSkills() {
+    return this.profile.applicantProfileSkills.filter(aps => !aps.verified || !aps.skill.get('isVerifiable'))
+  }
+
   @dropTask fetchSkillsTask = function *() {
-    return yield this.store.query('skill', { filter: { status: 'published' } })
+    return yield this.store.query('skill', { filter: { "status": 'published' } })
+  }
+
+  @dropTask saveSkillsTask = function *() {
+    try {
+      yield this.saveApplicantProfileTask.perform(2)
+      let newApplicantProfileSkills = yield this.store.query('applicant-profile-skill', {
+        custom: {
+          ext: 'url',
+          url: `${this.profile.id}/applicant-profile`
+        }
+      })
+      
+      this.set('profile.applicantProfileSkills', newApplicantProfileSkills)
+
+    } catch(err) {
+      console.log(err)
+    }
+    this.set('showSkillSelectorModal', false)
   }
 
   @dropTask takeTestTask = function *(applicantProfileSkill) {
@@ -40,15 +79,5 @@ export default class SkillSelectorComponent extends Component {
         this.set('skillTestErrorMsg', `You have given all tests for ${applicantProfileSkill.skill.get('name')} skill.`)
       }
     }
-  }
-
-  @computed('profile')
-  get verifiedApplicantProfileSkills() {
-    return this.profile.applicantProfileSkills.filter(skill => skill.verified)
-  }
-
-  @computed('profile')
-  get unverifiedApplicantProfileSkills() {
-    return this.profile.applicantProfileSkills.filter(skill => !skill.verified)
   }
 }

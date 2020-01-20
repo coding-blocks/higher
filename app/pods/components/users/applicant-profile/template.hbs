@@ -37,9 +37,6 @@
             <h2 class="mb-3">
               {{profile.user.firstname}}
               {{profile.user.lastname}}
-              {{#unless profile.isReviewed}}
-              <span class="tag tag-orange ml-3">Awaiting Verification</span>
-              {{/unless}}
             </h2>
             {{#unless profile.isStudent}}
               <div class="d-flex">

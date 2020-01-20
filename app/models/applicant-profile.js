@@ -10,7 +10,6 @@ const Validations = buildValidations({
       validator('belongs-to'),
       validator('presence', {
         presence: true,
-        message: 'Its good to be a vagabond, but we need a location.'
       })
     ]
   },
@@ -37,6 +36,7 @@ const Validations = buildValidations({
     description: 'Current CTC',
     validators: [
       validator('number', {
+        lt: 100,
         gt: 0
       }),
       validator('presence', {
@@ -50,31 +50,31 @@ const Validations = buildValidations({
     description: 'Expected CTC',
     validators: [
       validator('number', {
-        gt: 0
+        gt: 0,
+        lt: 100,
       }),
       validator('presence', {
-        presence: Ember.computed('model.isStudent', function() {
-          return !this.get('model.isStudent')
-        }).volatile()
+        presence: true
       })
     ]
   },
   joiningDate: {
     description: 'Joining Date',
     validators: [
-      validator('date'),
       validator('presence', {
         presence: Ember.computed('model.isStudent', function() {
           return !this.get('model.isStudent')
         }).volatile()
-      })
+      }),
+      validator('date')
     ]
   },
   githubLink: {
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -82,7 +82,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -90,7 +91,8 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
@@ -98,10 +100,19 @@ const Validations = buildValidations({
     description: 'Link',
     validators: [
       validator('format', {
-        type: 'url'
+        type: 'url',
+        allowBlank: true,
       })
     ]
   },
+  graduationYear: {
+    description: 'Graduation Year',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  }
 })
 
 export default DS.Model.extend(Validations, {
@@ -112,6 +123,7 @@ export default DS.Model.extend(Validations, {
   linkedinLink: DS.attr(),
   portfolioLink: DS.attr(),
   links: DS.attr(),
+  graduationYear: DS.attr(),
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),
   expectedCtc: DS.attr('number'),
@@ -152,7 +164,6 @@ export default DS.Model.extend(Validations, {
     set(key, val) {
       if(val) {
         this.set('currentCtc', null)
-        this.set('expectedCtc', null)
         this.set('joiningDate', null)
       }
       this.set('isStudent', val)

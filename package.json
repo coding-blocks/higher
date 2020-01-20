@@ -68,6 +68,6 @@
     "node": "8.* || >= 10.*"
   },
   "dependencies": {
-    "@coding-blocks/motley": "^0.4.10"
+    "@coding-blocks/motley": "^0.6.0"
   }
 }

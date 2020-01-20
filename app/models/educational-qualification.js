@@ -36,9 +36,7 @@ const Validations = buildValidations({
     validators: [
       validator('date'),
       validator('presence', {
-        presence: Ember.computed('model.isCurrent', function () {
-          return !this.get('model.isCurrent')
-        })
+        presence: true
       })
     ]
   }
@@ -53,18 +51,6 @@ export default DS.Model.extend(Validations, {
   type: DS.attr(),
   description: DS.attr(),
   isCurrent: DS.attr('boolean'),
-  isCurrentSetter: Ember.computed('isCurrent', {
-    get() {
-      return this.isCurrent
-    },
-    set(key, val) {
-      if (val) {
-        this.set('endYear', null)
-      }
-      this.set('isCurrent', val)
-      return val
-    }
-  }),
   isOtherCollege: DS.attr(),
   isOtherCollegeSetter: Ember.computed('isOtherCollege', {
     get() {
