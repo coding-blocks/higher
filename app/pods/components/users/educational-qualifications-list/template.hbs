@@ -23,7 +23,7 @@
         </button>
         {{/if}}
       </div>
-      <div class="my-1">{{educationalQualification.subtitle}}</div>
+      <div class="my-2">{{educationalQualification.subtitle}}</div>
       <div class="dark-grey">
         {{educationalQualification.startYear}} -
         {{#if educationalQualification.isCurrent}}
@@ -32,13 +32,13 @@
         {{educationalQualification.endYear}}
         {{/if}}
       </div>
-      <p>
+      <p class="word-break">
         {{educationalQualification.description}}
       </p>
     </div>
     {{/each}}
     {{else}}
-    No Educational Qualifications Added
+      No Educational Qualifications Added
     {{/if}}
 
   </div>
@@ -127,38 +127,40 @@
             {{/if}}
           </WFormValidations>
         </div>
-        <select name="start_year" onchange={{action (mut editingRecord.startYear) value="target.value"}}>
-          <option selected disabled>Start Year</option>
-          {{#each (range 1990 maxEndYear) as |year|}}
-            <option value="{{year}}" selected={{lite-eq editingRecord.startYear year}}>{{year}}</option>
-          {{/each}}
+        <select class="input-text w-auto" name="start_year" 
+          onchange={{action (mut editingRecord.startYear) 
+          value="target.value"}}>
+            <option selected disabled>Start Year</option>
+            {{#each (range 1990 maxEndYear) as |year|}}
+              <option value="{{year}}" selected={{lite-eq editingRecord.startYear year}}>{{year}}</option>
+            {{/each}}
         </select>
       </div>
     </div>
     <div class="col-12 col-md-6">
-      {{#unless editingRecord.isCurrent}}
       <div class="font-sm d-flex justify-content-between">
         <div>
-          End Year <span class="red">*</span>
+          {{if editingRecord.isCurrent 'Expected End Year' 'End Year'}} <span class="red">*</span>
           <WFormValidations class="mt-1" @model={{editingRecord}} @attributeName='endYear' as |validation|>
             {{#if (and validation.isInvalid showValidationMessages)}}
               <span class="red card-md">{{validation.message}}</span>
             {{/if}}
           </WFormValidations>
         </div>
-        <select name="end_year" onchange={{action (mut editingRecord.endYear) value="target.value"}}>
-          <option selected disabled>End Year</option>
-          {{#each (range 1990 maxEndYear) as |year|}}
-          <option value="{{year}}" selected={{lite-eq editingRecord.endYear year}}>{{year}}</option>
-          {{/each}}
+        <select class="input-text w-auto" name="end_year" 
+          onchange={{action (mut editingRecord.endYear) 
+          value="target.value"}}>
+            <option selected disabled>End Year</option>
+            {{#each (range 1990 maxEndYear) as |year|}}
+            <option value="{{year}}" selected={{lite-eq editingRecord.endYear year}}>{{year}}</option>
+            {{/each}}
         </select>
       </div>
-      {{/unless}}
     </div>
   </div>
   <div class="mb-4">
     <label class="input-checkbox checkbox-solid pt-1">
-      <Input @type="checkbox" @checked={{editingRecord.isCurrentSetter}} />
+      <Input @type="checkbox" @checked={{editingRecord.isCurrent}} />
         Currently Attending
 
       <span></span>
@@ -174,9 +176,11 @@
     
       <div class="d-flex">
         <div class="li-left">
-          <button class="red" {{action 'deleteRecord'}}>
-            <i class="fas fa-trash pr-3"></i>Delete
-          </button>
+          {{#if editingRecord.id}}
+            <button class="red" {{action 'deleteRecord'}}>
+              <i class="fas fa-trash pr-3"></i>Delete
+            </button>
+          {{/if}}
         </div>
         <div class="li-right">
           <button class="button-dashed button-orange mr-3" {{action "onCloseModal"}}>Cancel</button>

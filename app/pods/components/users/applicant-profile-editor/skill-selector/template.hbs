@@ -1,13 +1,3 @@
-<PowerSelectMultiple 
-  @searchEnabled={{true}} 
-  @searchField={{"name"}} 
-  @options={{skills}}
-  @selected={{profile.skills}} 
-  @placeholder="Add Skills"
-  @onChange={{action (mut profile.skills)}} as |skill|>
-  {{skill.name}}
-</PowerSelectMultiple>
-
 <div class="row mt-5">
   <div class="col-12 col-md-6">
     <div class="border-card">
@@ -45,7 +35,13 @@
   </div>
   <div class="col-12 col-md-6">
     <div class="border-card">
-      <h5>Non Verified Skills</h5>
+      <div class="d-flex justify-content-between align-items-center">
+        <h5>Non Verified Skills</h5>
+        <button class="button-solid button-orange" {{action (mut showSkillSelectorModal) true}}>
+          Add New Skills
+        </button>
+      </div>
+
       <div class="divider-h my-3"></div>
 
       {{#if unverifiedApplicantProfileSkills.length}}
@@ -78,3 +74,45 @@
     </div>
   </div>
 </div>
+
+{{#if showSkillSelectorModal}}
+  {{#modal-dialog
+    onClose=(action (perform saveSkillsTask))
+    targetAttachment="none"
+    translucentOverlay=true
+    containerClass='centered-scrolling-container w-50 mt-3 p-5'
+    overlayClass='centered-scrolling-overlay'
+    wrapperClass='centered-scrolling-wrapper'
+  }}
+
+    <PowerSelectMultiple 
+      @searchEnabled={{true}} 
+      @searchField={{"name"}} 
+      @options={{skills}} 
+      @selected={{profile.skills}}
+      @placeholder="Select Skills" 
+      @triggerComponent={{component 'trigger-component'}}
+      @onChange={{action (mut profile.skills)}} as |skill|>
+      <input 
+        type="checkbox" 
+        onclick={{action "preventDefault"}} 
+        checked={{includes profile.skills skill}} />
+      {{skill.name}}
+    </PowerSelectMultiple>
+
+    <div class="divider-h my-4"></div>
+
+    {{#each profile.skills as |skill|}}
+      <span class="pointer pill-dashed mr-2 mt-2" {{action 'removeSkill' skill}}>{{skill.name}} &#10005;</span>
+    {{/each}}
+
+    <div class="d-flex justify-content-end">
+      <button class="button-solid button-orange"
+        {{action (perform saveSkillsTask)}}
+        disabled={{saveSkillsTask.isRunning}}>
+        Save Skills
+      </button>
+    </div>
+
+  {{/modal-dialog}}
+{{/if}}

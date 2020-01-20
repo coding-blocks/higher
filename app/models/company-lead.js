@@ -12,6 +12,7 @@ const Validations = buildValidations({
   mobile: [
     validator('format', {
       type: 'phone',
+      message: 'Mobile no. should be 10 digit number'
     }),
     validator('presence', {
       presence: true,

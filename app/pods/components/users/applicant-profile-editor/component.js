@@ -3,6 +3,7 @@ import { dropTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
 import { action, computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
+import moment from 'moment';
 
 export default class ApplicantProfileEditor extends Component {
   @service store
@@ -11,10 +12,8 @@ export default class ApplicantProfileEditor extends Component {
   @alias('fetchLocationsTask.lastSuccessful.value') locations
   @alias('fetchJobRolesTask.lastSuccessful.value') jobRoles
 
-  github = ''
-  linkedin = ''
-  stackoverflow = ''
-  portfolio = ''
+  today = new Date()
+  maxEndYear = +moment().format('YYYY') + 6
 
   pages = [
     {
@@ -41,6 +40,16 @@ export default class ApplicantProfileEditor extends Component {
       const links = JSON.parse(this.applicantProfile.get('links'))
       Object.keys(links).map(siteName => this.applicantProfile.set(siteName + 'Link', links[siteName]))
     }
+  }
+
+  @action
+  preventDefault(e) {
+    e.preventDefault()
+  }
+
+  @action 
+  removeLocation (location) {
+    this.applicantProfile.locations.removeObject(location)
   }
 
   @dropTask fetchLocationsTask = function* () {
