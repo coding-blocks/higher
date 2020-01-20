@@ -103,7 +103,8 @@
     <div class="divider-h my-4"></div>
 
     {{#each profile.skills as |skill|}}
-      <span class="pointer pill-dashed mr-2 mt-2" {{action 'removeSkill' skill}}>{{skill.name}} &#10005;</span>
+      <span class="pointer pill-dashed mr-2 mt-2">{{skill.name}}
+      <button {{action 'removeSkill' skill}}>&#10005;</button> </span>
     {{/each}}
 
     <div class="d-flex justify-content-end">

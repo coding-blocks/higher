@@ -1,6 +1,10 @@
 @import "ember-modal-dialog/ember-modal-structure.css";
 @import "ember-modal-dialog/ember-modal-appearance.css";
 
+body {
+  padding-top: 62px;
+}
+
 .s-15x15{
   width: 15px;
   height: 15px
@@ -41,12 +45,20 @@ body.centered-modal-showing {
   box-shadow: 0px 4px 25px 4px rgba(0,0,0,0.30);
 }
 
+.ember-power-select-trigger{
+  background: #f3f3f3;
+  border: none;
+  height: 40px;
+  padding: 8px;
+  border-radius: 0;
+}
+
 .input-text {
   height: 40px;
   border-radius: none;
-  /* width: auto; */
+  background-color: #f3f3f3;
 }
 
-.w-auto {
-  width: auto !important;
+.bg-faded {
+  background-color: #e5e5e5 !important;
 }
