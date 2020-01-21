@@ -53,6 +53,10 @@ body.centered-modal-showing {
   border-radius: 0;
 }
 
+.ember-power-select-placeholder {
+  color: #333333;
+}
+
 .input-text {
   height: 40px;
   border-radius: none;
