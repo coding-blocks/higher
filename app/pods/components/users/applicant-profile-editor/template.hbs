@@ -76,7 +76,7 @@
               @selected={{applicantProfile.jobRoles}}
               @options={{jobRoles}} as |selector|>
               {{#each jobRoles as |jobRole|}}
-                <label class="input-checkbox checkbox-solid pt-1 mr-4 mt-2 display-inline-block">
+                <label class="input-checkbox checkbox-solid pt-1 mr-4 mt-3 display-inline-block">
                   <input type="checkbox" 
                     onclick={{action selector.changeSelected jobRole}}
                     checked={{includes applicantProfile.jobRoles jobRole}} />
@@ -93,102 +93,101 @@
             </WFormValidations>
           </div>
 
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">Where are you currently located? <span class="red">*</span></div>
-            <div class="li-right">
-              <div>
-                <PowerSelect 
-                  @searchEnabled={{true}} 
-                  @searchField={{"name"}}
-                  @options={{locations}} 
-                  @selected={{applicantProfile.currentLocation}}
-                  @placeholder="Select Location" 
-                  @onChange={{action (mut applicantProfile.currentLocation)}} as
-                  |location|>
-                  {{location.name}}
-                </PowerSelect>
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentLocation' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">Where are you currently located? <span class="red">*</span></div>
+            <div class="col-12 col-md-6">          
+              <PowerSelect 
+                @searchEnabled={{true}} 
+                @searchField={{"name"}}
+                @options={{locations}} 
+                @selected={{applicantProfile.currentLocation}}
+                @placeholder="Select Location" 
+                @onChange={{action (mut applicantProfile.currentLocation)}} as
+                |location|>
+                {{location.name}}
+              </PowerSelect>
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentLocation' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
+                  <span class="red card-md">{{validation.message}}</span>
+                {{/if}}
+              </WFormValidations>
             </div>
           </div>
 
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">
               <div>
                 Desired cities to work in? <span class="red">*</span>
                 <br>
                 {{#each applicantProfile.locations as |location|}}
-                  <span class="pointer pill-dashed mt-2 mr-2" {{action 'removeLocation' location}}>{{location.name}} &#10005;</span>
+                  <span class="pointer pill-dashed mt-2 mr-2">{{location.name}} 
+                  <button {{action 'removeLocation' location}}>&#10005;</button></span>
                 {{/each}}
               </div>
             </div>
-            <div class="li-right">
-              <div>
-                <PowerSelectMultiple 
-                  @searchEnabled={{true}} 
-                  @searchField={{"name"}}
-                  @options={{locations}}
-                  @selected={{applicantProfile.locations}} 
-                  @placeholder="Select Location"
-                  @triggerComponent={{component 'trigger-component'}}
-                  @onChange={{action (mut applicantProfile.locations)}} as |location|>
-                  <input type="checkbox" 
-                    onclick={{action "preventDefault"}} 
-                    checked={{includes applicantProfile.locations location}} />
-                  {{location.name}}
-                </PowerSelectMultiple>
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='locations' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">Your Graduation Year <span class="red">*</span></div>
-            <div class="li-right">
-              <div>
-                <select class="input-text" name="graduation_year" 
-                  onchange={{action (mut applicantProfile.graduationYear) 
-                  value="target.value"}}>
-                    <option selected disabled>Graduation Year</option>
-                    {{#each (range 2000 maxEndYear) as |year|}}
-                      <option value="{{year}}" selected={{lite-eq applicantProfile.graduationYear year}}>{{year}}</option>
-                    {{/each}}
-                </select>
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='graduationYear' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
+            <div class="col-12 col-md-6">              
+              <PowerSelectMultiple 
+                @searchEnabled={{true}} 
+                @searchField={{"name"}}
+                @options={{locations}}
+                @selected={{applicantProfile.locations}} 
+                @placeholder="Select Location"
+                @triggerComponent={{component 'trigger-component'}}
+                @onChange={{action (mut applicantProfile.locations)}} as |location|>
+                <input type="checkbox" 
+                  onclick={{action "preventDefault"}} 
+                  checked={{includes applicantProfile.locations location}} />
+                {{location.name}}
+              </PowerSelectMultiple>
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='locations' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
                   <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
+                {{/if}}
+              </WFormValidations>        
             </div>
           </div>
 
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">What is your minimum expected CTC? <span class="red">*</span></div>
-            <div class="li-right">
-              <div>
-                <Input @type="text" class="input-text t-align-r" @value={{applicantProfile.expectedCtcString}} />
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='expectedCtc' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">Your Graduation Year <span class="red">*</span></div>
+            <div class="col-12 col-md-6">          
+              <select class="input-text" name="graduation_year" 
+                onchange={{action (mut applicantProfile.graduationYear) 
+                value="target.value"}}>
+                  <option selected disabled>Graduation Year</option>
+                  {{#each (range 2000 maxEndYear) as |year|}}
+                    <option value="{{year}}" selected={{lite-eq applicantProfile.graduationYear year}}>{{year}}</option>
+                  {{/each}}
+              </select>
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='graduationYear' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
                   <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
+                {{/if}}
+              </WFormValidations>
+              
             </div>
           </div>
 
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">Are you a student or Professional?</div>
-            <div class="li-right">
-              <label for="student">
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">What is your minimum expected CTC? <span class="red">*</span></div>
+            <div class="col-12 col-md-6">
+              <div class="d-flex">
+                <Input @type="text" class="input-text t-align-l" 
+                  @value={{applicantProfile.expectedCtcString}}
+                  @placeholder="Enter amount here" />
+                <span class="all-center bg-faded px-3">lpa</span>
+              </div>
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='expectedCtc' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
+                  <span class="red card-md">{{validation.message}}</span>
+                {{/if}}
+              </WFormValidations>
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">Are you a student or Professional?</div>
+            <div class="col-12 col-md-6">
+              <label for="student" class="pl-4">
                 <input id="student" name="student-professional" type="radio" class="mr-2"
                   checked={{applicantProfile.isStudentSetter}}
                   onclick={{action (mut applicantProfile.isStudentSetter) true}} />
@@ -203,34 +202,38 @@
             </div>
           </div>
           {{#unless applicantProfile.isStudent}}
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">What is your current CTC? <span class="red">*</span></div>
-            <div class="li-right">
-              <div>
-                <Input @type="text" class="input-text t-align-r" @value={{applicantProfile.currentCtcString}} required />
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentCtc'as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">What is your current CTC? <span class="red">*</span></div>
+            <div class="col-12 col-md-6">  
+              <div class="d-flex">
+                <Input 
+                  @type="text" 
+                  class="input-text t-align-l" 
+                  @value={{applicantProfile.currentCtcString}}
+                  @placeholder="Enter amount here" required />
+                <span class="all-center bg-faded px-3">lpa</span>
+              </div>            
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentCtc'as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
+                  <span class="red card-md">{{validation.message}}</span>
+                {{/if}}
+              </WFormValidations>
             </div>
           </div>
-          <div class="d-flex mb-4 pt-2">
-            <div class="li-left">What is your earliest possible joining dates? <span class="red">*</span></div>
-            <div class="li-right">
-              <div>
-                <PikadayInput 
-                  @class="input-text" 
-                  @value="{{applicantProfile.joiningDateString}}"
-                  @onSelection={{action (mut applicantProfile.joiningDateString)}}
-                  @minDate={{today}} />
-                <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='joiningDate' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              </div>
+
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">What is your earliest possible joining dates? <span class="red">*</span></div>
+            <div class="col-12 col-md-6">            
+              <PikadayInput 
+                @class="input-text t-align-l" 
+                @value="{{applicantProfile.joiningDateString}}"
+                @onSelection={{action (mut applicantProfile.joiningDateString)}}
+                @minDate={{today}} />
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='joiningDate' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
+                  <span class="red card-md">{{validation.message}}</span>
+                {{/if}}
+              </WFormValidations>              
             </div>
           </div>
           {{/unless}}

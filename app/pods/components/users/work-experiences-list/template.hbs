@@ -153,16 +153,16 @@
     <Textarea class="input-textarea w-100" @value={{editingRecord.description}} @rows="7" />
     </div>
     
-      <div class="d-flex">
-        <div class="li-left">
+      <div class="d-flex justify-content-between">
+        <div>
           {{#if editingRecord.id}}
             <button class="red" {{action 'deleteRecord'}}>
               <i class="fas fa-trash pr-3"></i>Delete
             </button>
           {{/if}}
         </div>
-        <div class="li-right">
-          <button class="button-dashed button-orange mr-3" {{action "onCloseModal"}}>Cancel</button>
+        <div>
+          <button class="button-dashed button-orange mr-2" {{action "onCloseModal"}}>Cancel</button>
           <button class="button-solid button-orange" 
             {{action (perform saveRecordTask)}}
             disabled={{and (v-get editingRecord 'isInvalid') showValidationMessages}}>

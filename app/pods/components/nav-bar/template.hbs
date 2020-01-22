@@ -25,7 +25,7 @@
   </div>
   <div class="align-items-center">
     <ul class="right-nav">
-      <li class="top-nav-option px-3 mt-2 d-none d-md-block">
+      {{!-- <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://online.codingblocks.com/courses" target="blank">Courses</a>
       </li>
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
@@ -36,7 +36,7 @@
       </li>
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
-      </li>
+      </li> --}}
       <li class="top-nav-option hoverable px-3 d-md-block d-none">
         {{#if session.isAuthenticated}}
         <div class="img-desc align-items-center font-sm pt-1">
@@ -65,3 +65,4 @@
     </ul>
   </div>
 </div>
+<cb-navbar topalign="right"></cb-navbar>
