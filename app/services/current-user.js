@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 export default Service.extend({
   session: service(),
   store: service(),
+  //type ie. company or applicant
 
   load() {
     const currentUser = this.get('user')

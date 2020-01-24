@@ -56,7 +56,9 @@
               <button class="button-dashed lg button-orange regular" {{action (mut editMode) true}}>&lt; Edit</button>
             </div>
             {{!-- <div>
-              <button class="button-solid lg button-orange">Download as PDF</button>
+              <button class="button-solid lg button-orange"
+                {{action (perform generatePdfTask)}}
+                disabled={{generatePdfTask.isRunning}}>Download as PDF</button>
             </div> --}}
           {{/if}}
         </div>

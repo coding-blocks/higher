@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
-import ENV from 'codingblocks-online/config/environment'
-import { getPublicUrl } from "codingblocks-online/utils/browser"
+import ENV from 'hiring-front/config/environment'
+import { getPublicUrl } from "hiring-front/utils/browser"
 
 
 export default class LoginRoute extends Route {

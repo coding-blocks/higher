@@ -40,7 +40,7 @@ export default class SkillSelectorComponent extends Component {
   }
 
   @dropTask fetchSkillsTask = function *() {
-    return yield this.store.query('skill', { filter: { "status": 'published' } })
+    return yield this.store.query('skill', { filter: { "status =": 'published' } })
   }
 
   @dropTask saveSkillsTask = function *() {

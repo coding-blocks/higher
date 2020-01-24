@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('logout');
   this.route('users', function() {
     this.route('id', { path: '/:user_id'});
+    this.route('me');
   });
   this.route('loading');
   this.route('404', { path: '/*:' });
