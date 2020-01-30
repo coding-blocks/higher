@@ -6,6 +6,12 @@ export default class UsersIdRoute extends Route {
   @service currentUser
   @service session
 
+  queryParams = {
+    job_id: {
+      refreshModel: false
+    }
+  }
+
   afterModel(model) {
     if(!this.userHimself && !model.applicantProfile.id || model.applicantProfile.id == 0) {
       this.transitionTo('index')

@@ -16,6 +16,7 @@ export default class SkillSelectorComponent extends Component {
   
   didReceiveAttrs() {
     this._super(...arguments) 
+    this.set('showTakeTestModal', true)
     this.fetchSkillsTask.perform()
   }
 

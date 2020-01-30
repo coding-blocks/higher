@@ -30,11 +30,31 @@ export default class ApplicantProfileEditor extends Component {
     },
   ]
 
+  @computed('applicantProfile.githubLink', 'applicantProfile.linkedinLink', 'applicantProfile.stackoverflowLink', 'applicantProfile.portfolioLink')
+  get links() {
+    const github = this.applicantProfile.githubLink
+    const linkedin = this.applicantProfile.linkedinLink
+    const stackoverflow = this.applicantProfile.stackoverflowLink
+    const portfolio = this.applicantProfile.portfolioLink
+
+    const links = {
+      github,
+      linkedin,
+      stackoverflow,
+      portfolio
+    }
+
+    this.set('applicantProfile.links', JSON.stringify(links))
+    return links
+  }
+
+
   didReceiveAttrs() {
     this._super(...arguments)
     
     this.fetchLocationsTask.perform()
     this.fetchJobRolesTask.perform()
+    this.setCurrentPage()
 
     if (this.applicantProfile.get('links')) {
       const links = JSON.parse(this.applicantProfile.get('links'))
@@ -60,21 +80,16 @@ export default class ApplicantProfileEditor extends Component {
     return yield this.store.findAll('job-role')
   }
 
-  @computed('applicantProfile.githubLink', 'applicantProfile.linkedinLink', 'applicantProfile.stackoverflowLink', 'applicantProfile.portfolioLink')
-  get links() {
-    const github = this.applicantProfile.githubLink
-    const linkedin = this.applicantProfile.linkedinLink
-    const stackoverflow = this.applicantProfile.stackoverflowLink
-    const portfolio = this.applicantProfile.portfolioLink
+  setCurrentPage() {
+    const step = +this.step
+    const profileCompletion = this.applicantProfile.profileCompletion
+    const totalSteps = 4
+    const stepFromProfileCompletion = profileCompletion / 25
 
-    const links = {
-      github,
-      linkedin,
-      stackoverflow,
-      portfolio
+    if (step >= 1 && step <= totalSteps) {
+      return this.set('currentPage', Math.min(step -1, stepFromProfileCompletion))
     }
 
-    this.set('applicantProfile.links', JSON.stringify(links))
-    return links
+    this.set('currentPage', stepFromProfileCompletion % 4)
   }
 }

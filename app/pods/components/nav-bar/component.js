@@ -7,6 +7,7 @@ export default class NavBarComponent extends Component {
   @service session
   @service currentUser
   @service api
+  @service sidenav
 
   @action 
   toggleHamburgerNav(){

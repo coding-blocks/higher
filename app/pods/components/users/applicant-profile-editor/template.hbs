@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="li-right font-sm">
+      <div class="font-sm">
         {{#unless (eq currentPage 0)}}
         <button class="button-dashed lg button-orange mr-3"
           {{action pager.setCurrentPage (dec pager.currentPage)}}>
@@ -237,6 +237,21 @@
             </div>
           </div>
           {{/unless}}
+
+          <div class="row align-items-center mb-4 pt-2">
+            <div class="col-12 col-md-6">Your resume link <span class="red">*</span></div>
+            <div class="col-12 col-md-6">
+              <div class="d-flex">
+                <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.resumeLink}}
+                  @placeholder="https://drive.google.com/resume.pdf" />
+              </div>
+              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='resumeLink' as |validation|>
+                {{#if (and validation.isInvalid showValidationMessages)}}
+                <span class="red card-md">{{validation.message}}</span>
+                {{/if}}
+              </WFormValidations>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-4">
@@ -246,7 +261,9 @@
             {{#each-in links as |site link|}}
             {{#if (eq site "github")}}
             <i class="fab fa-github mr-3"></i>Github
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.githubLink}} />
+            <Input @type="url" class="input-text mt-3" 
+              @value={{applicantProfile.githubLink}} 
+              @placeholder="https://github.com/user"/>
             <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='githubLink' as |validation|>
               {{#if (and validation.isInvalid showValidationMessages)}}
                 <span class="red card-md">{{validation.message}}</span>
@@ -254,7 +271,9 @@
             </WFormValidations>
             {{else if (eq site "linkedin")}}
             <i class="fab fa-linkedin-in mr-3"></i>Linkedin
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.linkedinLink}} />
+            <Input @type="url" class="input-text mt-3" 
+              @value={{applicantProfile.linkedinLink}} 
+              @placeholder="https://linkedin.com/user"/>
             <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='linkedinLink' as |validation|>
               {{#if (and validation.isInvalid showValidationMessages)}}
                 <span class="red card-md">{{validation.message}}</span>
@@ -262,7 +281,9 @@
             </WFormValidations>
             {{else if (eq site "stackoverflow")}}
             <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.stackoverflowLink}} />
+            <Input @type="url" class="input-text mt-3" 
+              @value={{applicantProfile.stackoverflowLink}} 
+              @placeholder="https://stackoverflow.com/user"/>
             <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='stackoverflowLink' as |validation|>
               {{#if (and validation.isInvalid showValidationMessages)}}
                 <span class="red card-md">{{validation.message}}</span>
@@ -270,7 +291,9 @@
             </WFormValidations>
             {{else}}
             <i class="fas fa-globe mr-3"></i>Website/Portfolio
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.portfolioLink}} />
+            <Input @type="url" class="input-text mt-3" 
+              @value={{applicantProfile.portfolioLink}} 
+              @placeholder="https://abc.com"/>
             <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='portfolioLink' as |validation|>
               {{#if (and validation.isInvalid showValidationMessages)}}
                 <span class="red card-md">{{validation.message}}</span>

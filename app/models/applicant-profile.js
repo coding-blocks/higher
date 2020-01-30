@@ -112,6 +112,17 @@ const Validations = buildValidations({
         presence: true
       })
     ]
+  },
+  resumeLink: {
+    description: 'Resume Link',
+    validators: [
+      validator('format', {
+        type: 'url'
+      }),
+      validator('presence', {
+        presence: true
+      })
+    ]
   }
 })
 
@@ -123,7 +134,8 @@ export default DS.Model.extend(Validations, {
   linkedinLink: DS.attr(),
   portfolioLink: DS.attr(),
   links: DS.attr(),
-  graduationYear: DS.attr(),
+  graduationYear: DS.attr('number'),
+  resumeLink: DS.attr(),
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),
   expectedCtc: DS.attr('number'),
@@ -180,5 +192,6 @@ export default DS.Model.extend(Validations, {
   projects: DS.hasMany('project'),
   educationalQualifications: DS.hasMany('educational-qualification'),
   profileCompletion: DS.attr('number'),
-  user: DS.belongsTo('user')
+  user: DS.belongsTo('user'),
+  // jobApplications: DS.hasMany('job-application', { inverse: 'applicantProfile' })
 });

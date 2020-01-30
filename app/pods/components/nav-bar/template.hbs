@@ -15,12 +15,14 @@
   </div>
   <div class="col-6 d-md-block d-none">
     <ul>
-      <li>
-        <LinkTo class="navbar-brand font-md black" @route="index">
-          <!-- <img src="https://minio.codingblocks.com/amoeba/hellointern.svg" class="d-inline-block align-top" alt /> -->
-          Coding Blocks | <span class="gradient-red">Hire</span>
-        </LinkTo>
-      </li>
+      {{#if sidenav.isHidden}}
+        <li>
+          <LinkTo class="navbar-brand font-md black" @route="index">
+            <!-- <img src="https://minio.codingblocks.com/amoeba/hellointern.svg" class="d-inline-block align-top" alt /> -->
+            Coding Blocks | <span class="gradient-red">Hire</span>
+          </LinkTo>
+        </li>
+      {{/if}}
     </ul>
   </div>
   <div class="align-items-center">
@@ -38,6 +40,13 @@
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
       <li class="top-nav-option hoverable px-3 d-md-block d-none">
+        <LinkTo @route="jobs">
+          <h6>
+            Jobs
+          </h6>
+        </LinkTo>
+      </li>
+      <li class="top-nav-option hoverable px-3 d-md-block d-none">
         {{#if session.isAuthenticated}}
         <div class="img-desc align-items-center font-sm pt-1">
           <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}" alt="Profile Pic">
@@ -48,7 +57,7 @@
         <div class="pop-up border-card p-3 br-5">
           <ul class="t-align-l">
             <li>
-              {{#link-to "users.id" currentUser.user.id}}Profile{{/link-to}}
+              {{#link-to "applicants.id" currentUser.user.id}}Profile{{/link-to}}
             </li>
             <div class="divider-h my-3"></div>
             <li>
@@ -65,4 +74,9 @@
     </ul>
   </div>
 </div>
-<cb-navbar topalign="right"></cb-navbar>
+
+<div class="row">
+  <div class="w-100 {{unless sidenav.isHidden 'offset-1' ''}}">
+    <cb-navbar topalign="right"></cb-navbar>
+  </div>
+</div>

@@ -6,9 +6,9 @@ export default DS.Model.extend({
   username: DS.attr(),
   firstname: DS.attr(),
   lastname: DS.attr(),
-  fullName: computed('firstname', 'lastname', function () {
-    return this.firstname + ' ' + this.lastname
-  }),
+  // fullName: computed('firstname', 'lastname', function () {
+  //   return this.firstname + ' ' + this.lastname
+  // }),
   email: DS.attr(),
   college: DS.attr(),
   organization: DS.attr(),

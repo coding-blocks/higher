@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
   session: service(),
+  
   queryParams: {
     code: {
       refreshModel: true
@@ -30,5 +31,5 @@ export default Route.extend(ApplicationRouteMixin, {
     if(this.session.isAuthenticated) {
       return this.currentUser.load()
     }
-  }
+  },
 });

@@ -1,10 +1,12 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 export default class PagerComponent extends Component {
   currentPage = 0
   skippable = true
   pages = []
+
+  @computed.alias('pages.length') totalPages
 
   didReceiveAttrs() {
     const pages = this.pages
@@ -38,7 +40,7 @@ export default class PagerComponent extends Component {
     Promise.resolve(this.callOnNext && this.callOnNext.perform(this.currentPage))
       .then(r => {
         this.pages[this.currentPage].skippable = true
-        if (this.currentPage !== this.pages.length - 1) {
+        if (this.currentPage < this.totalPages - 1) {
           this.setCurrentPage(this.currentPage + 1)
         }
       })

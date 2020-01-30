@@ -1,0 +1,18 @@
+<div class="container my-5">
+  {{#if saveApplicantProfileTask.isRunning}}
+    <LoadingComponent />
+  {{/if}}
+  {{#if editMode}}
+    <Users::ApplicantProfileEditor 
+      @applicantProfile={{applicantProfile}}
+      @saveApplicantProfile={{saveApplicantProfileTask}} 
+      @syncOnlineCoursesTask={{syncOnlineCoursesTask}}
+      @getNewRecord={{action "getNewRecord"}} 
+      @step={{step}}
+      @showValidationMessages={{showValidationMessages}} />
+  {{else}}
+    <Users::ApplicantProfile 
+      @profile={{applicantProfile}} 
+      @hbPerformanceStats={{hbPerformanceStats}} />
+  {{/if}}
+</div>
