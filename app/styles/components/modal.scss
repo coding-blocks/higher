@@ -1,22 +1,7 @@
-@import "ember-modal-dialog/ember-modal-structure.css";
-@import "ember-modal-dialog/ember-modal-appearance.css";
-
-body {
-  padding-top: 62px;
-}
-
-.active {
-  color: orange;
-}
-
-.s-15x15{
-  width: 15px;
-  height: 15px
-}
-
 body.centered-modal-showing {
   overflow: hidden;
 }
+
 .centered-scrolling-wrapper {
   width: 100vw;
   height: 100vh;
@@ -46,26 +31,4 @@ body.centered-modal-showing {
   margin-bottom: 30px;
   box-sizing: border-box;
   box-shadow: 0px 4px 25px 4px rgba(0,0,0,0.30);
-}
-
-.ember-power-select-trigger{
-  background: #f3f3f3;
-  border: none;
-  height: 40px;
-  padding: 8px;
-  border-radius: 0;
-}
-
-.ember-power-select-placeholder {
-  color: #333333;
-}
-
-.input-text {
-  height: 40px;
-  border-radius: none;
-  background-color: #f3f3f3;
-}
-
-.bg-faded {
-  background-color: #e5e5e5 !important;
 }

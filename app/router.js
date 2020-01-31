@@ -21,6 +21,7 @@ Router.map(function() {
       this.route('all');
       this.route('applied');
     });
+    this.route('loading');
   });
 });
 

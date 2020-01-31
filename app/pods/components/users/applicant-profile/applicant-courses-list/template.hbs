@@ -26,7 +26,7 @@
         Sync Now
       </button>
       {{#if syncOnlineCoursesTask.isRunning}}
-        <LoadingComponent />
+        <LoadingComponent @smallLoader="true"/>
       {{/if}}
     {{/if}}
   </div>

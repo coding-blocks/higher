@@ -1,8 +1,20 @@
-<div class="loader height-100 w-100 d-flex flex-row justify-content-center">
-  <div class="lds-ellipsis">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+{{#if smallLoader}}
+  <div class="loader height-100 w-100 d-flex flex-row justify-content-center">
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
-</div>
+{{else}}
+  <div class='element-wrapper'>
+    <div class='element'></div>
+    <div class='element'></div>
+    <div class='element'></div>
+    <div class='loading'>Loading…</div>
+    <div class='large-square'></div>
+  </div>
+{{/if}}
+
+{{yield}}
