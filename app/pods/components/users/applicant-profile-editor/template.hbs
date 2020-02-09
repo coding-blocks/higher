@@ -339,8 +339,13 @@
         <div class="border-card">
           <h5 class="mb-4">Tell us About Yourself </h5>
           <Textarea class="input-textarea w-100" @value={{applicantProfile.about}} @rows="7" />
-          </div>
         </div>
+      </div>
+      {{!-- <div class="col-12 col-md-4">
+        <div class="border-card">
+          <FileUploaderMinio @uploadEndPoint="/applicant-profiles/upload-resume"/>
+        </div>
+      </div> --}}
     </div>
   {{/if}}
 

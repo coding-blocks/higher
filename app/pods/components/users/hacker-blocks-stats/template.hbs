@@ -2,7 +2,7 @@
   <h5 class="mb-4">Hacker Blocks Profile</h5>
 
   {{#if fetchHackerBlocksStatsTask.isRunning}}
-  <LoadingComponent />
+  <LoadingComponent @smallLoader="true" />
   {{else}}
   <div class="row">
     <div class="col-4 gradient-orange">

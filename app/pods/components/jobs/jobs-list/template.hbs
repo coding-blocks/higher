@@ -1,5 +1,13 @@
-<div class="list-divided border-none">
+<div class="list-divided border-none mb-4">
   {{#each jobs as |job|}}
     <Jobs::JobRow class="py-4" @job={{job}}/>
   {{/each}}
 </div>
+
+<WPagination 
+  @nextOffset={{pagination.nextOffset}}
+  @prevOffset={{pagination.prevOffset}}
+  @count={{pagination.count}}
+  @limit={{limit}}
+  @offset={{offset}}
+  @onChange={{action 'paginate'}} />
