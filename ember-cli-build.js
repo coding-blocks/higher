@@ -25,16 +25,16 @@ module.exports = function(defaults) {
 
   app.import('node_modules/@coding-blocks/motley/dist/hiringblocks/app.min.css')
   app.import('node_modules/pikaday/css/pikaday.css')
-  app.import('node_modules/jspdf/dist/jspdf.min.js', {
-    using: [
-      { transformation: 'cjs', as: 'jspdf' }
-    ]
-  })
-  app.import('node_modules/html2canvas/dist/html2canvas.min.js', {
-    using: [
-      { transformation: 'cjs', as: 'html2canvas' }
-    ]
-  })
+  // app.import('node_modules/jspdf/dist/jspdf.min.js', {
+  //   using: [
+  //     { transformation: 'cjs', as: 'jspdf' }
+  //   ]
+  // })
+  // app.import('node_modules/html2canvas/dist/html2canvas.min.js', {
+  //   using: [
+  //     { transformation: 'cjs', as: 'html2canvas' }
+  //   ]
+  // })
 
   return app.toTree();
 };

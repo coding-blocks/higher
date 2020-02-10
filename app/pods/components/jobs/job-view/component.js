@@ -50,5 +50,4 @@ export default class JobViewComponent extends Component {
     this.set('showTakeTestModal', false)
     this.set('showApplyToJobModal', true)
   }
-
 }
