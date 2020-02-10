@@ -1,4 +1,6 @@
+import Ember from 'ember';
 import DS from 'ember-data';
+import moment from 'moment';
 
 export default DS.Model.extend({
   title: DS.attr(),
@@ -12,6 +14,9 @@ export default DS.Model.extend({
   status: DS.attr(),
   experience: DS.attr(),
   deadline: DS.attr(),
+  hasDeadlinePassed: Ember.computed('deadline', function() {
+    return moment().isAfter(moment.unix(this.deadline))
+  }),
   postedOn: DS.attr(),
   isAccepting: DS.attr(),
   coverImage: DS.attr(),

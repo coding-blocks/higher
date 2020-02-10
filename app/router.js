@@ -15,7 +15,9 @@ Router.map(function() {
     this.route('profile', function() {
       this.route('id', { path: '/:user_id' });
       this.route('me');
+      this.route('loading');
     });
+    this.route('loading');
   });
   this.route('jobs', function() {
     this.route('id', { path: '/:job_id' });

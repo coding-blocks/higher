@@ -10,6 +10,7 @@ export default class JobsListComponent extends Component {
   @alias('fetchJobsTask.lastSuccessful.value') jobs
   @alias('fetchJobsTask.lastSuccessful.value.meta') pagination
 
+  allowPagination = true
   limit = 4
   offset = 0
 

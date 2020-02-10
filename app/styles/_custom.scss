@@ -2,6 +2,10 @@ body {
   padding-top: 62px;
 }
 
+.c-topnav {
+  height: 66px;
+}
+
 .active {
   color: orange;
 }
@@ -24,4 +28,8 @@ body {
 .review-body {
   height: 80px;
   overflow: hidden;
+}
+
+.fade-it {
+  opacity: 0.5;
 }

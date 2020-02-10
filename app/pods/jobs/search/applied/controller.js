@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default class JobSearchAppliedController extends Controller {
   @service store
 
-  limit = 4
+  limit = 10
   offset = 0
 
   @restartableTask fetchJobsTask = function* () {

@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default class JobSearchAllController extends Controller {
   @service store 
 
-  limit = 4
+  limit = 10
   offset = 0
 
   @restartableTask fetchJobsTask = function* () {
@@ -16,6 +16,18 @@ export default class JobSearchAllController extends Controller {
       page: {
         limit: this.limit,
         offset: this.offset
+      }
+    })
+  }
+
+  @restartableTask fetchPastJobsTask = function *() {
+    return yield this.store.query('job', {
+      filter: {
+        "deadline <": moment().format()
+      },
+      page: {
+        limit: 5,
+        offset: 0
       }
     })
   }

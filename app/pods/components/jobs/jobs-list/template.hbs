@@ -3,15 +3,17 @@
 {{else}}
   <div class="list-divided border-none mb-4">
     {{#each jobs as |job|}}
-      <Jobs::JobRow class="py-4" @job={{job}}/>
+      <Jobs::JobRow class="py-4 {{if job.hasDeadlinePassed 'fade-it'}}" @job={{job}}/>
     {{/each}}
   </div>
 {{/if}}
 
-<WPagination 
-  @nextOffset={{pagination.nextOffset}}
-  @prevOffset={{pagination.prevOffset}}
-  @count={{pagination.count}}
-  @limit={{limit}}
-  @offset={{offset}}
-  @onChange={{action 'paginate'}} />
+{{#if allowPagination}}
+  <WPagination 
+    @nextOffset={{pagination.nextOffset}}
+    @prevOffset={{pagination.prevOffset}}
+    @count={{pagination.count}}
+    @limit={{limit}}
+    @offset={{offset}}
+    @onChange={{action 'paginate'}} />
+{{/if}}
