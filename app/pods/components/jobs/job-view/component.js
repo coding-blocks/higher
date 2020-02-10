@@ -20,7 +20,7 @@ export default class JobViewComponent extends Component {
 
   @computed('job') 
   get completeProfileRedirectionPath (){
-    return `/applicants/me?step=3&job_id=${this.job.id}`
+    return `/applicants/profile/me?step=3&job_id=${this.job.id}`
   }
 
   @computed('applicantProfile.profileCompletion')
@@ -42,7 +42,7 @@ export default class JobViewComponent extends Component {
 
   @action
   takeToProfileEditor(step = 3) {
-    this.router.transitionTo('applicants.me', { queryParams: { job_id: this.job.id, step } })
+    this.router.transitionTo('applicants.profile.me', { queryParams: { job_id: this.job.id, step } })
   }
 
   @action

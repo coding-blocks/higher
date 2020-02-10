@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import ENV from 'hiring-front/config/environment';
 
 export default class NavBarComponent extends Component {
@@ -8,6 +8,13 @@ export default class NavBarComponent extends Component {
   @service currentUser
   @service api
   @service sidenav
+  @service router
+
+  @computed('router.currentURL')
+  get isCompanyRouteActive() {
+    let currentURL = this.router.currentURL.split('/')[1]
+    return currentURL === 'recruiter'
+  }
 
   @action 
   toggleHamburgerNav(){

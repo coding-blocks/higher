@@ -1,6 +1,6 @@
 {{#if presentationComponent}}
   {{component presentationComponent}}
-{{else}}
+{{else if (gt totalCount limit)}}
   <div class="w-100 t-align-c bold">
     <button disabled={{prevDisabled}} {{action 'onPrev'}}>Prev</button>
     <span class="dark-grey mx-2">

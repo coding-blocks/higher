@@ -4,14 +4,19 @@ import AuthenticatedRouteMixin from 'hiring-front/mixins/authenticated-route-mix
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
+  session: service(),
 
-  queryParams : {
+  queryParams: {
     job_id: {
       refreshModel: false
     }
   },
 
   beforeModel() {
-    this.transitionTo('applicants.id', this.currentUser.user.id)
+    if (this.session.isAuthenticated) {
+      this.transitionTo('applicants.profile.id', this.currentUser.user.id)
+    }
+    window.localStorage.setItem('redirection_path', '/applicants/profile/me')
+    this._super(...arguments)
   }
 })

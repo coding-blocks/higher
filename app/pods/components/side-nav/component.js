@@ -13,8 +13,13 @@ export default class SideNavComponent extends Component {
   navTypes = {
     applicant: [
       {
+        name: 'Profile',
+        iconClass: 'fas fa-id-card font-xl',
+        route: 'applicants.profile'
+      },
+      {
         name: 'Jobs',
-        iconClass: 'fas fa-briefcase fa-2x',
+        iconClass: 'fas fa-briefcase font-xl',
         route: 'jobs'
       }
     ]

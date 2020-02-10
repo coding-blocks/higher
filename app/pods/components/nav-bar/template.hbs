@@ -17,9 +17,9 @@
     <ul>
       {{#if sidenav.isHidden}}
         <li>
-          <LinkTo class="navbar-brand font-md black" @route="index">
+          <LinkTo class="navbar-brand font-md black" @route="{{if isCompanyRouteActive 'recruiter' 'index'}}">
             <!-- <img src="https://minio.codingblocks.com/amoeba/hellointern.svg" class="d-inline-block align-top" alt /> -->
-            Coding Blocks | <span class="gradient-red">Hire</span>
+            Coding Blocks | <span class="gradient-red bold">Hire</span>
           </LinkTo>
         </li>
       {{/if}}
@@ -39,36 +39,42 @@
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
-      <li class="top-nav-option hoverable px-3 d-md-block d-none">
-        <LinkTo @route="jobs">
-          <h6>
-            Jobs
-          </h6>
-        </LinkTo>
-      </li>
+      {{#if isCompanyRouteActive}}
+        <li class="top-nav-option hoverable px-3 d-md-block d-none">
+          <LinkTo @route="applicants" class="orange font-mds">
+            Are you a student?
+          </LinkTo>
+        </li>
+      {{else}}
+        <li class="top-nav-option hoverable px-3 d-md-block d-none">
+          <LinkTo @route="recruiter" class="orange font-mds">
+            Are you hiring?
+          </LinkTo>
+        </li>
+      {{/if}}
       <li class="top-nav-option hoverable px-3 d-md-block d-none">
         {{#if session.isAuthenticated}}
-        <div class="img-desc align-items-center font-sm pt-1">
-          <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}" alt="Profile Pic">
-          <div class="description ml-3">
-            Hi, {{currentUser.user.firstname}}
+          <div class="img-desc align-items-center font-sm pt-1">
+            <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}" alt="Profile Pic">
+            <div class="description ml-3">
+              Hi, {{currentUser.user.firstname}}
+            </div>
           </div>
-        </div>
-        <div class="pop-up border-card p-3 br-5">
-          <ul class="t-align-l">
-            <li>
-              {{#link-to "applicants.id" currentUser.user.id}}Profile{{/link-to}}
-            </li>
-            <div class="divider-h my-3"></div>
-            <li>
-              <a class="dark-grey" href={{logoutLink}}>
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-        {{else}}
-        <LoginButton />
+          <div class="pop-up border-card p-3 br-5">
+            <ul class="t-align-l">
+              <li>
+                {{#link-to "applicants.profile.id" currentUser.user.id}}Profile{{/link-to}}
+              </li>
+              <div class="divider-h my-3"></div>
+              <li>
+                <a class="dark-grey" href={{logoutLink}}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        {{else if (not isCompanyRouteActive)}}
+          <LoginButton class="font-sm" />
         {{/if}}
       </li>
     </ul>

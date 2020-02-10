@@ -10,8 +10,8 @@ export default class UserIdController extends Controller {
 
   queryParams = ['job_id', 'step']
   job_id = null
-  step = 0
-  
+  step = 3
+
   showValidationMessages = false
 
   @computed('applicantProfile', 'currentUser')
@@ -24,15 +24,15 @@ export default class UserIdController extends Controller {
     let step = +this.step
     let profileCompletion = this.applicantProfile.profileCompletion
     const totalSteps = 4
-    
-    if(step >= 1 && step <= totalSteps) {//when step has precedence?
+
+    if (step >= 1 && step <= totalSteps) {//when step has precedence?
       return this.userHimself
     }
 
     return this.userHimself && profileCompletion !== 100
   }
 
-  @dropTask saveApplicantProfileTask = function *(currentPage) {
+  @dropTask saveApplicantProfileTask = function* (currentPage) {
     try {
       if (this.applicantProfile.validations.isInvalid) {
         this.set('showValidationMessages', true)
@@ -40,9 +40,9 @@ export default class UserIdController extends Controller {
       }
 
       this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
-      
+
       yield this.applicantProfile.save()
-      if(this.applicantProfile.profileCompletion === 100) {
+      if (this.applicantProfile.profileCompletion === 100) {
         this.set('step', null)
       }
 

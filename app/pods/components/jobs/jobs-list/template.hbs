@@ -1,8 +1,12 @@
-<div class="list-divided border-none mb-4">
-  {{#each jobs as |job|}}
-    <Jobs::JobRow class="py-4" @job={{job}}/>
-  {{/each}}
-</div>
+{{#if fetchJobsTask.isRunning}}
+  <LoadingComponent @smallLoader="true" />
+{{else}}
+  <div class="list-divided border-none mb-4">
+    {{#each jobs as |job|}}
+      <Jobs::JobRow class="py-4" @job={{job}}/>
+    {{/each}}
+  </div>
+{{/if}}
 
 <WPagination 
   @nextOffset={{pagination.nextOffset}}

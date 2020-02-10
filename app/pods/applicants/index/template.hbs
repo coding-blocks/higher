@@ -40,13 +40,15 @@
           alt="contests" loading="lazy" class="s-100x100 mb-3">
         <h5 class="bold mb-3">Hands-on Coding Experience</h5>
         <div class="font-normal">
-          Experienced, engaging instructors take you through course material, step by step, in our high-quality video lessons.
+          Experienced, engaging instructors take you through course material, step by step, in our high-quality video
+          lessons.
         </div>
       </div>
     </div>
     <div class="col-md-4 col-6 mb-5">
-      <div class="border-card p-lg-5 p-4 h-100"><img src="https://minio.codingblocks.com/landing-pages/mentorsupport.svg"
-          alt="contests" loading="lazy" class="s-100x100 mb-3">
+      <div class="border-card p-lg-5 p-4 h-100"><img
+          src="https://minio.codingblocks.com/landing-pages/mentorsupport.svg" alt="contests" loading="lazy"
+          class="s-100x100 mb-3">
         <h5 class="bold mb-3">24x7 Mentor Support</h5>
         <div class="font-normal">
           Our online programming courses online are a
@@ -60,7 +62,8 @@
           alt="contests" loading="lazy" class="s-100x100 mb-3">
         <h5 class="bold mb-3">Work on Live Projects</h5>
         <div class="font-normal">
-          The Course Material contains lot of live projects to work on. The best way to learn making an application is put it into
+          The Course Material contains lot of live projects to work on. The best way to learn making an application is
+          put it into
           production.
         </div>
       </div>
@@ -70,7 +73,8 @@
           alt="contests" loading="lazy" class="s-100x100 mb-3">
         <h5 class="bold mb-3">Revisit and Revise</h5>
         <div class="font-normal">
-          Study the course contents at your own pace. If you're an experienced developer, you can complete the courses in a matter
+          Study the course contents at your own pace. If you're an experienced developer, you can complete the courses
+          in a matter
           of days.
         </div>
       </div>
@@ -80,7 +84,8 @@
           alt="contests" loading="lazy" class="s-100x100 mb-3">
         <h5 class="bold mb-3">Evaluation And Certification</h5>
         <div class="font-normal">
-          Get instructor-signed certificate with our seal to accredit your achievement after the course completion and increase
+          Get instructor-signed certificate with our seal to accredit your achievement after the course completion and
+          increase
           your job prospects.
         </div>
       </div>
@@ -90,7 +95,8 @@
           alt="contests" loading="lazy" class="s-100x100 mb-3">
         <h5 class="bold mb-3">Hackerblocks Leaderboard</h5>
         <div class="font-normal">
-          You will be assessed weekly in your path to becoming a programming expert at this online certification course and all
+          You will be assessed weekly in your path to becoming a programming expert at this online certification course
+          and all
           the practice, assignments and tests will be taken on our online automated code judge.
         </div>
       </div>
@@ -133,9 +139,10 @@
           </div>
         </div>
         <div class="my-5 font-normal review-body">
-          Hii I am Sidharth Bansal from Delhi technology university. I have done competitive boot camp from coding blocks.
+          Hii I am Sidharth Bansal from Delhi technology university. I have done competitive boot camp from coding
+          blocks.
           This gave me a great exposure to problem solving mindset.
-  
+
         </div>
         <div class="extra-bold">Placed at Amazon</div>
       </div>
@@ -153,8 +160,10 @@
           </div>
         </div>
         <div class="my-5 font-normal review-body">
-          My journey in the world of Competitive Programming started with the Bootcamp at Coding Blocks, which turned out
-          to be a changing point in my life. The immense amount of knowledge I got during the course did not only develop
+          My journey in the world of Competitive Programming started with the Bootcamp at Coding Blocks, which turned
+          out
+          to be a changing point in my life. The immense amount of knowledge I got during the course did not only
+          develop
           my interest but also made me pursue this field later. A special thanks to Shubham bhaiya, Mayank bhaiya and
           Prateek bhaiya for being the guiding lights in my journey and always motivating us to follow our passion!
         </div>
@@ -198,94 +207,54 @@
     </div>
 
     <div class="row justify-content-center my-5">
-      <div id="ember33" class="ember-view col-12 col-lg-5">
-        <div class="border-card br-20 mb-5 mb-lg-0">
-          <div class="img-desc">
-            <div class="col-3 pl-0">
-              <img src="https://minio.codingblocks.com/amoeba/2676ac9f-a092-4085-89fe-dfb2d6c07285.png" alt="Cuemath">
-            </div>
-            <div class="description col-9">
-              <div>
-                <h4>Software Engineer Intern</h4>
-                <div class="font-mds">
-                  Cuemath
+      {{#each jobs as |job|}}
+        <div class="col-12 col-lg-5">
+          <div class="border-card br-20 mb-5 mb-lg-0">
+            <div class="img-desc">
+              <div class="col-3 pl-0">
+                <img src="{{job.companyProfile.logo}}" alt="{{job.companyProfile.name}}">
+              </div>
+              <div class="description col-9">
+                <div>
+                  <h4>{{job.title}}</h4>
+                  <div class="font-mds">
+                    {{job.companyProfile.name}}
+                  </div>
+                </div>
+                <div class="dark-grey">
+                  Posted a {{moment-from-now (unix job.postedOn)}}
                 </div>
               </div>
-              <div class="dark-grey">
-                Posted a year ago
-              </div>
             </div>
-          </div>
-          <div class="divider-h mt-4 mb-4"></div>
-    
-          <div class="d-flex font-sm mb-3">
-            <div class="col-6 pl-0">
-              <div class="mb-3">
-                Job Location: <span class="extra-bold">Bengaluru</span>
-              </div>
-              <div class="mb-3 pl-0">
-                Job Type: <span class="extra-bold">Intern</span>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                Experience: <span class="extra-bold">no prior experience</span>
-              </div>
-              <div>
-                CTC: <span class="extra-bold">No bar for right candidate</span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="red">Deadline: 30th Apr 19</span>
-            <button id="ember34" class="ember-view button-solid button-orange">View</button>
-          </div>
-        </div>
-      </div>
-      <div id="ember36" class="ember-view col-12 col-lg-5">
-        <div class="border-card br-20 mb-5 mb-lg-0">
-          <div class="img-desc">
-            <div class="col-3 pl-0">
-              <img src="https://minio.codingblocks.com/amoeba/33548d57-3582-4390-99ee-d332dd47f120.png" alt="hyperDart">
-            </div>
-            <div class="description col-9">
-              <div>
-                <h4>Front End Developer</h4>
-                <div class="font-mds">
-                  hyperDart
+            <div class="divider-h mt-4 mb-4"></div>
+
+            <div class="d-flex font-sm mb-3">
+              <div class="col-6 pl-0">
+                <div class="mb-3">
+                  Job Location: <span class="extra-bold">{{job.location}}</span>
+                </div>
+                <div class="mb-3 pl-0">
+                  Job Type: <span class="extra-bold">{{job.type}}</span>
                 </div>
               </div>
-              <div class="dark-grey">
-                Posted a year ago
+              <div class="col-6">
+                <div class="mb-3">
+                  Experience: <span class="extra-bold">{{job.experience}}</span>
+                </div>
+                <div>
+                  CTC: <span class="extra-bold">{{ob.ctc}}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="divider-h mt-4 mb-4"></div>
-    
-          <div class="d-flex font-sm mb-3">
-            <div class="col-6 pl-0">
-              <div class="mb-3">
-                Job Location: <span class="extra-bold">Gurgaon</span>
-              </div>
-              <div class="mb-3 pl-0">
-                Job Type: <span class="extra-bold">Full-Time</span>
-              </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="red">Deadline: {{moment-format job.deadline "DD MMM YY"}}</span>
+              <LinkTo @route="jobs.id" @model={{job.id}}>
+                <button class="button-solid button-orange">View</button>
+              </LinkTo>
             </div>
-            <div class="col-6">
-              <div class="mb-3">
-                Experience: <span class="extra-bold">None</span>
-              </div>
-              <div>
-                CTC: <span class="extra-bold">No bar for right candidate</span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="red">Deadline: 21st May 19</span>
-            <button id="ember37" class="ember-view button-solid button-orange">View</button>
           </div>
         </div>
-      </div>
+      {{/each}}
     </div>
   </div>
 </div>

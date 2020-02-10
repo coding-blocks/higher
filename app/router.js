@@ -12,8 +12,10 @@ Router.map(function() {
   this.route('loading');
   this.route('404', { path: '/*:' });
   this.route('applicants', function() {
-    this.route('id', { path: '/:user_id' });
-    this.route('me');
+    this.route('profile', function() {
+      this.route('id', { path: '/:user_id' });
+      this.route('me');
+    });
   });
   this.route('jobs', function() {
     this.route('id', { path: '/:job_id' });
@@ -23,6 +25,7 @@ Router.map(function() {
     });
     this.route('loading');
   });
+  this.route('recruiter', function() {});
 });
 
 export default Router;

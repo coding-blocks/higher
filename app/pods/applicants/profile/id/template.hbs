@@ -1,6 +1,6 @@
 <div class="container my-5">
   {{#if saveApplicantProfileTask.isRunning}}
-    <LoadingComponent @smallLoader="true"/>
+    <LoadingComponent @smallLoader="true" />
   {{/if}}
   {{#if editMode}}
     <Users::ApplicantProfileEditor 
@@ -8,7 +8,7 @@
       @saveApplicantProfile={{saveApplicantProfileTask}} 
       @syncOnlineCoursesTask={{syncOnlineCoursesTask}}
       @getNewRecord={{action "getNewRecord"}} 
-      @step={{step}}
+      @step={{step}} 
       @showValidationMessages={{showValidationMessages}} />
   {{else}}
     <Users::ApplicantProfile 

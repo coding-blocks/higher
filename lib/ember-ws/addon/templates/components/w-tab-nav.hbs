@@ -3,7 +3,7 @@
     {{#if useLinks}}
       <LinkTo
         @route={{tab.route}}
-          class="{{if (eq currentTab.name tab.name) '' inactiveClass}}"
+          class="tab {{if (eq currentTab.name tab.name) '' inactiveClass}}"
           {{action (mut currentTab) tab}}>
             {{tab.name}}
       </LinkTo>

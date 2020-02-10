@@ -7,7 +7,8 @@ export default Mixin.create(AuthenticatedRouteMixin, {
   router: service(),
 
   beforeModel(transition) {
-    if(!this.session.isAuthenticated) {
+    const redirectionPath = window.localStorage.getItem('redirection_path')
+    if(!this.session.isAuthenticated && !redirectionPath) {
       window.localStorage.setItem('redirection_path', this.router.get('currentURL') || window.location.pathname)
     }
 

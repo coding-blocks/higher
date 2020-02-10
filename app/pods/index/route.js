@@ -7,6 +7,7 @@ export default class IndexRoute extends Route {
   @service sidenav
   
   beforeModel() {
+    this.transitionTo('applicants')
     this.sidenav.set('isHidden', true)
 
     if(this.session.isAuthenticated) {
@@ -14,16 +15,10 @@ export default class IndexRoute extends Route {
       if (redirectionPath) {
         window.localStorage.removeItem('redirection_path')
         this.transitionTo(redirectionPath)
+      } else {
+        this.transitionTo('applicants')
       }
     }
-  }
-
-  model() {
-    return this.store.createRecord('company-lead')
-  }
-
-  setupController(controller, model) {
-    controller.set('lead', model)
   }
 
   @action

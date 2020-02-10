@@ -85,9 +85,9 @@ export default class ApplicantProfileEditor extends Component {
     const profileCompletion = this.applicantProfile.profileCompletion
     const totalSteps = 4
     const stepFromProfileCompletion = profileCompletion / 25
-
+    
     if (step >= 1 && step <= totalSteps) {
-      return this.set('currentPage', Math.min(step -1, stepFromProfileCompletion))
+      return this.set('currentPage', Math.min(step - 1, stepFromProfileCompletion))
     }
 
     this.set('currentPage', stepFromProfileCompletion % 4)
