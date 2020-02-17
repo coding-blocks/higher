@@ -22,7 +22,9 @@ export default class JobsListComponent extends Component {
   @restartableTask fetchJobsTask = function* () {
     return yield this.store.query('job', {
       filter: {
-        "is_accepting =": true, "deadline >": moment().format()
+        "is_accepting =": true, 
+        "deadline >": moment().format(),
+        "company_profiles.is_active =": true
       },
       page: {
         limit: this.limit,
