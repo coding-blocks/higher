@@ -51,6 +51,19 @@ module.exports = function(environment) {
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
   }
 
+  if (environment === 'staging') {
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.API_HOST = 'https://hire-api.codingblocks.xyz'
+    ENV.PUBLIC_URL = 'https://hire.codigblocks.xyz/'
+    ENV.CLIENT_ID = 4190457915
+    ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
+    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
