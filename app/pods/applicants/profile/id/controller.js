@@ -3,14 +3,14 @@ import { inject as service } from '@ember/service';
 import { computed, action } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
 
-export default class UserIdController extends Controller {
+export default class ApplicantsProfileIdController extends Controller {
   @service currentUser
   @service store
   @service api
 
   queryParams = ['job_id', 'step']
   job_id = null
-  step = 3
+  step = null
 
   showValidationMessages = false
 
