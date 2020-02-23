@@ -1,0 +1,52 @@
+{{#if dropzone.active}}
+  {{#if dropzone.valid}}
+    <div class="border-dashed border-orange p-5 t-align-c" style="height: 164px;">
+      <div class="bold">
+        Drop files here or click to upload.
+      </div>
+      <div class="dark-grey card-md">
+        Please upload only .jpg, .png files with size less than 5MB
+      </div>
+    </div>
+  {{else}}
+    <div class="border-dashed border-orange p-5 t-align-c" style="height: 164px;">
+      <div class="bold">
+        Drop files here or click to upload.
+      </div>
+      <div class="dark-grey card-md">
+        Please upload only <span class="red bold">.jpg, .png</span> files with size less than 5MB
+      </div>
+    </div>
+  {{/if}}
+{{else if queue.files.length}}
+  <div class="border-dashed border-orange p-5 all-center flex-column" style="height: 164px;">
+    {{#if uploadingText}}
+      {{uploadingText}}
+    {{else}}
+      Uploading {{!-- {{queue.files.length}} --}} file
+      {{!-- ({{queue.progress}}%) --}}
+    {{/if}}
+  </div>
+{{else}}
+  <FileUpload 
+    @name="{{queueName}}" 
+    @accept={{accept}} 
+    @multiple={{false}}
+    @onfileadd={{action filesDidChange}}>
+      <a class="" tabindex=0>
+        {{#if dropzone.supported}}
+          <span class="border-dashed border-orange p-5 t-align-c display-block" style="height: 164px;">
+            <span class="bold display-block">
+              Drop files here or click to upload.
+            </span>
+            <span class="dark-grey card-md display-block">
+              Please upload only .jpg, .png files with size less than 5MB
+            </span>
+            <span class="red card-md display-block">
+              {{errorMessage}}
+            </span>
+          </span>
+        {{/if}}
+      </a>
+  </FileUpload>
+{{/if}}
