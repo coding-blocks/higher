@@ -9,12 +9,6 @@ export default class ApplicantProfileEditor extends Component {
   @service store
   @service currentUser
 
-  @alias('fetchLocationsTask.lastSuccessful.value') locations
-  @alias('fetchJobRolesTask.lastSuccessful.value') jobRoles
-
-  today = new Date()
-  maxEndYear = +moment().format('YYYY') + 6
-
   pages = [
     {
       title: 'Introduction',
@@ -51,9 +45,7 @@ export default class ApplicantProfileEditor extends Component {
 
   didReceiveAttrs() {
     this._super(...arguments)
-    
-    this.fetchLocationsTask.perform()
-    this.fetchJobRolesTask.perform()
+
     this.setCurrentPage()
 
     if (this.applicantProfile.get('links')) {
@@ -63,21 +55,13 @@ export default class ApplicantProfileEditor extends Component {
   }
 
   @action
-  preventDefault(e) {
-    e.preventDefault()
+  onProfilePicUpload({url}) {
+    this.applicantProfile.set('photo', url)
   }
-
+  
   @action 
   removeLocation (location) {
     this.applicantProfile.locations.removeObject(location)
-  }
-
-  @dropTask fetchLocationsTask = function* () {
-    return yield this.store.findAll('location')
-  }
-
-  @dropTask fetchJobRolesTask = function* () {
-    return yield this.store.findAll('job-role')
   }
 
   setCurrentPage() {
@@ -92,4 +76,5 @@ export default class ApplicantProfileEditor extends Component {
 
     this.set('currentPage', stepFromProfileCompletion % 4)
   }
+
 }

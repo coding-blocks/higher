@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { computed, action } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import { dropTask } from 'ember-concurrency-decorators';
 
 export default class ApplicantsProfileIdController extends Controller {
@@ -39,8 +40,18 @@ export default class ApplicantsProfileIdController extends Controller {
         return Promise.reject(new Error('Form Validations not passed'))
       }
 
-      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
+      yield Promise.all([this.handleResumeUpload(), this.handlePhotoUpload()])
+      if (this.resumeUpload && this.resumeUpload.hasDirtyAttributes) {
+        yield this.resumeUpload.save()
+        this.applicantProfile.set('resumeUpload', this.resumeUpload)
+      }
+      if (this.photoUpload && this.photoUpload.hasDirtyAttributes) {
+        yield this.photoUpload.save()
+        this.applicantProfile.set('photoUpload', this.photoUpload)
+      }
 
+      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
+      
       yield this.applicantProfile.save()
       if (this.applicantProfile.profileCompletion === 100) {
         this.set('step', null)
@@ -52,7 +63,7 @@ export default class ApplicantsProfileIdController extends Controller {
         this.set('job_id', null) //singleton & computed editMode :(
       }
     } catch (err) {
-
+      console.log(err)
     }
   }
 
@@ -73,5 +84,49 @@ export default class ApplicantsProfileIdController extends Controller {
       applicantProfile: this.applicantProfile,
       ...options
     })
+  }
+
+  async handleResumeUpload() {
+    if (isEmpty(this.applicantProfile.resumeLink)) { //ie. resume has never been uploaded for this company
+      return
+    }
+    
+    let resumeUpload = await this.applicantProfile.get('resumeUpload')
+
+    if (isEmpty(resumeUpload)) {
+      resumeUpload = this.store.createRecord('upload', {
+        type: 'resume',
+        isVerified: true,
+        verifiedById: this.currentUser.user.id,
+        url: this.applicantProfile.resumeLink
+      })
+    }
+    else {
+      resumeUpload.set('url', this.applicantProfile.resumeLink)
+    }
+
+    this.set('resumeUpload', resumeUpload)
+  }
+
+  async handlePhotoUpload() {
+    if (isEmpty(this.applicantProfile.photo)) { //ie. photo has never been uploaded for this company
+      return
+    }
+    
+    let photoUpload = await this.applicantProfile.get('photoUpload')
+
+    if (isEmpty(photoUpload)) {
+      photoUpload = this.store.createRecord('upload', {
+        type: 'profile_photo',
+        isVerified: true,
+        verifiedById: this.currentUser.user.id,
+        url: this.applicantProfile.photo
+      })
+    }
+    else {
+      photoUpload.set('url', this.applicantProfile.photo)
+    }
+
+    this.set('photoUpload', photoUpload)
   }
 }

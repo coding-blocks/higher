@@ -114,14 +114,11 @@ const Validations = buildValidations({
     ]
   },
   resumeLink: {
-    description: 'Resume Link',
+    description: 'Resume',
     validators: [
-      validator('format', {
-        type: 'url'
-      }),
-      validator('presence', {
-        presence: true
-      })
+      // validator('presence', {
+      //   presence: true
+      // })
     ]
   }
 })
@@ -193,5 +190,6 @@ export default DS.Model.extend(Validations, {
   educationalQualifications: DS.hasMany('educational-qualification'),
   profileCompletion: DS.attr('number'),
   user: DS.belongsTo('user'),
-  // jobApplications: DS.hasMany('job-application', { inverse: 'applicantProfile' })
+  resumeUpload: DS.belongsTo('upload'),
+  photoUpload: DS.belongsTo('upload')
 });
