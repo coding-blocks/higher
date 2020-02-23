@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 export default class RecruiterIndexRoute extends Route {
   @service sidenav
@@ -14,5 +15,10 @@ export default class RecruiterIndexRoute extends Route {
 
   setupController(controller, model) {
     controller.set('lead', model)
+  }
+
+  @action
+  willTransition() {
+    this.sidenav.set('isHidden', false)
   }
 }
