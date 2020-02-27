@@ -21,6 +21,7 @@ export default DS.Model.extend({
   isAccepting: DS.attr(),
   coverImage: DS.attr(),
   form: DS.attr(),
+  locations: DS.hasMany('location'),
   companyProfile: DS.belongsTo('company-profile'),
   myApplication: DS.belongsTo('job-application', {inverse: null}),
   jobApplications: DS.hasMany('job-application', { inverse: 'job' })

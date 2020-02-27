@@ -24,18 +24,22 @@ export default class ApplicantProfileEditor extends Component {
     },
   ]
 
-  @computed('applicantProfile.githubLink', 'applicantProfile.linkedinLink', 'applicantProfile.stackoverflowLink', 'applicantProfile.portfolioLink')
+  @computed('applicantProfile.githubLink', 'applicantProfile.linkedinLink', 'applicantProfile.stackoverflowLink', 'applicantProfile.portfolioLink', 'applicantProfile.leetcodeLink', 'applicantProfile.hackerrankHackerearthLink')
   get links() {
     const github = this.applicantProfile.githubLink
     const linkedin = this.applicantProfile.linkedinLink
     const stackoverflow = this.applicantProfile.stackoverflowLink
     const portfolio = this.applicantProfile.portfolioLink
+    const leetcode = this.applicantProfile.leetcodeLink
+    const hackerrankHackerearth = this.applicantProfile.hackerrankHackerearthLink
 
     const links = {
       github,
       linkedin,
       stackoverflow,
-      portfolio
+      portfolio,
+      leetcode,
+      hackerrankHackerearth
     }
 
     this.set('applicantProfile.links', JSON.stringify(links))

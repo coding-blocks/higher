@@ -12,6 +12,7 @@ export default class BasicInfoEditoComponent extends Component {
 
   today = new Date()
   maxEndYear = +moment().format('YYYY') + 6
+  jobTypes = ['fulltime', 'internship', 'parttime']
 
   didReceiveAttrs() {
     this._super(...arguments)

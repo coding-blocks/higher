@@ -105,6 +105,24 @@ const Validations = buildValidations({
       })
     ]
   },
+  leetcodeLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
+  hackerrankHackerearthLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
   graduationYear: {
     description: 'Graduation Year',
     validators: [
@@ -120,6 +138,15 @@ const Validations = buildValidations({
       //   presence: true
       // })
     ]
+  },
+  desiredJobType: {
+    description: 'Job Type',
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Select a job type'
+      })
+    ]
   }
 })
 
@@ -130,12 +157,15 @@ export default DS.Model.extend(Validations, {
   stackoverflowLink: DS.attr(),
   linkedinLink: DS.attr(),
   portfolioLink: DS.attr(),
+  leetcodeLink: DS.attr(),
+  hackerrankHackerearthLink: DS.attr(),
   links: DS.attr(),
   graduationYear: DS.attr('number'),
   resumeLink: DS.attr(),
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),
   expectedCtc: DS.attr('number'),
+  desiredJobType: DS.attr(),
   expectedCtcString: Ember.computed('expectedCtc', {
     get() {
       return this.get('expectedCtc')

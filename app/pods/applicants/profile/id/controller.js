@@ -37,6 +37,7 @@ export default class ApplicantsProfileIdController extends Controller {
     try {
       if (this.applicantProfile.validations.isInvalid) {
         this.set('showValidationMessages', true)
+        this.scrollTo(".form-error")
         return Promise.reject(new Error('Form Validations not passed'))
       }
 
@@ -62,6 +63,8 @@ export default class ApplicantsProfileIdController extends Controller {
         this.set('step', null) //singleton & computed editMode :(
         this.set('job_id', null) //singleton & computed editMode :(
       }
+
+      this.scrollTo("#timeline-top")
     } catch (err) {
       console.log(err)
     }
@@ -128,5 +131,10 @@ export default class ApplicantsProfileIdController extends Controller {
     }
 
     this.set('photoUpload', photoUpload)
+  }
+
+  scrollTo(id) {
+    const element = document.querySelector(id)
+    element.scrollIntoView()
   }
 }

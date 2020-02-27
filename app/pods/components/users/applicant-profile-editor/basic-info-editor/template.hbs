@@ -18,7 +18,7 @@
       </label>
       {{/each}}
     </WSelector>
-    <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='jobRoles' as |validation|>
+    <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='jobRoles' as |validation|>
       {{#if (and validation.isInvalid showValidationMessages)}}
       <span class="red card-md">{{validation.message}}</span>
       {{/if}}
@@ -28,12 +28,16 @@
   <div class="row align-items-center mb-4 pt-2">
     <div class="col-12 col-md-6">Where are you currently located? <span class="red">*</span></div>
     <div class="col-12 col-md-6">
-      <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
-        @selected={{applicantProfile.currentLocation}} @placeholder="Select Location"
+      <PowerSelect 
+        @searchEnabled={{true}} 
+        @searchField={{"name"}} 
+        @options={{locations}}
+        @selected={{applicantProfile.currentLocation}} 
+        @placeholder="Select Location"
         @onChange={{action (mut applicantProfile.currentLocation)}} as |location|>
         {{location.name}}
       </PowerSelect>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentLocation' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='currentLocation' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -61,7 +65,7 @@
           checked={{includes applicantProfile.locations location}} />
         {{location.name}}
       </PowerSelectMultiple>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='locations' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='locations' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -79,7 +83,7 @@
         <option value="{{year}}" selected={{lite-eq applicantProfile.graduationYear year}}>{{year}}</option>
         {{/each}}
       </select>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='graduationYear' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='graduationYear' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -96,7 +100,33 @@
           @placeholder="Enter amount here" />
         <span class="all-center bg-faded px-3">lpa</span>
       </div>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='expectedCtc' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='expectedCtc' as |validation|>
+        {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+        {{/if}}
+      </WFormValidations>
+    </div>
+  </div>
+
+  <div class="row align-items-center mb-4 pt-2">
+    <div class="col-12 col-md-6">What type of job are you looking for? <span class="red">*</span></div>
+    <div class="col-12 col-md-6">
+      <PowerSelect 
+        @searchEnabled={{true}} 
+        @searchField={{"name"}} 
+        @options={{jobTypes}}
+        @selected={{applicantProfile.desiredJobType}} 
+        @placeholder="Full Time / Internship / Part Time"
+        @onChange={{action (mut applicantProfile.desiredJobType)}} as |jobType|>
+          {{#if (eq jobType 'fulltime')}}
+            Full Time
+          {{else if (eq jobType 'internship')}}
+            Internship
+          {{else if (eq jobType 'parttime')}}
+            Part Time
+          {{/if}}
+      </PowerSelect>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='desiredJobType' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -129,7 +159,7 @@
           @placeholder="Enter amount here" required />
         <span class="all-center bg-faded px-3">lpa</span>
       </div>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentCtc' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='currentCtc' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -142,7 +172,7 @@
     <div class="col-12 col-md-6">
       <PikadayInput @class="input-text t-align-l" @value="{{applicantProfile.joiningDateString}}"
         @onSelection={{action (mut applicantProfile.joiningDateString)}} @minDate={{today}} />
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='joiningDate' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='joiningDate' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}
@@ -168,7 +198,7 @@
           @accept="application/pdf"
           @onDidUpload={{action 'onResumeUpload'}} />
       </div>
-      <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='resumeLink' as |validation|>
+      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='resumeLink' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>
         {{/if}}

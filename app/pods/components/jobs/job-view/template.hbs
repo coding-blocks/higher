@@ -30,18 +30,32 @@
             <div class="row font-sm pl-3">
               <div class="col-6">
                 <div class="mb-3">
-                  Job Location: <span class="extra-bold">{{job.location}}</span>
+                  Job Location: 
+                  <span class="extra-bold commafy">
+                    {{#each job.locations as |location|}}
+                      {{location.name}}
+                    {{/each}}
+                  </span>
                 </div>
                 <div class="mb-3">
-                  Job Type: <span class="extra-bold">{{job.type}}</span>
+                  Job Type: 
+                  <span class="extra-bold">
+                    {{#if (eq job.type 'fulltime')}}
+                      Full Time
+                    {{else if (eq job.type 'intern')}}
+                      Internship
+                    {{else}}
+                      Part Time
+                    {{/if}}
+                  </span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="mb-3">
-                  Experience: <span class="extra-bold">{{job.experience}}</span>
+                  Experience: <span class="extra-bold">{{job.experience}} Years</span>
                 </div>
                 <div>
-                  Stipend: <span class="extra-bold">{{job.ctc}}</span>
+                  CTC: <span class="extra-bold">{{job.ctc}} LPA</span>
                 </div>
               </div>
             </div>
@@ -106,7 +120,7 @@
             </EnsureLoginButton>
           {{else}}
             <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
-              @callIfLoggedIn={{action (mut showTakeTestModal) true}} 
+              @callIfLoggedIn={{action (mut showApplyToJobModal) true}} 
               disabled={{not job.isAccepting}}>
                 Apply To Job
             </EnsureLoginButton>
