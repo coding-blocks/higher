@@ -66,7 +66,7 @@ export default class ApplicantsProfileIdController extends Controller {
 
       this.scrollTo("#timeline-top")
     } catch (err) {
-      console.log(err)
+      console.log('yoyo', err)
     }
   }
 

@@ -150,25 +150,27 @@
       </label>
     </div>
   </div>
+
   {{#unless applicantProfile.isStudent}}
-  <div class="row align-items-center mb-4 pt-2">
-    <div class="col-12 col-md-6">What is your current CTC? <span class="red">*</span></div>
-    <div class="col-12 col-md-6">
-      <div class="d-flex">
-        <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.currentCtcString}}
-          @placeholder="Enter amount here" required />
-        <span class="all-center bg-faded px-3">lpa</span>
+    <div class="row align-items-center mb-4 pt-2">
+      <div class="col-12 col-md-6">What is your current CTC? <span class="red">*</span></div>
+      <div class="col-12 col-md-6">
+        <div class="d-flex">
+          <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.currentCtcString}}
+            @placeholder="Enter amount here" required />
+          <span class="all-center bg-faded px-3">lpa</span>
+        </div>
+        <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='currentCtc' as |validation|>
+          {{#if (and validation.isInvalid showValidationMessages)}}
+          <span class="red card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
       </div>
-      <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='currentCtc' as |validation|>
-        {{#if (and validation.isInvalid showValidationMessages)}}
-        <span class="red card-md">{{validation.message}}</span>
-        {{/if}}
-      </WFormValidations>
     </div>
-  </div>
+  {{/unless}}
 
   <div class="row align-items-center mb-4 pt-2">
-    <div class="col-12 col-md-6">What is your earliest possible joining dates? <span class="red">*</span></div>
+    <div class="col-12 col-md-6">What is your earliest possible joining date?</div>
     <div class="col-12 col-md-6">
       <PikadayInput @class="input-text t-align-l" @value="{{applicantProfile.joiningDateString}}"
         @onSelection={{action (mut applicantProfile.joiningDateString)}} @minDate={{today}} />
@@ -179,7 +181,6 @@
       </WFormValidations>
     </div>
   </div>
-  {{/unless}}
 
   <div class="row align-items-center mb-4 pt-2">
     <div class="col-12 col-md-6">

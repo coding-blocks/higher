@@ -22,6 +22,6 @@ export default class NavBarComponent extends Component {
   }
 
   get logoutLink() {
-    return ENV.ONEAUTH_URL + '/logout?redirect=' + ENV.PUBLIC_URL + '/logout'
+    return ENV.ONEAUTH_URL + '/logout?redirect=' + ENV.PUBLIC_URL + 'logout'
   }
 }

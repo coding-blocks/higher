@@ -65,11 +65,4 @@ export default class ApplicantCourseEditor extends Component {
     this.editingRecord.set('name', courseType.name)
     this.set('selectedCourseType', courseType.name)
   }
-
-  willDestroyElement() {
-    if(this.editingRecord.hasDirtyAttributes){
-      this.editingRecord.destroyRecord()
-    }
-    this._super(...arguments)
-  }
 }

@@ -37,12 +37,17 @@ export default class PagerComponent extends Component {
 
   @action
   nextPage() {
-    Promise.resolve(this.callOnNext && this.callOnNext.perform(this.currentPage))
+    if(this.callOnNext) {
+      this.callOnNext.perform(this.currentPage)
       .then(r => {
+        console.log('hihihihi')
         this.pages[this.currentPage].skippable = true
         if (this.currentPage < this.totalPages - 1) {
           this.setCurrentPage(this.currentPage + 1)
         }
       })
+      .catch(err => console.log('hihi', err))
+    }
+
   }
 }

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
 // import jspdf from 'jspdf';
 // import html2canvas from 'html2canvas';
@@ -39,5 +39,11 @@ export default class ApplicantProfileComponent extends Component {
   //     console.log('canvas error', err)
   //   }
   // }
+
+  @dropTask toggleProfileIsActiveTask = function *() {
+    this.profile.toggleProperty('isActive')
+    yield this.profile.save()
+  }
+  
 
 }

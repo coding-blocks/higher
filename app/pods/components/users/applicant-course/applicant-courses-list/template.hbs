@@ -95,7 +95,7 @@
 
 {{#if showAddNewCourseModal}}
   {{#modal-dialog
-      onClose=(action (mut showAddNewCourseModal) false)
+      onClose=(action 'onCloseModal')
       targetAttachment="none"
       translucentOverlay=true
       containerClass='centered-scrolling-container w-50 mt-3'

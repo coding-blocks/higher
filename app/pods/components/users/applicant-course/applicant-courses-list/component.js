@@ -36,4 +36,14 @@ export default class ApplicantCoursesList extends Component {
   onAfterSave() {
     this.set('showAddNewCourseModal', false)
   }
+
+  @action 
+  onCloseModal() {
+    const editingRecord = this.editingRecord
+    if(editingRecord.hasDirtyAttributes) {
+      this.courses.removeObject(editingRecord)
+      editingRecord.rollbackAttributes()
+    }
+    this.set('showAddNewCourseModal', false)
+  }
 }
