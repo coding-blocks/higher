@@ -19,13 +19,13 @@ export default class PagerComponent extends Component {
   setPage(page) {
     const pages = this.pages
     const currentPage = this.currentPage
-    const prevToPage = page - 1 < 0 ? 0 : page - 1
+    const prevToCurrentPage = page - 1 < 0 ? 0 : page - 1
 
     if (page < 0 || page > pages.length) {
       return
     }
 
-    if (this.skippable || page < currentPage || pages[currentPage].skippable && pages[prevToPage].skippable) {
+    if (this.skippable || page < currentPage || pages[currentPage].skippable && pages[prevToCurrentPage].skippable) {
       this.set('currentPage', page)
     }
   }
