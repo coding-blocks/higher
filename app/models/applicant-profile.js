@@ -61,11 +61,6 @@ const Validations = buildValidations({
   joiningDate: {
     description: 'Joining Date',
     validators: [
-      validator('presence', {
-        presence: Ember.computed('model.isStudent', function() {
-          return !this.get('model.isStudent')
-        }).volatile()
-      }),
       validator('date')
     ]
   },
