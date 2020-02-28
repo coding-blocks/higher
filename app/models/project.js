@@ -39,7 +39,25 @@ const Validations = buildValidations({
         })
       })
     ]
-  }
+  },
+  githubLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
+  websiteLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
 })
 
 export default DS.Model.extend(Validations, {
@@ -47,6 +65,9 @@ export default DS.Model.extend(Validations, {
   subtitle: DS.attr(),
   startDate: DS.attr(),
   endDate: DS.attr(),
+  githubLink: DS.attr(),
+  websiteLink: DS.attr(),
+  links: DS.attr(),
   startDateString: Ember.computed('startDate', {
     get() {
       return moment.unix(this.get('startDate')).toDate()
@@ -85,5 +106,7 @@ export default DS.Model.extend(Validations, {
   location:DS.attr(),
   type:DS.attr(),
   description:DS.attr(),
-  applicantProfile: DS.belongsTo('applicant-profile')
+  applicantProfile: DS.belongsTo('applicant-profile'),
+  screenshotUploadIds:DS.attr(),
+  screenshotUploads: DS.hasMany('upload')
 });
