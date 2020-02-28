@@ -3,6 +3,7 @@ import { dropTask } from 'ember-concurrency-decorators';
 import { alias } from '@ember/object/computed';
 import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
 export default class BasicInfoEditoComponent extends Component {
   @service store
@@ -21,6 +22,12 @@ export default class BasicInfoEditoComponent extends Component {
     this.fetchJobRolesTask.perform()
   }
 
+  @computed('applicantProfile.resumeLink', 'applicantProfile.resumeUpload')
+  get showResumeDownloadButton() {
+    const applicantProfile = this.applicantProfile
+    return isEmpty(this.applicantProfile.resumeLink) && !isEmpty(applicantProfile.get('resumeUpload.id'))
+  }
+
   @dropTask fetchLocationsTask = function* () {
     return yield this.store.findAll('location')
   }
@@ -31,7 +38,7 @@ export default class BasicInfoEditoComponent extends Component {
 
   @action
   onResumeUpload({ url }) {
-    this.applicantProfile.set('resumeLink', url)
+    this.applicantProfile.set('resumeLink', null)
   }
 
   @action

@@ -131,7 +131,11 @@ const Validations = buildValidations({
     validators: [
       // validator('presence', {
       //   presence: true
-      // })
+      // }),
+      validator('format', {
+        type: 'url',
+        allowBlank: true
+      })
     ]
   },
   desiredJobType: {

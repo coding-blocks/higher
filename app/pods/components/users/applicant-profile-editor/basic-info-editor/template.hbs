@@ -182,16 +182,16 @@
     </div>
   </div>
 
-  <div class="row align-items-center mb-4 pt-2">
+  <div class="row align-items-start mb-4 pt-2">
     <div class="col-12 col-md-6">
-      Upload Resume <span class="red">*</span>
+      Add Resume
       <br>
       <span class="dark-grey card-md">Please upload only PDF files with size less than 5MB</span>
     </div>
     <div class="col-12 col-md-6">
       <div class="d-flex">
-        {{#if applicantProfile.resumeLink}}
-          <a class="orange font-mds mr-3" href="{{applicantProfile.resumeLink}}" download>
+        {{#if showResumeDownloadButton}}
+          <a class="orange font-mds mr-3" href="{{applicantProfile.resumeUpload.url}}" download>
             <i class="fas fa-download"></i>
           </a>
         {{/if}}
@@ -199,6 +199,10 @@
           @accept="application/pdf"
           @onDidUpload={{action 'onResumeUpload'}} />
       </div>
+      <br>
+      OR
+      <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.resumeLink}}
+        @placeholder="Resume Link" />
       <WFormValidations class="form-error mt-1" @model={{applicantProfile}} @attributeName='resumeLink' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
         <span class="red card-md">{{validation.message}}</span>

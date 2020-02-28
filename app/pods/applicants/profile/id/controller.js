@@ -45,6 +45,7 @@ export default class ApplicantsProfileIdController extends Controller {
       if (this.resumeUpload && this.resumeUpload.hasDirtyAttributes) {
         yield this.resumeUpload.save()
         this.applicantProfile.set('resumeUpload', this.resumeUpload)
+        // this.applicantProfile.set('resumeLink', null)
       }
       if (this.photoUpload && this.photoUpload.hasDirtyAttributes) {
         yield this.photoUpload.save()
