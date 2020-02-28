@@ -40,13 +40,12 @@ export default class PagerComponent extends Component {
     if(this.callOnNext) {
       this.callOnNext.perform(this.currentPage)
       .then(r => {
-        console.log('hihihihi')
         this.pages[this.currentPage].skippable = true
         if (this.currentPage < this.totalPages - 1) {
           this.setCurrentPage(this.currentPage + 1)
         }
       })
-      .catch(err => console.log('hihi', err))
+      .catch(err => console.log('hihi',err))
     }
 
   }

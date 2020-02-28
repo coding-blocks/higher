@@ -1,7 +1,12 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators'; 
+import { inject as service } from '@ember/service';
 
 export default class ApplicantCoursesList extends Component {
+  @service store
+  @service currentUser
+  
   editMode = false
   showAddNewCourseModal = false
 
@@ -45,5 +50,17 @@ export default class ApplicantCoursesList extends Component {
       editingRecord.rollbackAttributes()
     }
     this.set('showAddNewCourseModal', false)
+  }
+
+  @dropTask syncOnlineCoursesTask = function* () {
+    const applicantProfile = yield this.currentUser.getApplicantProfile()
+    let applicantCourses = yield this.store.query('applicant-course', {
+      custom: {
+        ext: 'url',
+        url: `applicant-profile/${applicantProfile.id}/get-onlinecb-courses`
+      }
+    })
+
+    applicantCourses.map(ac => ac.set('applicantProfile', applicantProfile))
   }
 }

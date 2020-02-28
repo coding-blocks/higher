@@ -44,6 +44,4 @@ export default class ApplicantProfileComponent extends Component {
     this.profile.toggleProperty('isActive')
     yield this.profile.save()
   }
-  
-
 }

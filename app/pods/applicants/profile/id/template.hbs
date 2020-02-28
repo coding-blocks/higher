@@ -5,11 +5,9 @@
   {{#if editMode}}
     <Users::ApplicantProfileEditor 
       @applicantProfile={{applicantProfile}}
-      @saveApplicantProfile={{saveApplicantProfileTask}} 
-      @syncOnlineCoursesTask={{syncOnlineCoursesTask}}
       @getNewRecord={{action "getNewRecord"}} 
       @step={{step}} 
-      @showValidationMessages={{showValidationMessages}} />
+      @job_id={{job_id}} />
   {{else}}
     <Users::ApplicantProfile 
       @profile={{applicantProfile}} 

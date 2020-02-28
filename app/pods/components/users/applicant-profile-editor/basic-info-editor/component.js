@@ -37,7 +37,22 @@ export default class BasicInfoEditoComponent extends Component {
   }
 
   @action
-  onResumeUpload({ url }) {
+  async onResumeUpload({ url }) {
+    let resumeUpload = await this.applicantProfile.get('resumeUpload')
+
+    if (isEmpty(resumeUpload)) {
+      resumeUpload = this.store.createRecord('upload', {
+        type: 'resume',
+        isVerified: true,
+        verifiedById: this.currentUser.user.id,
+        url: url
+      })
+
+      this.applicantProfile.set('resumeUpload', resumeUpload)
+    }
+    else {
+      resumeUpload.set('url', url)
+    }
     this.applicantProfile.set('resumeLink', null)
   }
 

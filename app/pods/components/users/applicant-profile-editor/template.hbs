@@ -1,7 +1,7 @@
 <WPagerComponent 
   @pages={{pages}} 
   @skippable={{false}} 
-  @callOnNext={{saveApplicantProfile}}
+  @callOnNext={{saveApplicantProfileTask}}
   @currentPage={{currentPage}} as |pager|>
 
   <div id="timeline-top" class="border-card p-5 mb-5">
@@ -156,7 +156,6 @@
         <Users::ApplicantCourse::ApplicantCoursesList class="mb-5" 
           @courses={{applicantProfile.applicantCourses}}
           @editMode={{true}}
-          @syncOnlineCoursesTask={{syncOnlineCoursesTask}}
           @getNewRecord={{action getNewRecord}} />
       </div>
     </div>
