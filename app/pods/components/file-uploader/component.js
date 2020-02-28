@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 
 export default class FileUploaderComponent extends Component {
   @service fileQueue
+  @service session
 
   allowMultiple = false
   dropZoneComponent = 'file-uploader/p-drop-zone'
@@ -26,7 +27,7 @@ export default class FileUploaderComponent extends Component {
     if (this.waitForTrigger && this.triggerUpload && !isEmpty(this.file)) {
       this.set('errorMessage', null)
 
-      this.file.upload(this.uploadUrl).then(result => {
+      this.file.upload(this.uploadUrl, { headers: this.requestHeaders }).then(result => {
         this.onDidUpload(result.body)
       }).catch(err => {
         this.set('errorMessage', 'Error uploading files')
@@ -38,6 +39,14 @@ export default class FileUploaderComponent extends Component {
   @computed('fileQueue')
   get currentQueue() {
     return this.fileQueue.find(this.queueName)
+  }
+
+  @computed('session')
+  get requestHeaders() {
+
+    return {
+      Authorization: 'JWT ' + this.session.data.authenticated.jwt
+    }
   }
 
   @computed('waitForTrigger', 'triggerUpload', 'currentQueue.files.length')
@@ -70,7 +79,7 @@ export default class FileUploaderComponent extends Component {
         this.set('triggerUpload', false)
         this.set('file', file)
       } else {
-        let response = await file.upload(this.uploadUrl)
+        let response = await file.upload(this.uploadUrl, { headers: this.requestHeaders })
         if (this.onDidUpload) {
           this.onDidUpload(response.body)
         }
