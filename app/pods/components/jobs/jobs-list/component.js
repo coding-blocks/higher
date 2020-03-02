@@ -24,7 +24,7 @@ export default class JobsListComponent extends Component {
       filter: {
         "is_accepting =": true, 
         "deadline >": moment().format(),
-        "company_profiles.is_active =": true
+        "companies.is_active =": true
       },
       page: {
         limit: this.limit,

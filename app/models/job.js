@@ -22,7 +22,7 @@ export default DS.Model.extend({
   coverImage: DS.attr(),
   form: DS.attr(),
   locations: DS.hasMany('location'),
-  companyProfile: DS.belongsTo('company-profile'),
+  company: DS.belongsTo('company'),
   myApplication: DS.belongsTo('job-application', {inverse: null}),
   jobApplications: DS.hasMany('job-application', { inverse: 'job' })
 });

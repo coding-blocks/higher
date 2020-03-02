@@ -2,8 +2,8 @@
   <div class="col-md-4 col-sm-6 col-12">
     <div class="row no-gutters align-items-center">
       <div class="col-3">
-        {{#if job.companyProfile.logo}}
-          <img class="s-80x80" src={{job.companyProfile.logo}} alt={{job.companyProfile.name}}>
+        {{#if job.company.logo}}
+          <img class="s-80x80" src={{job.company.logo}} alt={{job.company.name}}>
         {{else}}
           <i class="far fa-building fa-4x"></i>
         {{/if}}
@@ -11,7 +11,7 @@
       <div class="col-9">
         <h5 class="bold">{{job.title}}</h5>
         <div class="font-normal mt-2 dark-grey">
-          {{job.companyProfile.name}}
+          {{job.company.name}}
           <span class="black">Posted {{moment-from-now (unix job.postedOn)}}</span>
         </div>
       </div>

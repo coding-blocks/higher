@@ -6,7 +6,7 @@
           <div class="col-12 col-md-6">
             <div class="img-desc b-right">
               <div class="col-3 pl-0">
-                <img src={{job.companyProfile.logo}} alt="">
+                <img src={{job.company.logo}} alt="">
               </div>
               <div class="description col-9">
                 <div>
@@ -14,7 +14,7 @@
                     {{job.title}}
                   </div>
                   <div class="font-mds">
-                    {{job.companyProfile.name}}
+                    {{job.company.name}}
                   </div>
                 </div>
                 <div class="dark-grey">
@@ -87,7 +87,7 @@
         <div class="w-50 divider-h"></div>
 
         <div class="font-sm">
-          {{markdown-to-html job.companyProfile.description class="d-inline"}}
+          {{markdown-to-html job.company.description class="d-inline"}}
         </div>
 
 

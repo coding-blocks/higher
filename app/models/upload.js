@@ -6,5 +6,5 @@ export default DS.Model.extend( {
   type: DS.attr(),
   isVerified: DS.attr(),
   verifiedById: DS.attr('number'),
-  companyProfile: DS.belongsTo('company-profile')
+  company: DS.belongsTo('company')
 })
