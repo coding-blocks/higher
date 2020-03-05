@@ -29,7 +29,18 @@
   </div>
 
   <div class="col-md-2 col-sm-3 col-6 mt-sm-0 mt-3">
-    <div class="font-normal">Type: <span class="bold">{{job.type}}</span></div>
+    <div class="font-normal">
+      Type: 
+      <span class="bold">
+        {{#if (eq job.type 'fulltime')}}
+          Full Time
+        {{else if (eq job.type 'internship')}}
+          Internship
+        {{else }}
+          Part Time
+        {{/if}}
+      </span>
+    </div>
     <div class="font-normal mt-2">Location: 
       <span class="bold commafy">
         {{#each job.locations as |location|}}
