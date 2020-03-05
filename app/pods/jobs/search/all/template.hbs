@@ -1,11 +1,18 @@
+
+<Filters::JobsFilter 
+  @filter={{jobsFilter}} 
+  @onApplyFilter={{onApplyFilter}} />
+
 <Jobs::JobsList class="mb-5"
   @limit={{limit}}
   @offset={{offset}}
-  @fetchJobsTask={{fetchJobsTask}}/>
+  @fetchJobsTask={{fetchJobsTask}} 
+  @filter={{jobsFilter}} />
 
 <h4 class="my-5">Past Jobs</h4>
 
 <Jobs::JobsList class="mb-5"
   @fetchJobsTask={{fetchPastJobsTask}} 
-  @allowPagination={{false}} />
+  @allowPagination={{false}}
+  @filter={{pastJobsFilter}} />
 

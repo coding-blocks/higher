@@ -14,18 +14,20 @@ export default class JobsListComponent extends Component {
   limit = 4
   offset = 0
 
-  didReceiveAttrs() {
-    this._super(...arguments)
-    this.fetchJobsTask.perform()
+  filter = {
+    "is_accepting =": true,
+    "deadline >": moment().format(),
+    "companies.is_active =": true
   }
 
-  @restartableTask fetchJobsTask = function* () {
+  didReceiveAttrs() {
+    this._super(...arguments)
+    this.fetchJobsTask.perform(this.filter)
+  }
+
+  @restartableTask fetchJobsTask = function* (filter) {
     return yield this.store.query('job', {
-      filter: {
-        "is_accepting =": true, 
-        "deadline >": moment().format(),
-        "companies.is_active =": true
-      },
+      filter,
       page: {
         limit: this.limit,
         offset: this.offset
