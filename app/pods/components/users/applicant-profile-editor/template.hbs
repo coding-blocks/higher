@@ -1,3 +1,6 @@
+{{#if saveApplicantProfileTask.isRunning}}
+  <LoadingComponent @smallLoader="true" />
+{{/if}}
 <WPagerComponent 
   @pages={{pages}} 
   @skippable={{false}} 

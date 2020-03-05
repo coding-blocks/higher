@@ -1,7 +1,4 @@
 <div class="container my-5">
-  {{#if saveApplicantProfileTask.isRunning}}
-    <LoadingComponent @smallLoader="true" />
-  {{/if}}
   {{#if editMode}}
     <Users::ApplicantProfileEditor 
       @applicantProfile={{applicantProfile}}
