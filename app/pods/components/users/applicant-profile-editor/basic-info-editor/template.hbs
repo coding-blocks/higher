@@ -96,7 +96,7 @@
     <div class="col-12 col-md-6">What is your minimum expected CTC? <span class="red">*</span></div>
     <div class="col-12 col-md-6">
       <div class="d-flex">
-        <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.expectedCtcString}}
+        <Input @type="number" class="input-text t-align-l" @value={{applicantProfile.expectedCtcString}}
           @placeholder="Enter amount here" />
         <span class="all-center bg-faded px-3">lpa</span>
       </div>
@@ -156,7 +156,7 @@
       <div class="col-12 col-md-6">What is your current CTC? <span class="red">*</span></div>
       <div class="col-12 col-md-6">
         <div class="d-flex">
-          <Input @type="text" class="input-text t-align-l" @value={{applicantProfile.currentCtcString}}
+          <Input @type="number" class="input-text t-align-l" @value={{applicantProfile.currentCtcString}}
             @placeholder="Enter amount here" required />
           <span class="all-center bg-faded px-3">lpa</span>
         </div>
