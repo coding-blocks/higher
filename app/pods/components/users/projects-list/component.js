@@ -5,7 +5,9 @@ export default class ProjectListComponent extends Component {
   @action
   getNewProject() {
     if (!this.newRecord) {
-      const newRecord = this.get('getNewRecord')('project')
+      const newRecord = this.get('getNewRecord')('project', {
+        links: JSON.stringify({})
+      })
       this.set('newRecord', newRecord)
     }
     this.set('editingRecord', this.newRecord)
