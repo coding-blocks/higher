@@ -16,14 +16,29 @@
     {{#each educationalQualifications as |educationalQualification|}}
     <div class="py-4">
       <div class="d-flex justify-content-between">
-        <h5>{{educationalQualification.title}}</h5>
+        {{#if (eq educationalQualification.type 'x_secondary')}}
+          <h5>X (Senior Secondary)</h5>
+        {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
+          <h5>XII (Senior Secondary)</h5>
+        {{else}}
+          <h5>{{educationalQualification.title}}</h5>
+        {{/if}}
+
         {{#if allowEdit}}
-        <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
-          <i class="fas fa-edit"></i>Edit
-        </button>
+          <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
+            <i class="fas fa-edit"></i>Edit
+          </button>
         {{/if}}
       </div>
-      <div class="my-2">{{educationalQualification.subtitle}}</div>
+      <div class="my-2">
+        {{#if (eq educationalQualification.type 'x_secondary')}}
+          {{educationalQualification.title}}
+        {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
+          {{educationalQualification.title}} | {{educationalQualification.subtitle}}
+        {{else}}
+          {{educationalQualification.subtitle}}
+        {{/if}}
+      </div>
       <div class="dark-grey">
         {{educationalQualification.startYear}} -
         {{#if educationalQualification.isCurrent}}
@@ -53,143 +68,10 @@
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}
-<div class="p-5">
-  <h4 class="mb-5">Add Educational Qualifications</h4>
-
-  <div class="mb-4">
-    <div class="font-sm d-flex justify-content-between">
-      <div>
-        College <span class="red">*</span>
-      </div>
-      <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='title' as |validation|>
-        {{#if (and validation.isInvalid showValidationMessages)}}
-          <span class="red card-md">{{validation.message}}</span>
-        {{/if}}
-      </WFormValidations>
-    </div>
-    
-    {{#unless editingRecord.isOtherCollege}}
-      <PowerSelect 
-        @searchEnabled={{true}} 
-        @options={{colleges}}
-        @selected={{editingRecord.title}} 
-        @placeholder="Select College"
-        @onChange={{action (mut editingRecord.title)}} as |college|>
-        {{college}}
-      </PowerSelect>
-    {{/unless}}
-
-    <div class="d-flex mt-2 mb-4">
-      <label class="input-checkbox checkbox-solid pt-1 mr-2">
-        <Input @type="checkbox" @checked={{editingRecord.isOtherCollegeSetter}} />
-        Other
-    
-        <span></span>
-      </label>
-
-      {{#if editingRecord.isOtherCollege}}
-        <Input class="input-text" @type="text" @value={{editingRecord.title}} />
-      {{/if}}
-    </div>
-  </div>  
-
-  <div class="mb-4">
-    <div class="font-sm d-flex justify-content-between">
-      <div>
-        Branch <span class="red">*</span>
-      </div>
-      <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='subtitle' as |validation|>
-        {{#if (and validation.isInvalid showValidationMessages)}}
-          <span class="red card-md">{{validation.message}}</span>
-        {{/if}}
-      </WFormValidations>
-    </div>
-    <PowerSelect 
-      @searchEnabled={{true}} 
-      @options={{branches}} 
-      @selected={{editingRecord.subtitle}}
-      @placeholder="Select Branch" 
-      @onChange={{action (mut editingRecord.subtitle)}} as |branch|>
-      {{branch}}
-    </PowerSelect>
-  </div>
-
-
-  <div class="row mb-4">
-    <div class="col-12 col-md-6">
-      <div class="font-sm d-flex justify-content-between">
-        <div>
-          Start Year <span class="red">*</span>
-        </div>
-        <WFormValidations class="mt-1" @model={{editingRecord}} @attributeName='startYear' as |validation|>
-          {{#if (and validation.isInvalid showValidationMessages)}}
-            <span class="red card-md">{{validation.message}}</span>
-          {{/if}}
-        </WFormValidations>
-      </div>
-      <select class="input-text" name="start_year" 
-        onchange={{action (mut editingRecord.startYear) 
-        value="target.value"}}>
-          <option selected disabled>Start Year</option>
-          {{#each (range 1990 maxEndYear) as |year|}}
-            <option value="{{year}}" selected={{lite-eq editingRecord.startYear year}}>{{year}}</option>
-          {{/each}}
-      </select>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="font-sm d-flex justify-content-between">
-        <div>
-          {{if editingRecord.isCurrent 'Expected End Year' 'End Year'}} <span class="red">*</span>
-        </div>
-        <WFormValidations class="mt-1" @model={{editingRecord}} @attributeName='endYear' as |validation|>
-          {{#if (and validation.isInvalid showValidationMessages)}}
-            <span class="red card-md">{{validation.message}}</span>
-          {{/if}}
-        </WFormValidations>
-      </div>
-      <select class="input-text" name="end_year" 
-        onchange={{action (mut editingRecord.endYear) 
-        value="target.value"}}>
-          <option selected disabled>End Year</option>
-          {{#each (range 1990 maxEndYear) as |year|}}
-            <option value="{{year}}" selected={{lite-eq editingRecord.endYear year}}>{{year}}</option>
-          {{/each}}
-      </select>
-    </div>
-  </div>
-  <div class="mb-4">
-    <label class="input-checkbox checkbox-solid pt-1">
-      <Input @type="checkbox" @checked={{editingRecord.isCurrent}} />
-        Currently Attending
-
-      <span></span>
-    </label>
-  </div>
-
-  <div class="mb-4">
-    <div class="font-sm">
-      Description (if any)
-    </div>
-    <Textarea class="input-textarea w-100" @value={{editingRecord.description}} @rows="7" />
-    </div>
-    
-      <div class="d-flex justify-content-between">
-        <div>
-          {{#if editingRecord.id}}
-            <button class="red" {{action 'deleteRecord'}}>
-              <i class="fas fa-trash pr-3"></i>Delete
-            </button>
-          {{/if}}
-        </div>
-        <div>
-          <button class="button-dashed button-orange mr-2" {{action "onCloseModal"}}>Cancel</button>
-          <button class="button-solid button-orange" 
-            {{action (perform saveRecordTask)}}
-            disabled={{and (v-get editingRecord 'isInvalid') showValidationMessages}}>
-            Save Details
-          </button>
-        </div>
-      </div>
-    </div>
+    <Users::EducationalQualificationsList::EducationalQualificationEditor 
+      @educationalQualification={{editingRecord}}
+      @onCloseModal={{action 'onCloseModal'}}
+      @onSaveRecord={{action 'onSaveRecord'}}
+      @onDeleteRecord={{action 'onDeleteRecord'}} />
   {{/modal-dialog}}
 {{/if}}

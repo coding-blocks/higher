@@ -9,7 +9,23 @@ const Validations = buildValidations({
     validators: [
       validator('presence', {
         presence: true,
-        message: 'College cannot be empty'
+        message: Ember.computed('model.type', function() {
+          const educationalQualificationType = this.get('model.type')
+          if(educationalQualificationType == 'x_secondary' || educationalQualificationType == 'xii_senior_secondary') {
+            return 'School name cannot be empty'
+          } else {
+            return 'College name cannot be empty'
+          }
+        })
+      })
+    ]
+  },
+  type: {
+    description: 'Type',
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Qualification Type cannot be empty'
       })
     ]
   },
@@ -17,7 +33,9 @@ const Validations = buildValidations({
     description: 'Subtitle',
     validators: [
       validator('presence', {
-        presence: true,
+        presence: Ember.computed('model.type', function() {
+          return this.model.type != 'x_secondary'
+        }),
         message: 'Branch cannot be empty'
       })
     ]
@@ -34,9 +52,24 @@ const Validations = buildValidations({
   endYear: {
     description: 'End Year',
     validators: [
-      validator('date'),
+      validator('date', {
+        after: Ember.computed('model.startYear', function() {
+          return this.get('model.startYear')
+        }),
+        message: 'End Year must be after Start Year'
+      }),
       validator('presence', {
         presence: true
+      })
+    ]
+  },
+  performanceScore: {
+    validators: [
+      validator('number', {
+        allowString: true,
+        lte: Ember.computed('model.performanceScale', function() {
+          return this.get('model.performanceScale') === 'percentage' ? 100 : 10
+        }).volatile()
       })
     ]
   }
@@ -52,6 +85,8 @@ export default DS.Model.extend(Validations, {
   description: DS.attr(),
   isCurrent: DS.attr('boolean'),
   isOtherCollege: DS.attr(),
+  performanceScale: DS.attr(),
+  performanceScore: DS.attr('number'),
   isOtherCollegeSetter: Ember.computed('isOtherCollege', {
     get() {
       return this.isOtherCollege
