@@ -10,7 +10,7 @@
     </div>
   {{else}}
 
-  {{#if showSchoolInput}}
+  {{#if educationalQualification.isForSchool}}
     <div class="mb-4">
       <div class="font-sm d-flex justify-content-between">
         <div>
@@ -40,10 +40,15 @@
       </div>
     
       {{#unless educationalQualification.isOtherCollege}}
-      <PowerSelect @searchEnabled={{true}} @options={{colleges}} @selected={{educationalQualification.title}}
-        @placeholder="Select College" @onChange={{action (mut educationalQualification.title)}} as |college|>
-        {{college}}
-      </PowerSelect>
+        <PowerSelect 
+          @searchEnabled={{true}} 
+          @searchField={{"name"}}
+          @options={{colleges}} 
+          @selected={{selectedCollege}}
+          @placeholder="Select College" 
+          @onChange={{action (mut selectedCollege)}} as |college|>
+          {{college.name}}
+        </PowerSelect>
       {{/unless}}
     
       <div class="d-flex mt-2 mb-4">
@@ -76,9 +81,10 @@
       <PowerSelect 
         @searchEnabled={{true}} 
         @options={{if (eq educationalQualification.type 'xii_senior_secondary') seniorSecondaryStreams branches}} 
-        @selected={{educationalQualification.subtitle}}
-        @placeholder="Select Branch" @onChange={{action (mut educationalQualification.subtitle)}} as |branch|>
-        {{branch}}
+        @selected={{selectedBranch}}
+        @placeholder="Select Branch" 
+        @onChange={{action (mut selectedBranch)}} as |branch|>
+        {{branch.name}}
       </PowerSelect>
     </div>
   {{/unless}}
@@ -122,7 +128,7 @@
         </select>
       </div>
     </div>
-    {{#unless showSchoolInput}}
+    {{#unless educationalQualification.isForSchool}}
       <div class="mb-4">
         <label class="input-checkbox checkbox-solid pt-1">
           <Input @type="checkbox" @checked={{educationalQualification.isCurrent}} />
