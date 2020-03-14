@@ -36,9 +36,9 @@
       </div>
     </div>
 
-    <div class="profile-timeline px-5 pb-5">
+    <div class="timeline px-5 pb-5">
       {{#each pages as |page index|}}
-      <div class="profile-timeline__event">
+      <div class="timeline__event">
         {{#if (lt index pager.currentPage)}}
         <button class="s-60x60 t-align-c white font-xl round bg-gradient-green-lr"
           {{action pager.setCurrentPage index}}>
@@ -55,7 +55,7 @@
         </button>
         {{/if}}
 
-        <div class="profile-timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
+        <div class="timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
           {{page.title}}
         </div>
       </div>

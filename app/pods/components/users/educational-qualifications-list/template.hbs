@@ -13,45 +13,45 @@
 
   <div class="list-divided border-none">
     {{#if educationalQualifications.length}}
-      {{#each educationalQualifications as |educationalQualification|}}
-        <div class="py-4">
-          <div class="d-flex justify-content-between">
-            {{#if (eq educationalQualification.type 'x_secondary')}}
-              <h5>X (Senior Secondary)</h5>
-            {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
-              <h5>XII (Senior Secondary)</h5>
-            {{else}}
-              <h5>{{educationalQualification.college.name}}</h5>
-            {{/if}}
+    {{#each educationalQualifications as |educationalQualification|}}
+    <div class="py-4">
+      <div class="d-flex justify-content-between">
+        {{#if (eq educationalQualification.type 'x_secondary')}}
+          <h5>X (Senior Secondary)</h5>
+        {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
+          <h5>XII (Senior Secondary)</h5>
+        {{else}}
+          <h5>{{educationalQualification.title}}</h5>
+        {{/if}}
 
-            {{#if allowEdit}}
-              <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
-                <i class="fas fa-edit"></i>Edit
-              </button>
-            {{/if}}
-          </div>
-          <div class="my-2">
-            {{#if (eq educationalQualification.type 'x_secondary')}}
-              {{educationalQualification.title}}
-            {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
-              {{educationalQualification.title}} | {{educationalQualification.subtitle}}
-            {{else}}
-              {{educationalQualification.branch.name}}
-            {{/if}}
-          </div>
-          <div class="dark-grey">
-            {{educationalQualification.startYear}} -
-            {{#if educationalQualification.isCurrent}}
-            Current
-            {{else}}
-            {{educationalQualification.endYear}}
-            {{/if}}
-          </div>
-          <p class="word-break">
-            {{educationalQualification.description}}
-          </p>
-        </div>
-      {{/each}}
+        {{#if allowEdit}}
+          <button class="orange" {{action 'setEditingRecord' educationalQualification}}>
+            <i class="fas fa-edit"></i>Edit
+          </button>
+        {{/if}}
+      </div>
+      <div class="my-2">
+        {{#if (eq educationalQualification.type 'x_secondary')}}
+          {{educationalQualification.title}}
+        {{else if (eq educationalQualification.type 'xii_senior_secondary')}}
+          {{educationalQualification.title}} | {{educationalQualification.subtitle}}
+        {{else}}
+          {{educationalQualification.subtitle}}
+        {{/if}}
+      </div>
+      <div class="dark-grey">
+        {{educationalQualification.startYear}} -
+        {{#if educationalQualification.isCurrent}}
+        Current
+        {{else}}
+        {{educationalQualification.endYear}}
+        {{/if}}
+      </div>
+      <p class="word-break">
+        {{educationalQualification.description}}
+      </p>
+    </div>
+    {{/each}}
     {{else}}
       No Educational Qualifications Added
     {{/if}}
