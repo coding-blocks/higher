@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
 import { dropTask } from 'ember-concurrency-decorators';
 
-export default class EducationalQualificationEditorComponent extends Component{
+export default class EducationalQualificationEditorComponent extends Component {
   @service store;
   @service api;
 
@@ -12,7 +12,7 @@ export default class EducationalQualificationEditorComponent extends Component{
   @alias('fetchBranchesTask.lastSuccessful.value') branches
 
   maxEndYear = +moment().format('YYYY') + 6
-  seniorSecondaryStreams = [{name: 'Commerce'}, {name: 'Science'}, {name: 'Arts'}]
+  seniorSecondaryStreams = [{ name: 'Commerce' }, { name: 'Science' }, { name: 'Arts' }]
   selectedCollege = null
   selectedBranch = null
 
@@ -22,7 +22,7 @@ export default class EducationalQualificationEditorComponent extends Component{
     this.fetchCollegesTask.perform()
     this.fetchBranchesTask.perform()
 
-    if(!this.educationalQualification.isNew) {
+    if (!this.educationalQualification.isNew) {
       this.setSelectedCollege()
       this.setSelectedBranch()
     }
@@ -42,11 +42,14 @@ export default class EducationalQualificationEditorComponent extends Component{
       this.set('showValidationMessages', true)
       return
     }
-    
-    if(!educationalQualification.isForSchool) {
-      this.setCollege() 
+
+    if (!educationalQualification.isForSchool) {
+      this.setCollege()
     }
-    this.setBranchOrSubtitle() 
+
+    if (educationalQualification.type !== 'x_secondary') {
+      this.setBranchOrSubtitle()
+    }
 
     yield this.get('educationalQualification').save()
 
@@ -58,8 +61,8 @@ export default class EducationalQualificationEditorComponent extends Component{
   setBranchOrSubtitle() {
     const educationalQualification = this.educationalQualification
     const selectedBranch = this.selectedBranch
-  
-    if (educationalQualification.get('isForSchool') ) {
+
+    if (educationalQualification.get('isForSchool')) {
       educationalQualification.set('subtitle', selectedBranch.name)
     } else {
       let newBranch = this.store.createRecord('branch', {
@@ -69,12 +72,12 @@ export default class EducationalQualificationEditorComponent extends Component{
       educationalQualification.set('branch', newBranch)
       educationalQualification.set('subtitle', newBranch.name)
     }
-  } 
+  }
 
   setCollege() {
     const educationalQualification = this.educationalQualification
     const selectedCollege = this.selectedCollege
-    
+
     let newCollege = this.store.createRecord('college', {
       name: educationalQualification.isOtherCollege ? educationalQualification.title : selectedCollege.name,
       oneauthId: educationalQualification.isOtherCollege ? null : selectedCollege.id,
@@ -82,17 +85,17 @@ export default class EducationalQualificationEditorComponent extends Component{
 
     educationalQualification.set('college', newCollege)
     educationalQualification.set('title', newCollege.name)
-  } 
+  }
 
   setSelectedBranch() {
     const educationalQualification = this.educationalQualification
 
-    if(educationalQualification.isForSchool) {
+    if (educationalQualification.isForSchool) {
       this.set('selectedBranch', { name: educationalQualification.subtitle })
     } else {
-      this.set('selectedBranch', { 
+      this.set('selectedBranch', {
         id: educationalQualification.get('branch.oneauthId'),
-        name: educationalQualification.get('branch.name') 
+        name: educationalQualification.get('branch.name')
       })
     }
   }
@@ -100,10 +103,10 @@ export default class EducationalQualificationEditorComponent extends Component{
   setSelectedCollege() {
     const educationalQualification = this.educationalQualification
 
-    if(!educationalQualification.isForSchool) {
-      this.set('selectedCollege', { 
+    if (!educationalQualification.isForSchool) {
+      this.set('selectedCollege', {
         id: educationalQualification.get('college.oneauthId'),
-        name: educationalQualification.get('college.name') 
+        name: educationalQualification.get('college.name')
       })
     }
   }
