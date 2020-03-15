@@ -29,11 +29,19 @@ export default class BasicInfoEditoComponent extends Component {
   }
 
   @dropTask fetchLocationsTask = function* () {
-    return yield this.store.findAll('location')
+    return yield this.store.query('location', {
+      filter: {
+        "is_listed =": true
+      }
+    })
   }
 
   @dropTask fetchJobRolesTask = function* () {
-    return yield this.store.findAll('job-role')
+    return yield this.store.query('job-role', {
+      filter: {
+        "is_listed =": true
+      }
+    })
   }
 
   @action
