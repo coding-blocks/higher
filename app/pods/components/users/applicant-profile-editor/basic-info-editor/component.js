@@ -52,7 +52,6 @@ export default class BasicInfoEditoComponent extends Component {
       resumeUpload = this.store.createRecord('upload', {
         type: 'resume',
         isVerified: true,
-        verifiedById: this.currentUser.user.id,
         url: url
       })
 
