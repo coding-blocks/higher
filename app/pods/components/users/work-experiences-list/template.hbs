@@ -1,10 +1,10 @@
 <div class="border-card mb-5">
-  <div class="d-flex">
-    <div class="li-left">
+  <div class="row no-gutters justify-content-between align-items-center">
+    <div class="flex-1">
       <h5>Work Experiences</h5>
     </div>
     {{#if allowEdit}}
-    <div class="li-right">
+    <div class="ml-2">
       <button class="button-solid button-orange" {{action 'getNewWorkExperience'}}>Add New +</button>
     </div>
     {{/if}}
@@ -56,7 +56,7 @@
     onClose=(action "onCloseModal")
     targetAttachment="none"
     translucentOverlay=true
-    containerClass='centered-scrolling-container w-50 mt-3'
+    containerClass='centered-scrolling-container hiring-modal mt-3'
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}
@@ -70,7 +70,7 @@
       </div>
       <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='title' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
-          <span class="red card-md">{{validation.message}}</span>
+        <span class="red card-md">{{validation.message}}</span>
         {{/if}}
       </WFormValidations>
     </div>
@@ -84,7 +84,7 @@
       </div>
       <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='subtitle' as |validation|>
         {{#if (and validation.isInvalid showValidationMessages)}}
-          <span class="red card-md">{{validation.message}}</span>
+        <span class="red card-md">{{validation.message}}</span>
         {{/if}}
       </WFormValidations>
     </div>
@@ -100,7 +100,7 @@
         </div>
         <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='startDate' as |validation|>
           {{#if (and validation.isInvalid showValidationMessages)}}
-            <span class="red card-md">{{validation.message}}</span>
+          <span class="red card-md">{{validation.message}}</span>
           {{/if}}
         </WFormValidations>
       </div>
@@ -115,7 +115,7 @@
         </div>
         <WFormValidations class="ml-1 mt-1" @model={{editingRecord}} @attributeName='endDate' as |validation|>
           {{#if (and validation.isInvalid showValidationMessages)}}
-            <span class="red card-md">{{validation.message}}</span>
+          <span class="red card-md">{{validation.message}}</span>
           {{/if}}
         </WFormValidations>
       </div>
@@ -125,7 +125,7 @@
     </div>
   </div>
   <div class="mb-4">
-    <label class="input-checkbox checkbox-solid pt-1">
+    <label class="input-checkbox gradient-tick">
       <Input @type="checkbox" @checked={{editingRecord.isCurrentSetter}} />
       Currently Working
       <span></span>
@@ -133,12 +133,18 @@
   </div>
 
   <div class="mb-4">
-    <input name="type" type="radio" checked={{eq editingRecord.type "intern"}}
-      onclick={{action (mut editingRecord.type) "intern"}} />
-    Intern
-    <input name="type" type="radio" checked={{eq editingRecord.type "fulltime"}}
-      onclick={{action (mut editingRecord.type) "fulltime"}} />
-    Full Time
+    <label for="type1" class="input-radio checked-input mr-4">
+      <input name="type" id="type1" type="radio" checked={{eq editingRecord.type "intern"}}
+        onclick={{action (mut editingRecord.type) "intern"}} />
+      Intern
+      <span></span>
+    </label>
+    <label for="type2" class="input-radio checked-input">
+      <input name="type" id="type2" type="radio" checked={{eq editingRecord.type "fulltime"}}
+        onclick={{action (mut editingRecord.type) "fulltime"}} />
+      Full Time
+      <span></span>
+    </label>
   </div>
 
   <div class="mb-4">

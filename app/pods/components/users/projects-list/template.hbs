@@ -1,10 +1,10 @@
 <div class="border-card mb-5">
-  <div class="d-flex">
-    <div class="li-left">
+  <div class="row no-gutters justify-content-between align-items-center">
+    <div class="flex-1">
       <h5>Projects</h5>
     </div>
     {{#if allowEdit}}
-    <div class="li-right">
+    <div class="ml-2">
       <button class="button-solid button-orange" {{action 'getNewProject'}}>Add New +</button>
     </div>
     {{/if}}
@@ -49,7 +49,7 @@
     onClose=(action "onCloseModal")
     targetAttachment="none"
     translucentOverlay=true
-    containerClass='centered-scrolling-container w-50 mt-3'
+    containerClass='centered-scrolling-container hiring-modal mt-3'
     overlayClass='centered-scrolling-overlay'
     wrapperClass='centered-scrolling-wrapper'
   }}

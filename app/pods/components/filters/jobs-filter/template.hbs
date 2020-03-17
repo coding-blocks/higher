@@ -7,69 +7,60 @@
       onClose=(action (mut showModal) false)
       targetAttachment="none"
       translucentOverlay=true
-      containerClass='centered-scrolling-container w-50 mt-3 p-5'
+      containerClass='centered-scrolling-container hiring-modal mt-3'
       overlayClass='centered-scrolling-overlay'
       wrapperClass='centered-scrolling-wrapper'
     }}
-    <PowerSelectMultiple 
-      @searchEnabled={{true}} 
-      @searchField={{"name"}} 
-      @options={{locations}}
-      @selected={{selectedLocations}} 
-      @placeholder="Select Location"
-      @triggerComponent={{component 'trigger-component'}} 
-      @onChange={{action 'setLocations'}} as |location|>
-      <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedLocations location}} />
-      {{location.name}}
-    </PowerSelectMultiple>
+    <div class="p-5">
+      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
+        @selected={{selectedLocations}} @placeholder="Select Location" @triggerComponent={{component 'trigger-component'}}
+        @onChange={{action 'setLocations'}} as |location|>
+        <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedLocations location}} />
+        {{location.name}}
+      </PowerSelectMultiple>
 
-    {{#each selectedLocations as |location|}}
+      {{#each selectedLocations as |location|}}
       <span class="pointer pill-dashed mr-2 mt-2">{{location.name}}
         <button {{action 'removeLocation' location}}>&#10005;</button> </span>
-    {{/each}}
+      {{/each}}
 
-    <div class="divider-h my-4"></div>
+      <div class="divider-h my-4"></div>
 
-    <PowerSelectMultiple 
-      @searchEnabled={{true}} 
-      @searchField={{"name"}} 
-      @options={{jobRoles}}
-      @selected={{selectedJobRoles}} 
-      @placeholder="Select Job Role"
-      @triggerComponent={{component 'trigger-component'}} 
-      @onChange={{action 'setJobRoles'}} as |jobRole|>
-      <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedJobRoles jobRole}} />
-      {{jobRole.name}}
-    </PowerSelectMultiple>
+      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{jobRoles}}
+        @selected={{selectedJobRoles}} @placeholder="Select Job Role" @triggerComponent={{component 'trigger-component'}}
+        @onChange={{action 'setJobRoles'}} as |jobRole|>
+        <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedJobRoles jobRole}} />
+        {{jobRole.name}}
+      </PowerSelectMultiple>
 
-    {{#each selectedJobRoles as |jobRole|}}
-    <span class="pointer pill-dashed mr-2 mt-2">{{jobRole.name}}
-      <button {{action 'removeJobRole' jobRole}}>&#10005;</button> </span>
-    {{/each}}
+      {{#each selectedJobRoles as |jobRole|}}
+      <span class="pointer pill-dashed mr-2 mt-2">{{jobRole.name}}
+        <button {{action 'removeJobRole' jobRole}}>&#10005;</button> </span>
+      {{/each}}
 
-    <div class="divider-h my-4"></div>
+      <div class="divider-h my-4"></div>
 
-    <label for="fulltime" class="input-checkbox checkbox-solid pt-1 mr-3">
-      <input type="checkbox" name="group-5" id="fulltime" 
-        checked={{includes selectedJobTypes 'fulltime'}} onclick={{action 'setJobTypes' 'fulltime'}}>Full Time
-      <span></span>
-    </label>
-    <label for="internship" class="input-checkbox checkbox-solid pt-1 mr-3">
-      <input type="checkbox" name="group-5" id="internship"
-        checked={{includes selectedJobTypes 'internship'}} onclick={{action 'setJobTypes' 'internship'}}>Internship
-      <span></span>
-    </label>
-    <label for="parttime" class="input-checkbox checkbox-solid pt-1 mr-3">
-      <input type="checkbox" name="group-5" id="parttime"
-        checked={{includes selectedJobTypes 'parttime'}} onclick={{action 'setJobTypes' 'parttime'}}>Part Time
-      <span></span>
-    </label>
+      <label for="fulltime" class="input-checkbox gradient-tick mr-3">
+        <input type="checkbox" name="group-5" id="fulltime" checked={{includes selectedJobTypes 'fulltime'}}
+          onclick={{action 'setJobTypes' 'fulltime'}}>Full Time
+        <span></span>
+      </label>
+      <label for="internship" class="input-checkbox gradient-tick mr-3">
+        <input type="checkbox" name="group-5" id="internship" checked={{includes selectedJobTypes 'internship'}}
+          onclick={{action 'setJobTypes' 'internship'}}>Internship
+        <span></span>
+      </label>
+      <label for="parttime" class="input-checkbox gradient-tick mr-3">
+        <input type="checkbox" name="group-5" id="parttime" checked={{includes selectedJobTypes 'parttime'}}
+          onclick={{action 'setJobTypes' 'parttime'}}>Part Time
+        <span></span>
+      </label>
 
 
-    <div class="d-flex justify-content-end mt-4">
-      <button class="button-dashed button-orange mr-2" {{action 'clearAllFilters'}}>Clear Filters</button>
-      <button class="button-solid button-orange" {{action 'applyFilters'}}>Apply Filters</button>
+      <div class="d-flex justify-content-end mt-4">
+        <button class="button-dashed button-orange mr-2" {{action 'clearAllFilters'}}>Clear Filters</button>
+        <button class="button-solid button-orange" {{action 'applyFilters'}}>Apply Filters</button>
+      </div>
     </div>
-
   {{/modal-dialog}}
 {{/if}}

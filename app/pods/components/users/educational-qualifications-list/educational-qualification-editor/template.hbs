@@ -1,12 +1,12 @@
-<div class="border-card">
+<div class="p-sm-5 p-4">
   <h4 class="mb-5">{{if educationalQualification.id 'Edit' 'Add'}} Educational Qualifications</h4>
 
   {{#unless educationalQualification.type}}
-    <div class="d-flex justify-content-around">
-      <button class="button-dashed button-orange" {{action (mut educationalQualification.type) 'x_secondary'}}>X (Secondary)</button>
-      <button class="button-dashed button-orange" {{action (mut educationalQualification.type) 'xii_senior_secondary'}}>XII (Senior Secondary)</button>
-      <button class="button-dashed button-orange" {{action (mut educationalQualification.type) 'graduation'}}>Graduation</button>
-      <button class="button-dashed button-orange" {{action (mut educationalQualification.type) 'post_graduation'}}>Post Graduation</button>
+    <div class="row no-gutters justify-content-around">
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'x_secondary'}}>X (Secondary)</button>
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'xii_senior_secondary'}}>XII (Senior Secondary)</button>
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'graduation'}}>Graduation</button>
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'post_graduation'}}>Post Graduation</button>
     </div>
   {{else}}
 
@@ -47,7 +47,7 @@
       {{/unless}}
     
       <div class="d-flex mt-2 mb-4">
-        <label class="input-checkbox checkbox-solid pt-1 mr-2">
+        <label class="input-checkbox gradient-tick mr-2">
           <Input @type="checkbox" @checked={{educationalQualification.isOtherCollegeSetter}} />
           Other
     
@@ -83,7 +83,7 @@
     </div>
   {{/unless}}
     <div class="row mb-4">
-      <div class="col-12 col-md-6">
+      <div class="col-md-6">
         <div class="font-sm d-flex justify-content-between">
           <div>
             Start Year <span class="red">*</span>
@@ -102,7 +102,7 @@
           {{/each}}
         </select>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-md-6 mt-md-0 mt-4">
         <div class="font-sm d-flex justify-content-between">
           <div>
             {{if educationalQualification.isCurrent 'Expected End Year' 'End Year'}} <span class="red">*</span>
@@ -124,7 +124,7 @@
     </div>
     {{#unless showSchoolInput}}
       <div class="mb-4">
-        <label class="input-checkbox checkbox-solid pt-1">
+        <label class="input-checkbox gradient-tick">
           <Input @type="checkbox" @checked={{educationalQualification.isCurrent}} />
           Currently Attending
       
@@ -141,7 +141,7 @@
     </div>
     
     <div class="row mb-4">
-      <div class="col-12 col-md-6">
+      <div class="col-md-6">
         <select class="input-text" name="graduation_year" 
           onchange={{action (mut educationalQualification.performanceScale) value="target.value"}}>
           <option selected disabled>Select Scale: Percengtage/CGPA</option>
@@ -149,7 +149,7 @@
           <option value="cgpa_10" selected={{lite-eq educationalQualification.performanceScale 'cgpa_10'}}>CGPA (Scale of 10)</option>
         </select>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-md-6 mt-md-0 mt-2">
         <Input @type="number" @placeholder="{{if (eq educationalQualification.performanceScale 'cgpa_10') 'CGPA' 'Percentage'}}" class="input-text" @value={{educationalQualification.performanceScore}} />
         <WFormValidations class="mt-1" @model={{educationalQualification}} @attributeName='performanceScore' as |validation|>
           {{#if (and validation.isInvalid showValidationMessages)}}
