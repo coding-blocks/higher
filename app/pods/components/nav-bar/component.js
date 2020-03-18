@@ -10,15 +10,18 @@ export default class NavBarComponent extends Component {
   @service sidenav
   @service router
 
+  hideHamburgerNav = true;
+  mobileSelectedTab = "online";
+
   @computed('router.currentURL')
   get isCompanyRouteActive() {
     let currentURL = this.router.currentURL.split('/')[1]
     return currentURL === 'recruiter'
   }
 
-  @action 
-  toggleHamburgerNav(){
-
+  @action
+  toggleHamburgerNav() {
+    this.toggleProperty("hideHamburgerNav");
   }
 
   get logoutLink() {
