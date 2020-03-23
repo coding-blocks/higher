@@ -144,7 +144,7 @@
             {{/if}}
           </div>
           <div>
-            <button class="button-dashed button-orange mr-2" {{action "onCloseModal"}}>Cancel</button>
+            <button class="button-dashed button-orange mr-2" {{action onCloseModal}}>Cancel</button>
             <button class="button-solid button-orange" 
               {{action (perform saveRecordTask) false}} 
               disabled={{and (v-get project 'isInvalid') showValidationMessages}}>

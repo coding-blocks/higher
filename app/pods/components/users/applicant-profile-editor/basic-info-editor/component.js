@@ -29,11 +29,19 @@ export default class BasicInfoEditoComponent extends Component {
   }
 
   @dropTask fetchLocationsTask = function* () {
-    return yield this.store.findAll('location')
+    return yield this.store.query('location', {
+      filter: {
+        "is_listed =": true
+      }
+    })
   }
 
   @dropTask fetchJobRolesTask = function* () {
-    return yield this.store.findAll('job-role')
+    return yield this.store.query('job-role', {
+      filter: {
+        "is_listed =": true
+      }
+    })
   }
 
   @action
@@ -44,7 +52,6 @@ export default class BasicInfoEditoComponent extends Component {
       resumeUpload = this.store.createRecord('upload', {
         type: 'resume',
         isVerified: true,
-        verifiedById: this.currentUser.user.id,
         url: url
       })
 
