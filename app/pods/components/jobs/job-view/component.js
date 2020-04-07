@@ -42,6 +42,11 @@ export default class JobViewComponent extends Component {
 
   @action
   takeToProfileEditor(step = 3) {
+    console.log('tracking')
+    window.dataLayer.push({ 
+      'event': 'job_viewed',
+      'userOneauth': `${this.currentUser.get('user.oneauthId')}`
+    })
     this.router.transitionTo('applicants.profile.me', { queryParams: { job_id: this.job.id, step } })
   }
 
