@@ -73,7 +73,7 @@
     "node": "8.* || >= 10.*"
   },
   "dependencies": {
-    "@coding-blocks/motley": "^0.7.1",
+    "@coding-blocks/motley": "^0.7.5",
     "jspdf": "^1.5.3"
   },
   "ember-addon": {
