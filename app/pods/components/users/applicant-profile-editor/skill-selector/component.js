@@ -16,6 +16,7 @@ export default class SkillSelectorComponent extends Component {
   
   didReceiveAttrs() {
     this._super(...arguments) 
+    this.set('showTakeTestModal', true)
     this.fetchSkillsTask.perform()
   }
 
@@ -40,7 +41,13 @@ export default class SkillSelectorComponent extends Component {
   }
 
   @dropTask fetchSkillsTask = function *() {
-    return yield this.store.query('skill', { filter: { "status": 'published' } })
+    return yield this.store.query('skill', {
+        filter: {
+          "status =": 'published',
+          "is_listed =": true
+        }, 
+        sort: "-created_at" 
+      })
   }
 
   @dropTask saveSkillsTask = function *() {

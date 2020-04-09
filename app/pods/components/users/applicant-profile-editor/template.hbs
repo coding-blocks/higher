@@ -1,10 +1,13 @@
+{{#if saveApplicantProfileTask.isRunning}}
+  <LoadingComponent @smallLoader="true" />
+{{/if}}
 <WPagerComponent 
   @pages={{pages}} 
   @skippable={{false}} 
-  @callOnNext={{saveApplicantProfile}}
+  @callOnNext={{saveApplicantProfileTask}}
   @currentPage={{currentPage}} as |pager|>
 
-  <div class="border-card p-5 mb-5">
+  <div id="timeline-top" class="border-card p-5 mb-5">
     <div class="d-flex mb-5 px-5">
       <div class="li-left">
         <div>
@@ -16,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="li-right font-sm">
+      <div class="font-sm">
         {{#unless (eq currentPage 0)}}
         <button class="button-dashed lg button-orange mr-3"
           {{action pager.setCurrentPage (dec pager.currentPage)}}>
@@ -33,9 +36,9 @@
       </div>
     </div>
 
-    <div class="timeline px-5 pb-5">
+    <div class="profile-timeline px-5 pb-5">
       {{#each pages as |page index|}}
-      <div class="timeline__event">
+      <div class="profile-timeline__event">
         {{#if (lt index pager.currentPage)}}
         <button class="s-60x60 t-align-c white font-xl round bg-gradient-green-lr"
           {{action pager.setCurrentPage index}}>
@@ -52,7 +55,7 @@
         </button>
         {{/if}}
 
-        <div class="timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
+        <div class="profile-timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
           {{page.title}}
         </div>
       </div>
@@ -63,221 +66,76 @@
   {{#if (eq pager.currentPage 0)}}
     <div class="row">
       <div class="col-12 col-md-8">
-        <div class="border-card">
-          <h3>Tell us about your job preferences</h3>
-          <div class="divider-h my-4"></div>
-
-          <div class="mb-4">
-            <p>
-              Select the roles that you are well-qualified for <span class="red">*</span>
-            </p>
-            
-            <WSelector 
-              @selected={{applicantProfile.jobRoles}}
-              @options={{jobRoles}} as |selector|>
-              {{#each jobRoles as |jobRole|}}
-                <label class="input-checkbox checkbox-solid pt-1 mr-4 mt-3 display-inline-block">
-                  <input type="checkbox" 
-                    onclick={{action selector.changeSelected jobRole}}
-                    checked={{includes applicantProfile.jobRoles jobRole}} />
-                  {{jobRole.name}}
-                
-                  <span></span>
-                </label>
-              {{/each}}
-            </WSelector>
-            <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='jobRoles' as |validation|>
-              {{#if (and validation.isInvalid showValidationMessages)}}
-                <span class="red card-md">{{validation.message}}</span>
-              {{/if}}
-            </WFormValidations>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">Where are you currently located? <span class="red">*</span></div>
-            <div class="col-12 col-md-6">          
-              <PowerSelect 
-                @searchEnabled={{true}} 
-                @searchField={{"name"}}
-                @options={{locations}} 
-                @selected={{applicantProfile.currentLocation}}
-                @placeholder="Select Location" 
-                @onChange={{action (mut applicantProfile.currentLocation)}} as
-                |location|>
-                {{location.name}}
-              </PowerSelect>
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentLocation' as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">
-              <div>
-                Desired cities to work in? <span class="red">*</span>
-                <br>
-                {{#each applicantProfile.locations as |location|}}
-                  <span class="pointer pill-dashed mt-2 mr-2">{{location.name}} 
-                  <button {{action 'removeLocation' location}}>&#10005;</button></span>
-                {{/each}}
-              </div>
-            </div>
-            <div class="col-12 col-md-6">              
-              <PowerSelectMultiple 
-                @searchEnabled={{true}} 
-                @searchField={{"name"}}
-                @options={{locations}}
-                @selected={{applicantProfile.locations}} 
-                @placeholder="Select Location"
-                @triggerComponent={{component 'trigger-component'}}
-                @onChange={{action (mut applicantProfile.locations)}} as |location|>
-                <input type="checkbox" 
-                  onclick={{action "preventDefault"}} 
-                  checked={{includes applicantProfile.locations location}} />
-                {{location.name}}
-              </PowerSelectMultiple>
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='locations' as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>        
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">Your Graduation Year <span class="red">*</span></div>
-            <div class="col-12 col-md-6">          
-              <select class="input-text" name="graduation_year" 
-                onchange={{action (mut applicantProfile.graduationYear) 
-                value="target.value"}}>
-                  <option selected disabled>Graduation Year</option>
-                  {{#each (range 2000 maxEndYear) as |year|}}
-                    <option value="{{year}}" selected={{lite-eq applicantProfile.graduationYear year}}>{{year}}</option>
-                  {{/each}}
-              </select>
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='graduationYear' as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>
-              
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">What is your minimum expected CTC? <span class="red">*</span></div>
-            <div class="col-12 col-md-6">
-              <div class="d-flex">
-                <Input @type="text" class="input-text t-align-l" 
-                  @value={{applicantProfile.expectedCtcString}}
-                  @placeholder="Enter amount here" />
-                <span class="all-center bg-faded px-3">lpa</span>
-              </div>
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='expectedCtc' as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">Are you a student or Professional?</div>
-            <div class="col-12 col-md-6">
-              <label for="student" class="pl-4">
-                <input id="student" name="student-professional" type="radio" class="mr-2"
-                  checked={{applicantProfile.isStudentSetter}}
-                  onclick={{action (mut applicantProfile.isStudentSetter) true}} />
-                Student
-              </label>
-              <label for="professional" class="pl-4">
-                <input id="professional" name="student-professional" type="radio" class="mr-2"
-                  checked={{not applicantProfile.isStudentSetter}}
-                  onclick={{action (mut applicantProfile.isStudentSetter) false}} />
-                Professional
-              </label>
-            </div>
-          </div>
-          {{#unless applicantProfile.isStudent}}
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">What is your current CTC? <span class="red">*</span></div>
-            <div class="col-12 col-md-6">  
-              <div class="d-flex">
-                <Input 
-                  @type="text" 
-                  class="input-text t-align-l" 
-                  @value={{applicantProfile.currentCtcString}}
-                  @placeholder="Enter amount here" required />
-                <span class="all-center bg-faded px-3">lpa</span>
-              </div>            
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='currentCtc'as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-4 pt-2">
-            <div class="col-12 col-md-6">What is your earliest possible joining dates? <span class="red">*</span></div>
-            <div class="col-12 col-md-6">            
-              <PikadayInput 
-                @class="input-text t-align-l" 
-                @value="{{applicantProfile.joiningDateString}}"
-                @onSelection={{action (mut applicantProfile.joiningDateString)}}
-                @minDate={{today}} />
-              <WFormValidations class="mt-1" @model={{applicantProfile}} @attributeName='joiningDate' as |validation|>
-                {{#if (and validation.isInvalid showValidationMessages)}}
-                  <span class="red card-md">{{validation.message}}</span>
-                {{/if}}
-              </WFormValidations>              
-            </div>
-          </div>
-          {{/unless}}
-        </div>
+        <Users::ApplicantProfileEditor::BasicInfoEditor 
+          @applicantProfile={{applicantProfile}}
+          @showValidationMessages={{showValidationMessages}} />
       </div>
       <div class="col-12 col-md-4">
         <div class="border-card">
           <h5 class="mb-5">Social Links</h5>
           <div class="font-sm">
             {{#each-in links as |site link|}}
-            {{#if (eq site "github")}}
-            <i class="fab fa-github mr-3"></i>Github
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.githubLink}} />
-            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='githubLink' as |validation|>
-              {{#if (and validation.isInvalid showValidationMessages)}}
-                <span class="red card-md">{{validation.message}}</span>
+              {{#if (eq site "github")}}
+                <i class="fab fa-github mr-3"></i>Github
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.githubLink}} 
+                  @placeholder="https://github.com/user"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='githubLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
+              {{else if (eq site "linkedin")}}
+                <i class="fab fa-linkedin-in mr-3"></i>Linkedin
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.linkedinLink}} 
+                  @placeholder="https://linkedin.com/user"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='linkedinLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
+              {{else if (eq site "stackoverflow")}}
+                <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.stackoverflowLink}} 
+                  @placeholder="https://stackoverflow.com/user"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='stackoverflowLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
+              {{else if (eq site "portfolio")}}
+                <i class="fas fa-globe mr-3"></i>Website/Portfolio
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.portfolioLink}} 
+                  @placeholder="https://abc.com"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='portfolioLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
+              {{else if (eq site "leetcode")}}
+                <i class="fas fa-code mr-3"></i>Leetcode
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.leetcodeLink}} 
+                  @placeholder="https://abc.com"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='leetcodeLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
+              {{else}}
+                <i class="fas fa-code mr-3"></i>HackerRank / HackerEarth
+                <Input @type="url" class="input-text mt-3" 
+                  @value={{applicantProfile.hackerrankHackerearthLink}} 
+                  @placeholder="https://abc.com"/>
+                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='hackerrankHackerearthLink' as |validation|>
+                  {{#if (and validation.isInvalid showValidationMessages)}}
+                    <span class="red card-md">{{validation.message}}</span>
+                  {{/if}}
+                </WFormValidations>
               {{/if}}
-            </WFormValidations>
-            {{else if (eq site "linkedin")}}
-            <i class="fab fa-linkedin-in mr-3"></i>Linkedin
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.linkedinLink}} />
-            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='linkedinLink' as |validation|>
-              {{#if (and validation.isInvalid showValidationMessages)}}
-                <span class="red card-md">{{validation.message}}</span>
-              {{/if}}
-            </WFormValidations>
-            {{else if (eq site "stackoverflow")}}
-            <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.stackoverflowLink}} />
-            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='stackoverflowLink' as |validation|>
-              {{#if (and validation.isInvalid showValidationMessages)}}
-                <span class="red card-md">{{validation.message}}</span>
-              {{/if}}
-            </WFormValidations>
-            {{else}}
-            <i class="fas fa-globe mr-3"></i>Website/Portfolio
-            <Input @type="url" class="input-text mt-3" @value={{applicantProfile.portfolioLink}} />
-            <WFormValidations class="mt-1 mb-3" @model={{applicantProfile}} @attributeName='portfolioLink' as |validation|>
-              {{#if (and validation.isInvalid showValidationMessages)}}
-                <span class="red card-md">{{validation.message}}</span>
-              {{/if}}
-            </WFormValidations>
-            {{/if}}
-      
             {{/each-in}}
           </div>
         </div>
@@ -298,26 +156,39 @@
       <div class="col-12 col-md-4">
         <Users::HackerBlocksStats />
         
-        <Users::ApplicantProfile::ApplicantCoursesList class="mb-5" 
+        <Users::ApplicantCourse::ApplicantCoursesList class="mb-5" 
           @courses={{applicantProfile.applicantCourses}}
-          @enableSync={{true}}
-          @syncOnlineCoursesTask={{syncOnlineCoursesTask}} />
-        
-        <Users::ApplicantProfileEditor::ApplicantCourseEditor @getNewRecord={{action getNewRecord}} />
+          @editMode={{true}}
+          @getNewRecord={{action getNewRecord}} />
       </div>
     </div>
   {{else if (eq pager.currentPage 2)}}
     <Users::ApplicantProfileEditor::SkillSelector 
       @profile={{applicantProfile}}
-      @saveApplicantProfileTask={{saveApplicantProfile}} />
+      @saveApplicantProfileTask={{saveApplicantProfileTask}} />
   {{else if (eq pager.currentPage 3)}}
     <div class="row">
       <div class="col-12 col-md-8">
         <div class="border-card">
           <h5 class="mb-4">Tell us About Yourself </h5>
           <Textarea class="input-textarea w-100" @value={{applicantProfile.about}} @rows="7" />
-          </div>
         </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="border-card">
+          <h5 class="mb-4 d-flex justify-content-between align-items-center">
+            Upload a Profile Picture
+            {{#if applicantProfile.photo}}
+              <img class="s-50x50 round" src="{{applicantProfile.photo}}" alt="">
+            {{/if}}
+          </h5>
+          <FileUploader
+            @dropZoneEnabled="true"
+            @dropZoneComponent="users/applicant-profile-editor/p-drop-zone-profile-pic"
+            @accept="image/png,image/jpg,image/jpeg"
+            @onDidUpload={{action 'onProfilePicUpload'}} />
+        </div>
+      </div>
     </div>
   {{/if}}
 

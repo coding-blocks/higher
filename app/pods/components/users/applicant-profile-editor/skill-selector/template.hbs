@@ -17,7 +17,11 @@
             </div>
             <div class="li-right">
               {{#if applicantProfileSkill.score}}
-                <button class="orange" {{action 'takeTest' applicantProfileSkill}}>Take Retest</button>
+                <button class="orange"                 
+                  {{action (perform takeTestTask applicantProfileSkill)}}
+                  disabled={{takeTestTask.isRunning}}>
+                  Take Retest
+                </button>
               {{/if}}
             </div>
           </div>

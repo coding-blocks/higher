@@ -1,0 +1,56 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding-top: 62px;
+}
+
+.c-topnav {
+  height: 66px;
+}
+
+.active {
+  color: orange;
+}
+
+.s-15x15{
+  width: 15px;
+  height: 15px
+}
+
+.input-text {
+  height: 40px;
+  border-radius: none;
+  background-color: #f3f3f3;
+}
+
+.bg-faded {
+  background-color: #e5e5e5 !important;
+}
+
+.review-body {
+  height: 80px;
+  overflow: hidden;
+}
+
+.fade-it {
+  opacity: 0.5;
+}
+
+.border-dashed {
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.border-orange {
+  border-color: #f2734c;
+}
+
+.course-list-container {
+  max-height: 370px;
+}
+
+.w-200 {
+  width: 200px;
+}

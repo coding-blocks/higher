@@ -1,7 +1,9 @@
 import Component from '@ember/component';
+import { action } from '@ember/action';
 
 export default class ApplicantCourseList extends Component {
-  enableSync = false
+  editMode = false
+  showAddNewCourseModal = false
   
   didReceiveAttrs() {
     const courses = this.get('courses')
@@ -12,5 +14,9 @@ export default class ApplicantCourseList extends Component {
     this.set('onlineCBCourses', onlineCBCourses)
     this.set('offlineCBCourses', offlineCBCourses)
     this.set('otherCourses', otherCourses)
+  }
+
+  @action addNewCourse(organizationType) {
+    this.set('showAddNewCourseModel', true)
   }
 }

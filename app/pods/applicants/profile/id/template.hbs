@@ -1,0 +1,13 @@
+<div class="container my-5">
+  {{#if editMode}}
+    <Users::ApplicantProfileEditor 
+      @applicantProfile={{applicantProfile}}
+      @getNewRecord={{action "getNewRecord"}} 
+      @step={{step}} 
+      @job_id={{job_id}} />
+  {{else}}
+    <Users::ApplicantProfile 
+      @profile={{applicantProfile}} 
+      @hbPerformanceStats={{hbPerformanceStats}} />
+  {{/if}}
+</div>

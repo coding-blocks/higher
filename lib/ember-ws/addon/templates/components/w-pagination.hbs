@@ -1,0 +1,20 @@
+{{#if presentationComponent}}
+  {{component presentationComponent}}
+{{else if (gt totalCount offset)}}
+  <div class="w-100 t-align-c bold">
+    <button disabled={{prevDisabled}} {{action 'onPrev'}}>Prev</button>
+    <span class="dark-grey mx-2">
+      {{range.start}} - {{range.end}} of {{totalCount}}
+    </span>
+    <button disabled={{nextDisabled}} {{action 'onNext'}}>Next</button>
+  </div>
+{{/if}}
+
+{{yield (hash
+  totalCount=totalCount
+  onNext=(action 'onNext')
+  onPrev=(action 'onPrev')
+  prevDisabled=prevDisabled
+  nextDisabled=nextDisabled
+  range=range
+)}}

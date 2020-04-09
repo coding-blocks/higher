@@ -1,0 +1,13 @@
+<a class="input-text">
+  {{#if isUploading}}
+    Uploading...
+  {{else}}
+    Select File
+  {{/if}}
+</a>
+{{#if fileName}}
+  {{fileName}}
+{{/if}}
+{{#if errorMessage}}
+  <span class="red">{{errorMessage}}</span>
+{{/if}}

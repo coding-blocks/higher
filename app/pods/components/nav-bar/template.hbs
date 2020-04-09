@@ -1,5 +1,5 @@
-<div class="row c-topnav py-3 justify-content-between">
-  <div class="col-6 px-0 d-md-none d-block">
+<div class="row c-topnav py-3 justify-content-between align-items-center">
+  <div class="col-sm-6 px-0 d-md-none d-block">
     <div class="d-flex align-items-center ml-3">
       <div class="hamburger-menu mr-3">
         <div class="ham-toggle">
@@ -10,17 +10,21 @@
           </div>
         </div>
       </div>
-      {{!-- <span class="font-sm">Hacker<strong> Blocks</strong></span> --}}
+      <a href="/" id="ember234" class="navbar-brand font-md black">
+        Coding Blocks | <span class="gradient-red bold">Hire</span>
+      </a>
     </div>
   </div>
   <div class="col-6 d-md-block d-none">
     <ul>
+      {{#if sidenav.isHidden}}
       <li>
-        <LinkTo class="navbar-brand bold font-md black" @route="index">
+        <LinkTo class="navbar-brand font-md black" @route="{{if isCompanyRouteActive 'recruiter' 'index'}}">
           <!-- <img src="https://minio.codingblocks.com/amoeba/hellointern.svg" class="d-inline-block align-top" alt /> -->
-          Coding Blocks | <span class="gradient-red">Hire</span>
+          Coding Blocks | <span class="gradient-red bold">Hire</span>
         </LinkTo>
       </li>
+      {{/if}}
     </ul>
   </div>
   <div class="align-items-center">
@@ -37,10 +41,24 @@
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
-      <li class="top-nav-option hoverable px-3 d-md-block d-none">
+      {{#if isCompanyRouteActive}}
+      <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+        <LinkTo @route="applicants" class="orange font-sm">
+          Are you a student?
+        </LinkTo>
+      </li>
+      {{else}}
+      <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+        <LinkTo @route="recruiter" class="orange font-sm">
+          Are you hiring?
+        </LinkTo>
+      </li>
+      {{/if}}
+      <li class="top-nav-option hoverable px-3 d-sm-block d-none">
         {{#if session.isAuthenticated}}
         <div class="img-desc align-items-center font-sm pt-1">
-          <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}" alt="Profile Pic">
+          <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}"
+            alt="Profile Pic">
           <div class="description ml-3">
             Hi, {{currentUser.user.firstname}}
           </div>
@@ -48,7 +66,7 @@
         <div class="pop-up border-card p-3 br-5">
           <ul class="t-align-l">
             <li>
-              {{#link-to "users.id" currentUser.user.id}}Profile{{/link-to}}
+              {{#link-to "applicants.profile.id" currentUser.user.id}}Profile{{/link-to}}
             </li>
             <div class="divider-h my-3"></div>
             <li>
@@ -58,11 +76,179 @@
             </li>
           </ul>
         </div>
-        {{else}}
-        <LoginButton />
+        {{else if (not isCompanyRouteActive)}}
+        <LoginButton class="font-sm" />
         {{/if}}
       </li>
     </ul>
   </div>
 </div>
-<cb-navbar topalign="right"></cb-navbar>
+
+<div class="d-flex">
+  <div class="w-100 {{unless sidenav.isHidden 'offset-1' ''}}">
+    <cb-navbar topalign="right"></cb-navbar>
+  </div>
+</div>
+
+<div class="hamburger-nav border-right overflow-y-auto no-scrollbar {{if hideHamburgerNav 'hamburger-nav--hidden' ''}}">
+  <div class="d-flex py-3 px-4 justify-content-between align-items-center hamburger-nav__top-bar">
+    <a href="/" id="ember234" class="navbar-brand font-md black">
+      Coding Blocks | <span class="gradient-red bold">Hire</span>
+    </a>
+    <button class="hamburger-nav__cross pointer" {{action 'toggleHamburgerNav'}}>
+      <img src="https://minio.codingblocks.com/motley/wrong_g.png" alt="#">
+    </button>
+  </div>
+  <div class="divider-h"></div>
+
+  <div class="d-sm-none d-block">
+    {{#if session.isAuthenticated}}
+    <div class="d-flex align-items-center my-4 pl-4">
+      <div class="img-ring s-50x50">
+        <img class="round img" src="{{currentUser.user.photo}}" alt="ProfilePic">
+      </div>
+
+      <div class="pl-4">
+        <div class="extra-bold gradient-text font-mds">{{currentUser.user.firstname}} {{currentUser.user.lastname}}
+        </div>
+        <div href='https://account.codingblocks.com'>
+          <a class="bold orange" href="https://account.codingblocks.com/users/me" {{action 'toggleHamburgerNav'}}>View
+            Profile</a>
+        </div>
+      </div>
+    </div>
+    {{else if (not isCompanyRouteActive)}}
+    <LoginButton class="font-sm t-align-c px-4 mt-4" />
+    {{/if}}
+
+    {{#if isCompanyRouteActive}}
+    <div class="hoverable mt-4 t-align-c">
+      <LinkTo @route="applicants" class="orange font-sm" {{action 'toggleHamburgerNav'}}>
+        Are you a student?
+      </LinkTo>
+    </div>
+    {{else}}
+    <div class="hoverable mt-4 t-align-c">
+      <LinkTo @route="recruiter" class="orange font-sm" {{action 'toggleHamburgerNav'}}>
+        Are you hiring?
+      </LinkTo>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="mt-5 px-4 overflow-y-auto no-scrollbar">
+    <div class="d-flex justify-content-between">
+      <div class="extra-bold orange">Courses</div>
+      <a href="#" class="orange"><i class="fas fa-angle-up fa-lg"></i></a>
+    </div>
+
+
+    <div class="my-4 pl-4">
+      <div class="hamburger-nav__menu-element {{if (eq mobileSelectedTab "online") "active"}}"
+        {{action (mut mobileSelectedTab) "online"}}>
+        <div class="extra-bold">
+          Online Courses
+        </div>
+        <div class="light"><a href="https://online.codingblocks.com" target="blank" class="orange">Explore
+            All</a></div>
+      </div>
+      {{#if (eq mobileSelectedTab "online")}}
+      <div class="pl-4">
+        <div class="mt-4">
+          <div class="light extra-bold">Beginner Courses</div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/c-plus-plus-online-course-for-beginners">
+              C++ Master Course | Launchpad
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/complete-java-course-online">
+              Java Master Course | Crux
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/python-for-beginners-developers">
+              Python For Developers
+            </a>
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class="light extra-bold">Advanced Courses</div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/python-django">
+              Web Dev with Python-Django
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/coding-interview-preparation-online">
+              Interview Prep Bootcamp
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/data-structures-and-algorithms-online-course-java-algo">
+              Algo.Java Online
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/android-app-training-online">
+              Android App Development Online
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/telegram-chatbot-python-online">
+              Build Chatbots in Python
+            </a>
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class="light extra-bold">Expert Courses</div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/competitive-programming-course-online">
+              Competitive Programming Online
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/coding-interview-preparation-course-online-c-plus-plus">
+              Interview Preparation - C++
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/machine-learning-course-online">
+              Machine Learning Master Course
+            </a>
+          </div>
+          <div class="light">
+            <a href="https://online.codingblocks.com/courses/coding-interview-preparation-course-online-java">
+              Interview Preparation - Java
+            </a>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    {{!-- <div class="light mt-5 mb-4">Products</div> --}}
+    {{!-- <div class="light my-4">Resources</div> --}}
+    <div class="light my-4">
+      <a href="https://codingblocks.com/campus-ambassador-program.html" target="blank">
+        Campus Ambassadors
+      </a>
+    </div>
+    <div class="light my-4">
+      <a href="https://codingblocks.com/about" target="blank">
+        About Us
+      </a>
+    </div>
+    <div class="light my-4">
+      <a href="https://codingblocks.com/centres" target="blank">
+        Contact Us
+      </a>
+    </div>
+    {{#if session.isAuthenticated}}
+    <div class="light my-4">
+      <a class="dark-grey" href="/logout">
+        Logout
+      </a>
+    </div>
+    {{/if}}
+  </div>
+</div>

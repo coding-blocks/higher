@@ -1,0 +1,22 @@
+<div class="tab-nav-underline">
+  {{#each tabs as |tab|}}
+    {{#if useLinks}}
+      <LinkTo
+        @route={{tab.route}}
+          class="tab {{if (eq currentTab.name tab.name) '' inactiveClass}}"
+          {{action (mut currentTab) tab}}>
+            {{tab.name}}
+      </LinkTo>
+
+    {{else}}
+      <div class="tab {{if (eq currentTab.name tab.name) 'active' inactiveClass}}"
+        {{action (mut currentTab) tab}}>
+          {{tab.name}}
+      </div>
+    {{/if}}
+  {{/each}}
+</div>
+
+{{yield  (hash
+  currentTab=currentTab
+)}}

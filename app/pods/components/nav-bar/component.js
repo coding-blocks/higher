@@ -1,19 +1,30 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import ENV from 'hiring-front/config/environment';
 
 export default class NavBarComponent extends Component {
   @service session
   @service currentUser
   @service api
+  @service sidenav
+  @service router
 
-  @action 
-  toggleHamburgerNav(){
+  hideHamburgerNav = true;
+  mobileSelectedTab = "online";
 
+  @computed('router.currentURL')
+  get isCompanyRouteActive() {
+    let currentURL = this.router.currentURL.split('/')[1]
+    return currentURL === 'recruiter'
+  }
+
+  @action
+  toggleHamburgerNav() {
+    this.toggleProperty("hideHamburgerNav");
   }
 
   get logoutLink() {
-    return ENV.ONEAUTH_URL + '/logout?redirect=' + ENV.PUBLIC_URL + '/logout'
+    return ENV.ONEAUTH_URL + '/logout?redirect=' + ENV.PUBLIC_URL + 'logout'
   }
 }

@@ -61,11 +61,6 @@ const Validations = buildValidations({
   joiningDate: {
     description: 'Joining Date',
     validators: [
-      validator('presence', {
-        presence: Ember.computed('model.isStudent', function() {
-          return !this.get('model.isStudent')
-        }).volatile()
-      }),
       validator('date')
     ]
   },
@@ -105,11 +100,50 @@ const Validations = buildValidations({
       })
     ]
   },
+  leetcodeLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
+  hackerrankHackerearthLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
   graduationYear: {
     description: 'Graduation Year',
     validators: [
       validator('presence', {
         presence: true
+      })
+    ]
+  },
+  resumeLink: {
+    description: 'Resume',
+    validators: [
+      // validator('presence', {
+      //   presence: true
+      // }),
+      validator('format', {
+        type: 'url',
+        allowBlank: true
+      })
+    ]
+  },
+  desiredJobType: {
+    description: 'Job Type',
+    validators: [
+      validator('presence', {
+        presence: true,
+        message: 'Select a job type'
       })
     ]
   }
@@ -122,11 +156,15 @@ export default DS.Model.extend(Validations, {
   stackoverflowLink: DS.attr(),
   linkedinLink: DS.attr(),
   portfolioLink: DS.attr(),
+  leetcodeLink: DS.attr(),
+  hackerrankHackerearthLink: DS.attr(),
   links: DS.attr(),
-  graduationYear: DS.attr(),
+  graduationYear: DS.attr('number'),
+  resumeLink: DS.attr(),
   isReviewed: DS.attr('boolean'),
   isActive: DS.attr('boolean'),
   expectedCtc: DS.attr('number'),
+  desiredJobType: DS.attr(),
   expectedCtcString: Ember.computed('expectedCtc', {
     get() {
       return this.get('expectedCtc')
@@ -180,5 +218,7 @@ export default DS.Model.extend(Validations, {
   projects: DS.hasMany('project'),
   educationalQualifications: DS.hasMany('educational-qualification'),
   profileCompletion: DS.attr('number'),
-  user: DS.belongsTo('user')
+  user: DS.belongsTo('user'),
+  resumeUpload: DS.belongsTo('upload'),
+  photoUpload: DS.belongsTo('upload')
 });
