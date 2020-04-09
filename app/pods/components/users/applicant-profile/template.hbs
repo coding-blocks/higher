@@ -1,6 +1,6 @@
 <div class="border-card p-5 my-5">
   <div class="row">
-    <div class="col-12 col-md-3 border-right">
+    <div class="col-12 col-md-3 border-right profile-left-pane">
       <div class="s-120x120 mb-5">
         <img class="round wh-100" src="{{if profile.photo profile.photo '/images/user.svg'}}" alt="">
       </div>
@@ -35,10 +35,10 @@
       {{/if}} --}}
     </div>
     <div class="col-12 col-md-9 pl-md-5">
-      <div class="d-flex">
-        <div class="li-left">
+      <div class="row no-gutters align-items-center justify-content-between">
+        <div class="flex-1">
           <div>
-            <h2 class="mb-3">
+            <h2 class="v-align-ma">
               {{profile.user.firstname}}
               {{profile.user.lastname}}
 
@@ -70,7 +70,7 @@
               {{/if}}
             </h2>
             {{#unless profile.isStudent}}
-              <div class="d-flex">
+              <div class="d-flex mt-3">
                 <div class="bold orange mr-4">
                   <span>Current CTC: {{profile.currentCtc}} LPA</span>
                 </div>
@@ -81,10 +81,10 @@
             {{/unless}}
           </div>
         </div>
-        <div class="li-right">
+        <div class="ml-2">
           {{#if userHimself}}
             <div>
-              <button class="button-dashed lg button-orange regular" {{action (mut profile.profileCompletion) 0}}>&lt; Edit</button>
+              <button class="button-dashed button-orange regular" {{action (mut profile.profileCompletion) 0}}>&lt; Edit</button>
             </div>
             {{!-- <div>
               <button class="button-solid lg button-orange"
@@ -132,7 +132,7 @@
           Interested Roles
           <span class="mx-2"></span>
           {{#each profile.jobRoles as |jobRole|}}
-            <span class="pill-dashed">{{jobRole.name}}</span>
+            <span class="pill-dashed my-1">{{jobRole.name}}</span>
           {{/each}}
         </div>
       {{/if}}
@@ -147,7 +147,7 @@
 </div>
 
 <div class="row">
-  <div class="col-12 col-md-8">
+  <div class="col-lg-8">
     {{#if profile.educationalQualifications.length}}
       <Users::EducationalQualificationsList @educationalQualifications={{profile.educationalQualifications}} />
     {{/if}}
@@ -159,7 +159,7 @@
       <Users::ProjectsList @projects={{profile.projects}} />
     {{/if}}
   </div>
-  <div class="col-12 col-md-4">
+  <div class="col-lg-4">
     <Users::HackerBlocksStats class="mb-5" />
 
     {{#if profile.applicantProfileSkills.length}}

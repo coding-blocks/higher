@@ -1,15 +1,12 @@
 {{#if saveApplicantProfileTask.isRunning}}
-  <LoadingComponent @smallLoader="true" />
+<LoadingComponent @smallLoader="true" />
 {{/if}}
-<WPagerComponent 
-  @pages={{pages}} 
-  @skippable={{false}} 
-  @callOnNext={{saveApplicantProfileTask}}
+<WPagerComponent @pages={{pages}} @skippable={{false}} @callOnNext={{saveApplicantProfileTask}}
   @currentPage={{currentPage}} as |pager|>
 
-  <div id="timeline-top" class="border-card p-5 mb-5">
-    <div class="d-flex mb-5 px-5">
-      <div class="li-left">
+  <div id="timeline-top" class="border-card p-sm-5 p-4 mb-5">
+    <div class="row no-gutters align-items-center justify-content-between mb-5 px-lg-5">
+      <div class="flex-1">
         <div>
           <h2>
             Hi, {{currentUser.user.firstname}}
@@ -21,42 +18,39 @@
       </div>
       <div class="font-sm">
         {{#unless (eq currentPage 0)}}
-        <button class="button-dashed lg button-orange mr-3"
-          {{action pager.setCurrentPage (dec pager.currentPage)}}>
+        <button class="button-dashed lg button-orange mr-3" {{action pager.setCurrentPage (dec pager.currentPage)}}>
           &lt; Back
         </button>
         {{/unless}}
-        <button 
-          type="submit" 
-          class="button-solid lg button-orange" 
-          {{action pager.nextPage pager.currentPage}}
+        <button type="submit" class="button-solid lg button-orange" {{action pager.nextPage pager.currentPage}}
           disabled={{and (v-get applicantProfile 'isInvalid') showValidationMessages}}>
-          Save & Continue &gt;
+          Save &amp; Continue &gt;
         </button>
       </div>
     </div>
 
-    <div class="profile-timeline px-5 pb-5">
+    <div class="profile-timeline px-lg-5 pb-5">
       {{#each pages as |page index|}}
       <div class="profile-timeline__event">
-        {{#if (lt index pager.currentPage)}}
-        <button class="s-60x60 t-align-c white font-xl round bg-gradient-green-lr"
-          {{action pager.setCurrentPage index}}>
-          0{{inc index}}
-        </button>
-        {{else if (gt index pager.currentPage)}}
-        <button class="s-60x60 t-align-c black font-xl round bg-grey is-selection-disabled" {{action pager.setCurrentPage index}}>
-          0{{inc index}}
-        </button>
-        {{else}}
-        <button class="s-60x60 t-align-c white font-xl round bg-gradient-orange-lr"
-          {{action pager.setCurrentPage index}}>
-          0{{inc index}}
-        </button>
-        {{/if}}
+        <div class="profile-timeline__event__container">
+          {{#if (lt index pager.currentPage)}}
+          <button class="s-60x60 t-align-c white round bg-gradient-green-lr" {{action pager.setCurrentPage index}}>
+            0{{inc index}}
+          </button>
+          {{else if (gt index pager.currentPage)}}
+          <button class="s-60x60 t-align-c black round bg-grey is-selection-disabled"
+            {{action pager.setCurrentPage index}}>
+            0{{inc index}}
+          </button>
+          {{else}}
+          <button class="s-60x60 t-align-c white round bg-gradient-orange-lr" {{action pager.setCurrentPage index}}>
+            0{{inc index}}
+          </button>
+          {{/if}}
 
-        <div class="profile-timeline__event__tag font-sm {{if (lte index pager.currentPage) 'bold'}}">
-          {{page.title}}
+          <div class="profile-timeline__event__container__tag {{if (lte index pager.currentPage) 'bold'}}">
+            {{page.title}}
+          </div>
         </div>
       </div>
       {{/each}}
@@ -64,124 +58,123 @@
   </div>
 
   {{#if (eq pager.currentPage 0)}}
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <Users::ApplicantProfileEditor::BasicInfoEditor 
-          @applicantProfile={{applicantProfile}}
-          @showValidationMessages={{showValidationMessages}} />
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="border-card">
-          <h5 class="mb-5">Social Links</h5>
-          <div class="font-sm">
-            {{#each-in links as |site link|}}
-              {{#if (eq site "github")}}
-                <i class="fab fa-github mr-3"></i>Github
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.githubLink}} 
-                  @placeholder="https://github.com/user"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='githubLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{else if (eq site "linkedin")}}
-                <i class="fab fa-linkedin-in mr-3"></i>Linkedin
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.linkedinLink}} 
-                  @placeholder="https://linkedin.com/user"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='linkedinLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{else if (eq site "stackoverflow")}}
-                <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.stackoverflowLink}} 
-                  @placeholder="https://stackoverflow.com/user"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='stackoverflowLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{else if (eq site "portfolio")}}
-                <i class="fas fa-globe mr-3"></i>Website/Portfolio
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.portfolioLink}} 
-                  @placeholder="https://abc.com"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='portfolioLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{else if (eq site "leetcode")}}
-                <i class="fas fa-code mr-3"></i>Leetcode
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.leetcodeLink}} 
-                  @placeholder="https://abc.com"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='leetcodeLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{else}}
-                <i class="fas fa-code mr-3"></i>HackerRank / HackerEarth
-                <Input @type="url" class="input-text mt-3" 
-                  @value={{applicantProfile.hackerrankHackerearthLink}} 
-                  @placeholder="https://abc.com"/>
-                <WFormValidations class="form-error mt-1 mb-3" @model={{applicantProfile}} @attributeName='hackerrankHackerearthLink' as |validation|>
-                  {{#if (and validation.isInvalid showValidationMessages)}}
-                    <span class="red card-md">{{validation.message}}</span>
-                  {{/if}}
-                </WFormValidations>
-              {{/if}}
-            {{/each-in}}
-          </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <Users::ApplicantProfileEditor::BasicInfoEditor @applicantProfile={{applicantProfile}}
+        @showValidationMessages={{showValidationMessages}} />
+    </div>
+    <div class="col-lg-4 mt-lg-0 mt-5">
+      <div class="border-card">
+        <h5 class="mb-5">Social Links</h5>
+        <div class="font-sm">
+          {{#each-in links as |site link|}}
+          {{#if (eq site "github")}}
+          <i class="fab fa-github mr-3"></i>Github
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.githubLink}}
+            @placeholder="https://github.com/user" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}} @attributeName='githubLink'
+            as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{else if (eq site "linkedin")}}
+          <i class="fab fa-linkedin-in mr-3"></i>Linkedin
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.linkedinLink}}
+            @placeholder="https://linkedin.com/user" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}}
+            @attributeName='linkedinLink' as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{else if (eq site "stackoverflow")}}
+          <i class="fab fa-stack-overflow mr-3"></i>Stack Overflow
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.stackoverflowLink}}
+            @placeholder="https://stackoverflow.com/user" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}}
+            @attributeName='stackoverflowLink' as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{else if (eq site "portfolio")}}
+          <i class="fas fa-globe mr-3"></i>Website/Portfolio
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.portfolioLink}}
+            @placeholder="https://abc.com" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}}
+            @attributeName='portfolioLink' as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{else if (eq site "leetcode")}}
+          <i class="fas fa-code mr-3"></i>Leetcode
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.leetcodeLink}}
+            @placeholder="https://abc.com" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}}
+            @attributeName='leetcodeLink' as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{else}}
+          <i class="fas fa-code mr-3"></i>HackerRank / HackerEarth
+          <Input @type="url" class="input-text mt-2" @value={{applicantProfile.hackerrankHackerearthLink}}
+            @placeholder="https://abc.com" />
+          <WFormValidations class="form-error mt-1 mb-md-4 mb-5" @model={{applicantProfile}}
+            @attributeName='hackerrankHackerearthLink' as |validation|>
+            {{#if (and validation.isInvalid showValidationMessages)}}
+            <span class="red card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+          {{/if}}
+          {{/each-in}}
         </div>
       </div>
     </div>
+  </div>
   {{else if (eq pager.currentPage 1)}}
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <Users::EducationalQualificationsList @allowEdit="true" @getNewRecord={{action getNewRecord}}
-          @educationalQualifications={{applicantProfile.educationalQualifications}} />
+  <div class="row">
+    <div class="col-lg-8">
+      <Users::EducationalQualificationsList @allowEdit="true" @getNewRecord={{action getNewRecord}}
+        @educationalQualifications={{applicantProfile.educationalQualifications}} />
 
-        <Users::WorkExperiencesList @allowEdit="true" @getNewRecord={{action getNewRecord}}
-          @workExperiences={{applicantProfile.workExperiences}} />
+      <Users::WorkExperiencesList @allowEdit="true" @getNewRecord={{action getNewRecord}}
+        @workExperiences={{applicantProfile.workExperiences}} />
 
-        <Users::ProjectsList @allowEdit="true" @getNewRecord={{action getNewRecord}} @projects={{applicantProfile.projects}} />
-      </div>
-
-      <div class="col-12 col-md-4">
-        <Users::HackerBlocksStats />
-        
-        <Users::ApplicantCourse::ApplicantCoursesList class="mb-5" 
-          @courses={{applicantProfile.applicantCourses}}
-          @editMode={{true}}
-          @getNewRecord={{action getNewRecord}} />
-      </div>
+      <Users::ProjectsList @allowEdit="true" @getNewRecord={{action getNewRecord}}
+        @projects={{applicantProfile.projects}} />
     </div>
+
+    <div class="col-lg-4">
+      <Users::HackerBlocksStats />
+
+      <Users::ApplicantCourse::ApplicantCoursesList class="mb-5" @courses={{applicantProfile.applicantCourses}}
+        @editMode={{true}} @getNewRecord={{action getNewRecord}} />
+    </div>
+  </div>
   {{else if (eq pager.currentPage 2)}}
-    <Users::ApplicantProfileEditor::SkillSelector 
-      @profile={{applicantProfile}}
-      @saveApplicantProfileTask={{saveApplicantProfileTask}} />
+  <Users::ApplicantProfileEditor::SkillSelector @profile={{applicantProfile}}
+    @saveApplicantProfileTask={{saveApplicantProfileTask}} />
   {{else if (eq pager.currentPage 3)}}
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <div class="border-card">
-          <h5 class="mb-4">Tell us About Yourself </h5>
-          <Textarea class="input-textarea w-100" @value={{applicantProfile.about}} @rows="7" />
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="border-card">
+        <h5 class="mb-4">Tell us About Yourself </h5>
+        <Textarea class="input-textarea w-100" @value={{applicantProfile.about}} @rows="7" />
         </div>
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-lg-4 mt-lg-0 mt-5">
         <div class="border-card">
-          <h5 class="mb-4 d-flex justify-content-between align-items-center">
-            Upload a Profile Picture
+          <div class="mb-4 row no-gutters justify-content-between align-items-center">
+            <h5 class="flex-1">
+              Upload a Profile Picture
+            </h5>
             {{#if applicantProfile.photo}}
               <img class="s-50x50 round" src="{{applicantProfile.photo}}" alt="">
             {{/if}}
-          </h5>
+          </div>
           <FileUploader
             @dropZoneEnabled="true"
             @dropZoneComponent="users/applicant-profile-editor/p-drop-zone-profile-pic"
@@ -201,7 +194,7 @@
       class="button-solid lg button-orange" 
       {{action pager.nextPage pager.currentPage}}
       disabled={{and (v-get applicantProfile 'isInvalid') showValidationMessages }}>
-      Save & Continue &gt;
+      Save &amp; Continue &gt;
     </button>
   </div>
 </WPagerComponent>
