@@ -1,47 +1,46 @@
 <div class="row mt-5">
-  <div class="col-12 col-md-6">
+  <div class="col-lg-6">
     <div class="border-card">
       <h5>Verified Skills</h5>
       <div class="divider-h my-3"></div>
 
       {{#if verifiedApplicantProfileSkills.length}}
-        <div class="list-divided border-none">
-          {{#each verifiedApplicantProfileSkills as |applicantProfileSkill|}}
-          <div class="d-flex py-4">
-            <div class="li-left">
-              <h5 class="green mr-4">
-                {{applicantProfileSkill.skill.name}}
-              </h5>
-              <div class="round s-15x15 tick bg-gradient-green-lr mr-5"></div>
-              <span>Score: {{applicantProfileSkill.score}}</span>
-            </div>
-            <div class="li-right">
-              {{#if applicantProfileSkill.score}}
-                <button class="orange"                 
-                  {{action (perform takeTestTask applicantProfileSkill)}}
-                  disabled={{takeTestTask.isRunning}}>
-                  Take Retest
-                </button>
-              {{/if}}
-            </div>
+      <div class="list-divided border-none">
+        {{#each verifiedApplicantProfileSkills as |applicantProfileSkill|}}
+        <div class="d-flex py-4">
+          <div class="li-left">
+            <h5 class="green mr-4">
+              {{applicantProfileSkill.skill.name}}
+            </h5>
+            <div class="round s-15x15 tick bg-gradient-green-lr mr-5"></div>
+            <span>Score: {{applicantProfileSkill.score}}</span>
           </div>
-          {{/each}}
+          <div class="li-right">
+            {{#if applicantProfileSkill.score}}
+            <button class="orange" {{action (perform takeTestTask applicantProfileSkill)}}
+              disabled={{takeTestTask.isRunning}}>
+              Take Retest
+            </button>
+            {{/if}}
+          </div>
         </div>
+        {{/each}}
+      </div>
       {{else}}
-        No verified skills.
+      No verified skills.
       {{/if}}
 
       {{#if showSkillTestError}}
-        <div class="divider-h my-3"></div>
-        <div class="t-align-c red">{{skillTestErrorMsg}}</div>
+      <div class="divider-h my-3"></div>
+      <div class="t-align-c red">{{skillTestErrorMsg}}</div>
       {{/if}}
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-lg-6 mt-lg-0 mt-5">
     <div class="border-card">
-      <div class="d-flex justify-content-between align-items-center">
-        <h5>Non Verified Skills</h5>
-        <button class="button-solid button-orange" {{action (mut showSkillSelectorModal) true}}>
+      <div class="row no-gutters justify-content-between align-items-center">
+        <h5 class="flex-1">Non Verified Skills</h5>
+        <button class="button-solid button-orange ml-2" {{action (mut showSkillSelectorModal) true}}>
           Add New Skills
         </button>
       </div>
@@ -49,31 +48,30 @@
       <div class="divider-h my-3"></div>
 
       {{#if unverifiedApplicantProfileSkills.length}}
-        <div class="list-divided border-none">
-          {{#each unverifiedApplicantProfileSkills as |applicantProfileSkill|}}
-          <div class="d-flex py-4">
-            <div class="li-left">
-              <h5>
-                {{applicantProfileSkill.skill.name}}
-              </h5>
-              {{#if (gte score 0)}}
-                <span>Score: {{applicantProfileSkill.score}}</span>
-              {{/if}}
-            </div>
-            <div class="li-right">
-              {{#if applicantProfileSkill.skill.isVerifiable}}
-                <button class="orange" 
-                  {{action (perform takeTestTask applicantProfileSkill)}}
-                  disabled={{takeTestTask.isRunning}}>
-                  Take Test
-                </button>
-              {{/if}}
-            </div>
+      <div class="list-divided border-none">
+        {{#each unverifiedApplicantProfileSkills as |applicantProfileSkill|}}
+        <div class="d-flex py-4">
+          <div class="li-left">
+            <h5>
+              {{applicantProfileSkill.skill.name}}
+            </h5>
+            {{#if (gte score 0)}}
+            <span>Score: {{applicantProfileSkill.score}}</span>
+            {{/if}}
           </div>
-          {{/each}}
+          <div class="li-right">
+            {{#if applicantProfileSkill.skill.isVerifiable}}
+            <button class="orange" {{action (perform takeTestTask applicantProfileSkill)}}
+              disabled={{takeTestTask.isRunning}}>
+              Take Test
+            </button>
+            {{/if}}
+          </div>
         </div>
+        {{/each}}
+      </div>
       {{else}}
-        No non verified skills.
+      No non verified skills.
       {{/if}}
     </div>
   </div>
@@ -81,43 +79,37 @@
 
 {{#if showSkillSelectorModal}}
   {{#modal-dialog
-    onClose=(action (perform saveSkillsTask))
-    targetAttachment="none"
-    translucentOverlay=true
-    containerClass='centered-scrolling-container w-50 mt-3 p-5'
-    overlayClass='centered-scrolling-overlay'
-    wrapperClass='centered-scrolling-wrapper'
-  }}
+      onClose=(action (perform saveSkillsTask))
+      targetAttachment="none"
+      translucentOverlay=true
+      containerClass='centered-scrolling-container hiring-modal mt-3'
+      overlayClass='centered-scrolling-overlay'
+      wrapperClass='centered-scrolling-wrapper'
+    }}
 
-    <PowerSelectMultiple 
-      @searchEnabled={{true}} 
-      @searchField={{"name"}} 
-      @options={{skills}} 
-      @selected={{profile.skills}}
-      @placeholder="Select Skills" 
-      @triggerComponent={{component 'trigger-component'}}
-      @onChange={{action (mut profile.skills)}} as |skill|>
-      <input 
-        type="checkbox" 
-        onclick={{action "preventDefault"}} 
-        checked={{includes profile.skills skill}} />
-      {{skill.name}}
-    </PowerSelectMultiple>
+    <div class="p-sm-5 p-4">
+      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{skills}} @selected={{profile.skills}}
+        @placeholder="Select Skills" @triggerComponent={{component 'trigger-component'}}
+        @onChange={{action (mut profile.skills)}} as |skill|>
+        <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes profile.skills skill}} />
+        {{skill.name}}
+      </PowerSelectMultiple>
 
-    <div class="divider-h my-4"></div>
+      <div class="divider-h my-4"></div>
 
-    {{#each profile.skills as |skill|}}
+      {{#each profile.skills as |skill|}}
       <span class="pointer pill-dashed mr-2 mt-2">{{skill.name}}
-      <button {{action 'removeSkill' skill}}>&#10005;</button> </span>
-    {{/each}}
+        <button {{action 'removeSkill' skill}}>&#10005;</button> </span>
+      {{/each}}
 
-    <div class="d-flex justify-content-end">
-      <button class="button-solid button-orange"
-        {{action (perform saveSkillsTask)}}
-        disabled={{saveSkillsTask.isRunning}}>
-        Save Skills
-      </button>
+      <div class="d-flex justify-content-end">
+        <button class="button-solid button-orange" {{action (perform saveSkillsTask)}}
+          disabled={{saveSkillsTask.isRunning}}>
+          Save Skills
+        </button>
+      </div>
     </div>
+
 
   {{/modal-dialog}}
 {{/if}}
