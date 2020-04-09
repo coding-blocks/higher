@@ -4,24 +4,42 @@ import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
-  title: {
-    description: 'Title',
+  // title: {
+  //   description: 'Title',
+  //   validators: [
+  //     validator('presence', {
+  //       presence: true,
+  //       message: Ember.computed('model.type', function() {
+  //         const educationalQualificationType = this.get('model.type')
+  //         if(educationalQualificationType == 'x_secondary' || educationalQualificationType == 'xii_senior_secondary') {
+  //           return 'School name cannot be empty'
+  //         } else {
+  //           return 'College name cannot be empty'
+  //         }
+  //       })
+  //     })
+  //   ]
+  // },
+  type: {
+    description: 'Type',
     validators: [
       validator('presence', {
         presence: true,
-        message: 'College cannot be empty'
+        message: 'Qualification Type cannot be empty'
       })
     ]
   },
-  subtitle: {
-    description: 'Subtitle',
-    validators: [
-      validator('presence', {
-        presence: true,
-        message: 'Branch cannot be empty'
-      })
-    ]
-  },
+  // subtitle: {
+  //   description: 'Subtitle',
+  //   validators: [
+  //     validator('presence', {
+  //       presence: Ember.computed('model.type', function() {
+  //         return this.model.type != 'x_secondary'
+  //       }),
+  //       message: 'Branch cannot be empty'
+  //     })
+  //   ]
+  // },
   startYear: {
     description: 'Start Year',
     validators: [
@@ -34,9 +52,24 @@ const Validations = buildValidations({
   endYear: {
     description: 'End Year',
     validators: [
-      validator('date'),
+      validator('date', {
+        after: Ember.computed('model.startYear', function() {
+          return this.get('model.startYear')
+        }),
+        message: 'End Year must be after Start Year'
+      }),
       validator('presence', {
         presence: true
+      })
+    ]
+  },
+  performanceScore: {
+    validators: [
+      validator('number', {
+        allowString: true,
+        lte: Ember.computed('model.performanceScale', function() {
+          return this.get('model.performanceScale') === 'percentage' ? 100 : 10
+        }).volatile()
       })
     ]
   }
@@ -52,6 +85,8 @@ export default DS.Model.extend(Validations, {
   description: DS.attr(),
   isCurrent: DS.attr('boolean'),
   isOtherCollege: DS.attr(),
+  performanceScale: DS.attr(),
+  performanceScore: DS.attr('number'),
   isOtherCollegeSetter: Ember.computed('isOtherCollege', {
     get() {
       return this.isOtherCollege
@@ -62,5 +97,10 @@ export default DS.Model.extend(Validations, {
       return val
     }
   }),
-  applicantProfile: DS.belongsTo('applicant-profile')
+  isForSchool: Ember.computed('type', function() {
+    return this.type === 'x_secondary' || this.type === 'xii_senior_secondary'
+  }),
+  applicantProfile: DS.belongsTo('applicant-profile'),
+  college: DS.belongsTo('college'),
+  branch: DS.belongsTo('branch')
 });

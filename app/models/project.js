@@ -32,14 +32,37 @@ const Validations = buildValidations({
   endDate: {
     description: 'End Date',
     validators: [
-      validator('date'),
+      validator('date', {
+        after: Ember.computed('model.startDate', function () {
+          return this.get('model.startDate')
+        }),
+        message: 'End Date must be after Start Date'
+      }),
       validator('presence', {
         presence: Ember.computed('model.isCurrent', function() {
           return !this.get('model.isCurrent')
         })
       })
     ]
-  }
+  },
+  githubLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
+  websiteLink: {
+    description: 'Link',
+    validators: [
+      validator('format', {
+        type: 'url',
+        allowBlank: true,
+      })
+    ]
+  },
 })
 
 export default DS.Model.extend(Validations, {
@@ -47,6 +70,9 @@ export default DS.Model.extend(Validations, {
   subtitle: DS.attr(),
   startDate: DS.attr(),
   endDate: DS.attr(),
+  githubLink: DS.attr(),
+  websiteLink: DS.attr(),
+  links: DS.attr(),
   startDateString: Ember.computed('startDate', {
     get() {
       return moment.unix(this.get('startDate')).toDate()
@@ -85,5 +111,7 @@ export default DS.Model.extend(Validations, {
   location:DS.attr(),
   type:DS.attr(),
   description:DS.attr(),
-  applicantProfile: DS.belongsTo('applicant-profile')
+  applicantProfile: DS.belongsTo('applicant-profile'),
+  screenshotUploadIds:DS.attr(),
+  screenshotUploads: DS.hasMany('upload')
 });

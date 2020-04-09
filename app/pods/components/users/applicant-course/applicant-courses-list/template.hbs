@@ -1,0 +1,109 @@
+<div class="border-card">
+  <div class="mb-5">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5>Enrolled Online Courses</h5>
+      {{#if editMode}}
+      <button class="button-solid button-orange mt-2" {{action (perform syncOnlineCoursesTask)}}
+        disabled={{syncOnlineCoursesTask.isRunning}}>
+        Sync Now
+      </button>
+      {{/if}}
+    </div>
+    {{#if syncOnlineCoursesTask.isRunning}}
+      <LoadingComponent @smallLoader="true" />
+    {{/if}}
+    <div class="divider-h mt-3 mb-4"></div>
+    {{#if onlineCBCourses.length}}
+    <div class="course-list-container overflow-scroll">
+      {{#each onlineCBCourses as |course|}}
+      <div class="img-desc mb-4">
+        <img class="round s-60x60" src="{{course.logo}}" alt="">
+        <div class="description justify-content-center pl-4">
+          <div>
+            <h5 class="mb-1">{{course.name}}</h5>
+            Batch: {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    Not Enrolled in any Online Courses
+    {{/if}}
+  </div>
+
+  <div class="mb-5">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5>Enrolled Offline Courses</h5>
+      {{#if editMode}}
+      <button class="button-solid button-orange" {{action 'addNewCourse' 'codingblocks'}}>Add New +
+      </button>
+      {{/if}}
+    </div>
+    <div class="divider-h mt-3 mb-4"></div>
+
+    {{#if offlineCBCourses.length}}
+    <div class="course-list-container overflow-scroll">
+      {{#each offlineCBCourses as |course|}}
+      <div class="img-desc mb-4">
+        <img class="round s-60x60" src="{{course.logo}}" alt="">
+        <div class="description justify-content-center pl-4">
+          <div>
+            <h5 class="mb-1">{{course.name}}</h5>
+            Batch: {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    Not Enrolled in any Offline Courses
+    {{/if}}
+  </div>
+
+  {{#if (or editMode otherCourses.length)}}
+  <div>
+    <div class="d-flex justify-content-between align-items-center">
+      <h5>Other Courses</h5>
+      {{#if editMode}}
+      <button class="button-solid button-orange" {{action 'addNewCourse' 'other'}}>
+        Add New +
+      </button>
+      {{/if}}
+    </div>
+    <div class="divider-h mt-3 mb-4"></div>
+    <div class="course-list-container overflow-scroll">
+      {{#each otherCourses as |course|}}
+      <div class="img-desc mb-4">
+        {{!-- <img class="round s-60x60" src="{{course.logo}}" alt=""> --}}
+        <div class="round font-lg white s-60x60 bg-gradient-purple all-center">{{course.logo}}</div>
+        <div class="description justify-content-center pl-4">
+          <div>
+            <h5 class="mb-1">{{course.name}}</h5>
+            <div class="dark-grey">{{course.organizationName}}</div>
+          </div>
+          <div>
+            {{moment-format (unix course.startDate) 'MMMM YYYY'}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+{{#if showAddNewCourseModal}}
+  {{#modal-dialog
+      onClose=(action 'onCloseModal')
+      targetAttachment="none"
+      translucentOverlay=true
+      containerClass='centered-scrolling-container w-50 mt-3'
+      overlayClass='centered-scrolling-overlay'
+      wrapperClass='centered-scrolling-wrapper'
+    }}
+    <Users::ApplicantCourse::ApplicantCourseEditor 
+      @onAfterSave={{action 'onAfterSave'}}
+      @editingRecord={{editingRecord}} />
+  {{/modal-dialog}}
+{{/if}}

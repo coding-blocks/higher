@@ -32,7 +32,12 @@ const Validations = buildValidations({
   endDate: {
     description: 'End Date',
     validators: [
-      validator('date'),
+      validator('date', {
+        after: Ember.computed('model.startDate', function () {
+          return this.get('model.startDate')
+        }),
+        message: 'End Date must be after Start Date'
+      }),
       validator('presence', {
         presence: Ember.computed('model.isCurrent', function () {
           return !this.get('model.isCurrent')

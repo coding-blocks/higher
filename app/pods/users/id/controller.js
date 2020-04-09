@@ -8,6 +8,8 @@ export default class UserIdController extends Controller {
   @service store
   @service api
 
+  queryParams = ['job_id']
+  job_id = null
   showValidationMessages = false
 
   @computed('applicantProfile', 'currentUser')

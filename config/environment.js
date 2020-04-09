@@ -14,6 +14,7 @@ module.exports = function(environment) {
       refreshAccessTokens: true,
       tokenExpireName: 'exp',
       refreshLeeway: 60, //send a request for refresh_token 60sec before actual expiration
+      refreshTokenPropertyName: 'refresh_token',
       authorizationHeaderName: 'Authorization',
       authorizationPrefix: 'JWT ',
     },
@@ -50,6 +51,19 @@ module.exports = function(environment) {
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
   }
 
+  if (environment === 'staging') {
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.API_HOST = 'https://hire-api.codingblocks.xyz'
+    ENV.PUBLIC_URL = 'https://hire.codingblocks.xyz/'
+    ENV.CLIENT_ID = 4190457915
+    ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
+    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
@@ -71,8 +85,6 @@ module.exports = function(environment) {
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
   }
 
-  ENV['ember-simple-auth-token'].tokenPropertyName = 'jwt'
-  ENV['ember-simple-auth-token'].refreshTokenPropertyName = 'refresh_token'
   ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.API_HOST}/login`
   ENV['ember-simple-auth-token'].serverTokenRefreshEndpoint = `${ENV.API_HOST}/refresh-token?client=web`
 

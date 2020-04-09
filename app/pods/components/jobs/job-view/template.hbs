@@ -1,0 +1,191 @@
+<section class="container c-job-description">
+  <div class="row no-gutters mt-5">
+    <div class="col-12 col-md-8">
+      <div class="border-card p-5 mb-5">
+        <div class="row no-gutters">
+          <div class="col-12 col-md-6">
+            <div class="img-desc b-right">
+              <div class="col-3 pl-0">
+                {{#if job.company.logo}}
+                  <img src={{job.company.logo}} alt={{job.company.name}}>
+                {{else}}
+                  <i class="far fa-building fa-4x"></i>
+                {{/if}}
+              </div>
+              <div class="description col-9">
+                <div>
+                  <div class="heading">
+                    {{job.title}}
+                  </div>
+                  <div class="font-mds">
+                    {{job.company.name}}
+                  </div>
+                </div>
+                <div class="dark-grey">
+                  Posted {{moment-from-now (unix job.postedOn)}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider-h d-md-none mt-4 mb-4"></div>
+
+          <div class="col-12 col-md-6">
+            <div class="row font-sm pl-3">
+              <div class="col-6">
+                <div class="mb-3">
+                  Job Location: 
+                  <span class="extra-bold commafy">
+                    {{#each job.locations as |location|}}
+                      <span>
+                        {{location.name}}
+                      </span>
+                    {{/each}}
+                  </span>
+                </div>
+                <div class="mb-3">
+                  Job Type: 
+                  <span class="extra-bold">
+                    {{#if (eq job.type 'fulltime')}}
+                      Full Time
+                    {{else if (eq job.type 'intern')}}
+                      Internship
+                    {{else}}
+                      Part Time
+                    {{/if}}
+                  </span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  Experience: <span class="extra-bold">{{job.experience}} Years</span>
+                </div>
+                <div>
+                  CTC: <span class="extra-bold">{{job.ctc}} LPA</span>
+                </div>
+              </div>
+            </div>
+            {{!-- <div class="red pl-3">
+              Deadline: 24 March 2019
+            </div> --}}
+          </div>
+        </div>
+      </div>
+
+      <button class="bg-gradient-violet-lr w-100 white d-md-none p-4 mb-4"
+        {{action "toggleShowDescription"}}>{{if showDescription 'Hide' 'View'}} Job Description</button>
+
+      <div class="border-card p-5 {{unless showDescription 'dsp-none-sm'}}">
+        <div class="font-md extra-bold mb-4">
+          Job Description
+        </div>
+        <div class="w-50 divider-h mb-4"></div>
+
+        <div class="font-sm">
+          {{markdown-to-html job.description class="d-inline"}}
+        </div>
+
+        <div class="font-md extra-bold mt-5 mb-4">
+          About the Company
+        </div>
+        <div class="w-50 divider-h"></div>
+
+        <div class="font-sm">
+          {{markdown-to-html job.company.description class="d-inline"}}
+        </div>
+
+
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 pl-lg-5">
+      <div class="position-relative br-10 overflow-hidden">
+        <div class="back-div br-10"></div>
+
+        <div class="bg-gradient-black-bt p-5">
+          <div class="d-flex justify-content-between white mb-2 font-sm">
+            <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>
+          </div>
+          {{!-- <div class="d-flex justify-content-between mb-2 {{if job.eligible "green" "red"}}">
+            Status:
+            <span class="extra-bold">
+              {{if job.eligible "Eligible" "Not Eligible"}}
+            </span>
+          </div> --}}
+          {{#if allreadyApplied}}
+            <div class="mt-4 green t-align-c">You've already applied for this Job.</div>
+          {{else if job.hasDeadlinePassed}}
+            <div class="mt-4 red t-align-c">Last date to apply for this job has passed.</div>
+          {{else if (not job.isAccepting)}}
+            <div class="mt-4 yellow t-align-c">Applications are temporarily Closed.</div>
+          {{else if (not isProfileCompleted)}}
+            <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
+              @callIfLoggedIn={{action 'takeToProfileEditor' 3}} 
+              @redirectionPath={{completeProfileRedirectionPath}}
+              disabled={{not job.isAccepting}}>
+                Complete Profile and Apply
+            </EnsureLoginButton>
+          {{else}}
+            <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
+              @callIfLoggedIn={{action (mut showApplyToJobModal) true}} 
+              disabled={{not job.isAccepting}}>
+                Apply To Job
+            </EnsureLoginButton>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{{#if showTakeTestModal}}
+{{#modal-dialog
+    onClose=(action 'toggleModals')
+    targetAttachment="none"
+    translucentOverlay=true
+    containerClass='centered-scrolling-container w-50 mt-3 p-5'
+    overlayClass='centered-scrolling-overlay'
+    wrapperClass='centered-scrolling-wrapper'
+  }}
+<div class="">
+  <h3>Get Verified</h3>
+  <div class="divider-h my-3"></div>
+  Get your skills verified by taking skill based tests and increase your chances of getting shortlisted.
+</div>
+
+<div class="d-flex justify-content-end mt-5">
+  <button class="button-dashed button-orange mr-3" {{action 'toggleModals'}}>
+    I'll Do Later
+  </button>
+  <button class="button-solid button-orange" {{action 'takeToProfileEditor' 3}}>
+    Take Test
+  </button>
+</div>
+{{/modal-dialog}}
+{{/if}}
+
+{{#if showApplyToJobModal}}
+{{#modal-dialog
+    onClose=(action (mut showApplyToJobModal) false)
+    targetAttachment="none"
+    translucentOverlay=true
+    containerClass='centered-scrolling-container w-50 mt-3 p-5'
+    overlayClass='centered-scrolling-overlay'
+    wrapperClass='centered-scrolling-wrapper'
+  }}
+
+<h4>What do you want to say to recruiter?</h4>
+<div class="divider-h my-3"></div>
+<Textarea class="input-textarea w-100" id="" rows="5" @value={{messageToRecruiter}}></Textarea>
+
+
+<div class="d-flex justify-content-end mt-5">
+  <button class="button-dashed button-orange mr-3" {{action (mut showApplyToJobModal) false}}>
+    Cancel
+  </button>
+  <button class="button-solid button-orange" {{action (perform applyToJobTask)}}>
+    Apply To Job
+  </button>
+</div>
+{{/modal-dialog}}
+{{/if}}

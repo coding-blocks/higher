@@ -113,5 +113,6 @@ export default DS.Model.extend(Validations, {
   }),
   isVerified: DS.attr(),
   amoebaCourseId: DS.attr('number'),
-  applicantProfile: DS.belongsTo('applicant-profile')
+  applicantProfile: DS.belongsTo('applicant-profile'),
+  skill: DS.belongsTo('skill')
 });

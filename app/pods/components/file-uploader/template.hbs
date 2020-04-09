@@ -1,0 +1,32 @@
+{{#if dropZoneEnabled}}
+  <FileDropzone 
+    @name="{{queueName}}" 
+    @accept={{accept}}
+    @multiple={{allowMultiple}} as |dropzone queue|>
+      {{component dropZoneComponent 
+        dropzone=dropzone 
+        queue=queue
+        accept=accept
+        queueName=queueName
+        errorMessage=errorMessage
+        filesDidChange=(action 'filesDidChange')}}
+  </FileDropzone>
+{{else}}
+  <FileUpload 
+    @name="{{queueName}}" 
+    @accept={{accept}}
+    @onfileadd={{action 'filesDidChange'}} as |queue|>
+      {{component fileUploadComponent 
+        queue=queue
+        accept=accept
+        tagName="span"
+        errorMessage=errorMessage
+        triggerUpload=triggerUpload
+        isUploading=isUploading
+        filesDidChange=(action 'filesDidChange')}}
+  </FileUpload>
+{{/if}}
+
+{{yield (hash
+  errorMessage=errorMessage
+)}}

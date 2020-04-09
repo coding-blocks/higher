@@ -1,22 +1,13 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency-decorators';
 
 export default class ProjectListComponent extends Component {
-  showValidationMessages = false
-  
-  @action
-  deleteRecord() {
-    this.get('editingRecord').destroyRecord()
-      .then(r => {
-        this.set('showEditModal', false)
-      })
-  }
-
   @action
   getNewProject() {
     if (!this.newRecord) {
-      const newRecord = this.get('getNewRecord')('project')
+      const newRecord = this.get('getNewRecord')('project', {
+        links: JSON.stringify({})
+      })
       this.set('newRecord', newRecord)
     }
     this.set('editingRecord', this.newRecord)
@@ -32,20 +23,9 @@ export default class ProjectListComponent extends Component {
 
   @action
   setEditingRecord(Record) {
+    Record.hasMany('screenshotUploads').reload()//why ember is not doing this?
     this.set('editingRecord', Record)
     this.set('showEditModal', true)
-  }
-
-  @dropTask saveRecordTask = function* () {
-    if (this.editingRecord.validations.isInvalid) {
-      this.set('showValidationMessages', true)
-      return
-    }
-
-    yield this.get('editingRecord').save()
-
-    this.set('showEditModal', false)
-    this.set('newRecord', null)
   }
 
   willDestroyElement() {

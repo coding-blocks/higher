@@ -1,0 +1,166 @@
+<div class="p-5">
+  <h4 class="mb-5">Add Project</h4>
+
+  <div class="mb-4">
+    <div class="font-sm d-flex justify-content-between">
+      <div>
+        Title <span class="red">*</span>
+      </div>
+      <WFormValidations class="ml-1 mt-1" @model={{project}} @attributeName='title' as |validation|>
+        {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+        {{/if}}
+      </WFormValidations>
+    </div>
+    <Input class="input-text" @type="text" @value={{project.title}} />
+  </div>
+
+  <div class="mb-4">
+    <div class="font-sm d-flex justify-content-between">
+      <div>
+        Subtitle <span class="red">*</span>
+      </div>
+      <WFormValidations class="ml-1 mt-1" @model={{project}} @attributeName='subtitle' as |validation|>
+        {{#if (and validation.isInvalid showValidationMessages)}}
+        <span class="red card-md">{{validation.message}}</span>
+        {{/if}}
+      </WFormValidations>
+    </div>
+    <Input class="input-text" @type="text" @value={{project.subtitle}} />
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12 col-md-6">
+      <div class="font-sm d-flex justify-content-between">
+        <div>
+          Start Date <span class="red">*</span>
+        </div>
+        <WFormValidations class="ml-1 mt-1" @model={{project}} @attributeName='startDate' as |validation|>
+          {{#if (and validation.isInvalid showValidationMessages)}}
+          <span class="red card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      </div>
+      <PikadayInput class="input-text" @value={{project.startDateString}}
+        @onSelection={{action (mut project.startDateString)}} />
+    </div>
+    <div class="col-12 col-md-6">
+      {{#unless project.isCurrent}}
+      <div class="font-sm d-flex justify-content-between">
+        <div>
+          End Date <span class="red">*</span>
+        </div>
+        <WFormValidations class="ml-1 mt-1" @model={{project}} @attributeName='endDate' as |validation|>
+          {{#if (and validation.isInvalid showValidationMessages)}}
+          <span class="red card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      </div>
+      <PikadayInput class="input-text" @value={{project.endDateString}}
+        @onSelection={{action (mut project.endDateString)}} />
+      {{/unless}}
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="input-checkbox checkbox-solid pt-1">
+      <Input @type="checkbox" @checked={{project.isCurrentSetter}} />
+      Currently Working
+      <span></span>
+    </label>
+  </div>
+
+  {{#if project.id}}
+  <div class="font-sm">
+    {{#each-in links as |site link|}}
+      {{#if (eq site "github")}}
+        <i class="fab fa-github mr-3"></i>Github
+        <Input @type="url" class="input-text mt-3" @value={{project.githubLink}}
+          @placeholder="https://github.com/user/project" />
+        <WFormValidations class="mt-1 mb-3" @model={{project}} @attributeName='githubLink' as |validation|>
+          {{#if (and validation.isInvalid showValidationMessages)}}
+          <span class="red card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      {{else}}
+        <i class="fas fa-globe mr-3"></i>Website
+        <Input @type="url" class="input-text mt-3" @value={{project.websiteLink}}
+          @placeholder="https://abc.com" />
+        <WFormValidations class="mt-1 mb-3" @model={{project}} @attributeName='websiteLink' as |validation|>
+          {{#if (and validation.isInvalid showValidationMessages)}}
+          <span class="red card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      {{/if}}
+    {{/each-in}}
+  </div>
+  <div class="mb-4">
+    <div class="font-sm">Location</div>
+    <Input @type="text" class="input-text" @value={{project.location}} />
+  </div>
+
+  <div class="mb-4">
+    <div class="font-sm">
+      Description (if any)
+    </div>
+    <Textarea class="input-textarea w-100" @value={{project.description}} @rows="7" />
+    </div>
+        
+        <div class="mb-4">
+          <div class="font-sm mb-2">
+            Add Screenshots
+          </div>
+          <div class="row">
+            {{#each project.screenshotUploads as |screenshotUpload|}}
+              <div class="col-6 col-md-4 mb-5">
+                <div class="hoverable">
+                  <img src="{{screenshotUpload.url}}" alt="">
+                  <div class="pop-up t-align-c w-100">
+                    <button class="button-solid button-orange" 
+                      {{action (perform deleteScreenshotUploadTask) screenshotUpload}}
+                      disabled={{deleteScreenshotUploadTask.isRunning}}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+          <FileUploader
+            @uploadEndPoint="/projects/{{project.id}}/upload-screenshot"
+            @queueName="projectImages" 
+            @dropZoneEnabled="true"
+            @dropZoneComponent="users/projects-list/project-editor/p-drop-zone-project-screenshots"
+            @accept="image/png,image/jpg,image/jpeg"
+            @onDidUpload={{action 'onImageUpload'}} />
+        </div>
+        
+        <div class="d-flex justify-content-between">
+          <div>
+            {{#if project.id}}
+              <button class="red" {{action 'deleteRecord'}}>
+                <i class="fas fa-trash pr-3"></i>Delete
+              </button>
+            {{/if}}
+          </div>
+          <div>
+            <button class="button-dashed button-orange mr-2" {{action onCloseModal}}>Cancel</button>
+            <button class="button-solid button-orange" 
+              {{action (perform saveRecordTask) false}} 
+              disabled={{and (v-get project 'isInvalid') showValidationMessages}}>
+              Save Details
+            </button>
+          </div>
+        </div>
+      {{else}}
+        <div class="t-align-c">
+          <button class="button-solid button-orange"
+            {{action (perform saveRecordTask) true}} 
+              disabled={{and (v-get project 'isInvalid') showValidationMessages}}>
+              Continue
+          </button>
+        </div>
+      {{/if}}
+
+      
+    </div>
