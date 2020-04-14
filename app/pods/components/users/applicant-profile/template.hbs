@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 <div class="border-card p-5 my-5">
   <div class="row">
     <div class="col-12 col-md-3 border-right profile-left-pane">
@@ -43,7 +45,7 @@
               {{profile.user.lastname}}
 
               {{#if userHimself}}
-                <span class="pill ml-2 white card-md hoverable {{if profile.isActive 'bg-gradient-lgreen' 'bg-gradient-orange'}}">  
+                <span class="pill ignore-in-pdf ml-2 white card-md hoverable {{if profile.isActive 'bg-gradient-lgreen' 'bg-gradient-orange'}}">  
                   {{if profile.isActive 'Active' 'Inactive'}}
                   
                   <div class="black p-4 border-card pop-up w-200">
@@ -81,16 +83,16 @@
             {{/unless}}
           </div>
         </div>
-        <div class="ml-2">
+        <div class="ml-2 d-flex ignore-in-pdf">
           {{#if userHimself}}
             <div>
-              <button class="button-dashed button-orange regular" {{action (mut profile.profileCompletion) 0}}>&lt; Edit</button>
+              <button class="button-dashed button-orange regular mr-2" {{action (mut profile.profileCompletion) 0}}>&lt; Edit</button>
             </div>
-            {{!-- <div>
+            <div>
               <button class="button-solid lg button-orange"
                 {{action (perform generatePdfTask)}}
                 disabled={{generatePdfTask.isRunning}}>Download as PDF</button>
-            </div> --}}
+            </div>
           {{/if}}
         </div>
       </div>
