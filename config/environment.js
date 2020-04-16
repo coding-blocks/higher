@@ -35,7 +35,8 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    SCATTERSHOT_API_HOST: 'https://app.codingblocks.com'
   };
 
   if (environment === 'development') {
@@ -85,6 +86,7 @@ module.exports = function(environment) {
     ENV.CLIENT_ID = 4190457915
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+    ENV.SCATTERSHOT_API_HOST = 'https://app.codingblocks.com'
   }
 
   ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.API_HOST}/login`
