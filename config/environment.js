@@ -49,6 +49,7 @@ module.exports = function(environment) {
     ENV.CLIENT_ID = 8986717992
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+    ENV.SCATTERSHOT_API_HOST = 'https://app.codingblocks.com'
   }
 
   if (environment === 'staging') {
@@ -62,6 +63,7 @@ module.exports = function(environment) {
     ENV.CLIENT_ID = 4190457915
     ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+    ENV.SCATTERSHOT_API_HOST = 'https://app.codingblocks.com'
   }
 
   if (environment === 'test') {

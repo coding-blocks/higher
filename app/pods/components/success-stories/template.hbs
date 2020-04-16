@@ -1,0 +1,30 @@
+<div class="row my-5 justify-content-center">
+  {{#each successStories as |successStory|}}
+    <div class="col-lg-4 col-md-6 pb-4">
+      <div class="border-card p-5">
+        <img src="https://minio.codingblocks.com/landing-pages/group.svg" alt="" class="overlay-icon">
+        <div class="d-flex align-items-center">
+          <div class="bg-grey s-50x50 br-50 overflow-hidden">
+            <img src="{{successStory.photo}}" alt="" class="h-100">
+          </div>
+          <div class="ml-3">
+            <div class="bold">{{successStory.fullName}}</div>
+            <div class="card-md font-normal">{{successStory.coursesAttended}}</div>
+          </div>
+        </div>
+        <div class="my-5 font-normal review-body">
+          {{successStory.stories}}
+        </div>
+        {{#if successStory.company}}
+          <div class="extra-bold">Placed at {{successStory.company.companyName}}</div>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+{{#if successStoriesUrl}}
+  <div class="t-align-c my-5">
+    <button class="button-dashed button-orange" {{action (perform fetchSuccessStoriesTask)}}>Load More</button>
+  </div>
+{{/if}}
