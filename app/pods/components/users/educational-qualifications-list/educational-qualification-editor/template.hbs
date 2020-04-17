@@ -5,8 +5,9 @@
     <div class="row no-gutters justify-content-around">
       <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'x_secondary'}}>X (Secondary)</button>
       <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'xii_senior_secondary'}}>XII (Senior Secondary)</button>
-      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'graduation'}}>Graduation</button>
-      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'post_graduation'}}>Post Graduation</button>
+      {{!-- <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'graduation'}}>Graduation</button>
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'post_graduation'}}>Post Graduation</button> --}}
+      <button class="button-dashed button-orange my-1" {{action (mut educationalQualification.type) 'graduation_post_graduation'}}>Graduation / Post Graduation</button>
     </div>
   {{else}}
 
