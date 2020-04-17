@@ -56,6 +56,16 @@ const Validations = buildValidations({
       })
     ]
   },
+  skill: {
+    description: 'Skill',
+    validators: [
+      validator('presence', {
+        disabled: Ember.computed.equal('model.organizationType', 'codingblocks'),
+        presence: Ember.computed.equal('model.organizationType', 'other'),
+        message: 'Course Type cannot be empty'
+      })
+    ]
+  }
 })
 
 export default DS.Model.extend(Validations, {
