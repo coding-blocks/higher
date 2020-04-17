@@ -171,8 +171,12 @@
             <h5 class="flex-1">
               Upload a Profile Picture
             </h5>
-            {{#if applicantProfile.photo}}
+            {{#if applicantProfile.photoUpload}}
+              <img class="s-50x50 round" src="{{applicantProfile.photoUpload.url}}" alt="">
+            {{else if applicantProfile.photo}}
               <img class="s-50x50 round" src="{{applicantProfile.photo}}" alt="">
+            {{else}}
+              <img class="s-50x50 round" src="/images/user.svg" alt="">
             {{/if}}
           </div>
           <FileUploader

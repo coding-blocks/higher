@@ -59,8 +59,24 @@ export default class ApplicantProfileEditor extends Component {
   }
 
   @action
-  onProfilePicUpload({url}) {
+  async onProfilePicUpload({url}) {
     this.applicantProfile.set('photo', url)
+
+    let photoUpload = await this.applicantProfile.get('photoUpload')
+
+    if (isEmpty(photoUpload)) {
+      photoUpload = this.store.createRecord('upload', {
+        type: 'profile_photo',
+        url: this.applicantProfile.photo
+      })
+      await photoUpload.save()
+      this.applicantProfile.set('photoUpload', photoUpload)
+      await this.applicantProfile.save()
+    }
+    else {
+      photoUpload.set('url', this.applicantProfile.photo)
+      await photoUpload.save()
+    }
   }
   
   @action 
@@ -76,15 +92,11 @@ export default class ApplicantProfileEditor extends Component {
         return Promise.reject(new Error('Form Validations not passed'))
       }
 
-      yield Promise.all([this.handleResumeUpload(), this.handlePhotoUpload()])
+      yield this.handleResumeUpload()
       if (this.resumeUpload && this.resumeUpload.hasDirtyAttributes) {
         yield this.resumeUpload.save()
         this.applicantProfile.set('resumeUpload', this.resumeUpload)
         // this.applicantProfile.set('resumeLink', null)
-      }
-      if (this.photoUpload && this.photoUpload.hasDirtyAttributes) {
-        yield this.photoUpload.save()
-        this.applicantProfile.set('photoUpload', this.photoUpload)
       }
 
       this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
@@ -102,7 +114,7 @@ export default class ApplicantProfileEditor extends Component {
 
       this.scrollTo("#timeline-top")
     } catch (err) {
-      console.log('yoyo', err)
+      console.error('yoyo', err)
     }
   }
 
@@ -128,28 +140,6 @@ export default class ApplicantProfileEditor extends Component {
     let resumeUpload = await this.applicantProfile.get('resumeUpload')
 
     this.set('resumeUpload', resumeUpload)
-  }
-
-  async handlePhotoUpload() {
-    if (isEmpty(this.applicantProfile.photo)) { //ie. photo has never been uploaded for this company
-      return
-    }
-
-    let photoUpload = await this.applicantProfile.get('photoUpload')
-
-    if (isEmpty(photoUpload)) {
-      photoUpload = this.store.createRecord('upload', {
-        type: 'profile_photo',
-        isVerified: true,
-        verifiedById: this.currentUser.user.id,
-        url: this.applicantProfile.photo
-      })
-    }
-    else {
-      photoUpload.set('url', this.applicantProfile.photo)
-    }
-
-    this.set('photoUpload', photoUpload)
   }
 
   scrollTo(id) {

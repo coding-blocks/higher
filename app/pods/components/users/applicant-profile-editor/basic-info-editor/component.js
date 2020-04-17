@@ -59,6 +59,7 @@ export default class BasicInfoEditoComponent extends Component {
     }
     else {
       resumeUpload.set('url', url)
+      await resumeUpload.save()
     }
     this.applicantProfile.set('resumeLink', null)
   }
