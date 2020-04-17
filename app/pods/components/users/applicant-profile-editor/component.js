@@ -3,6 +3,7 @@ import { dropTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
 import { action, computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
+import { later } from '@ember/runloop';
 
 export default class ApplicantProfileEditor extends Component {
   @service store
@@ -87,6 +88,7 @@ export default class ApplicantProfileEditor extends Component {
   @dropTask saveApplicantProfileTask = function* (currentPage) {
     try {
       if (this.applicantProfile.validations.isInvalid) {
+        this.set('currentPage', 0)
         this.set('showValidationMessages', true)
         this.scrollTo(".form-error")
         return Promise.reject(new Error('Form Validations not passed'))
@@ -142,8 +144,10 @@ export default class ApplicantProfileEditor extends Component {
     this.set('resumeUpload', resumeUpload)
   }
 
-  scrollTo(id) {
-    const element = document.querySelector(id)
-    element.scrollIntoView()
+  scrollTo(selector) {
+    const element = document.querySelector(selector)
+    if(element) {
+      element.scrollIntoView()
+    }
   }
 }
