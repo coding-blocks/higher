@@ -183,6 +183,7 @@
             @dropZoneEnabled="true"
             @dropZoneComponent="users/applicant-profile-editor/p-drop-zone-profile-pic"
             @accept="image/png,image/jpg,image/jpeg,image/svg+xml"
+            @allowedFileTypesText=".png, .jpg, .jpeg"
             @onDidUpload={{action 'onProfilePicUpload'}} />
         </div>
       </div>

@@ -6,14 +6,14 @@
         Drop files here or click to upload.
       </div>
       <div class="dark-grey card-md">
-        Please upload only .jpg, .png files with size less than 5MB
+        Please upload only {{allowedFileTypesText}} files with size less than 5MB
       </div>
     {{else}}  
       <div class="bold">
         Drop files here or click to upload.
       </div>
       <div class="dark-grey card-md">
-        Please upload only <span class="red bold">.jpg, .png</span> files with size less than 5MB
+        Please upload only <span class="red bold">{{allowedFileTypesText}}</span> files with size less than 5MB
       </div>
     {{/if}}
   {{else if queue.files.length}}
@@ -37,7 +37,7 @@
             Drop files here or click to upload.
           </span>
           <span class="dark-grey card-md display-block">
-            Please upload only .jpg, .png files with size less than 5MB
+            Please upload only {{allowedFileTypesText}} files with size less than 5MB
           </span>
           <span class="red card-md display-block">
             {{errorMessage}}
