@@ -14,5 +14,8 @@ export default DS.Model.extend({
   postedOn: DS.attr(),
   isAccepting: DS.attr(),
   coverImage: DS.attr(),
-  form: DS.attr()
+  form: DS.attr(),
+  logoUpload: DS.belongsTo('upload', { inverse: null }),
+  videoUpload: DS.belongsTo('upload', { inverse: null }),
+  brochureUpload: DS.belongsTo('upload', { inverse: null })
 });

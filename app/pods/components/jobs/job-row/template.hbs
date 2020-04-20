@@ -2,8 +2,8 @@
   <div class="col-md-4 col-sm-6 col-12">
     <div class="row no-gutters align-items-center">
       <div class="col-3">
-        {{#if job.company.logo}}
-          <img class="s-80x80" src={{job.company.logo}} alt={{job.company.name}}>
+        {{#if job.company.logoUpload}}
+          <img class="s-80x80" src={{job.company.logoUpload.url}} alt={{job.company.name}}>
         {{else}}
           <i class="far fa-building fa-4x"></i>
         {{/if}}

@@ -68,6 +68,7 @@ export default class ApplicantProfileEditor extends Component {
     if (isEmpty(photoUpload)) {
       photoUpload = this.store.createRecord('upload', {
         type: 'profile_photo',
+        isVerified: true,
         url: this.applicantProfile.photo
       })
       await photoUpload.save()
