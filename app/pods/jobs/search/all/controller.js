@@ -16,7 +16,8 @@ export default class JobSearchAllController extends Controller {
   }
 
   pastJobsFilter = {
-    "deadline <": moment().format()
+    "deadline <": moment().format(),
+    "companies.is_active =": true
   }
 
   @restartableTask fetchJobsTask = function* (filter) {
