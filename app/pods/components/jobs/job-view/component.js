@@ -12,6 +12,7 @@ export default class JobViewComponent extends Component {
   showTakeTestModal = false
   showApplyToJobModal = false
   messageToRecruiter = ''
+  notEligible = false
 
   @computed('myApplication', 'jobApplication')
   get allreadyApplied() {
@@ -29,15 +30,25 @@ export default class JobViewComponent extends Component {
   }
 
   @dropTask applyToJobTask = function* () {
-    let jobApplication = this.store.createRecord('job-application', {
-      applicantProfile: this.applicantProfile,
-      message: this.messageToRecruiter,
-      job: this.job
-    })
+    try {
+      this.set('notEligible', false)
 
-    yield jobApplication.save()
-    this.set('jobApplication', jobApplication)
-    this.set('showApplyToJobModal', false)
+      let jobApplication = this.store.createRecord('job-application', {
+        applicantProfile: this.applicantProfile,
+        message: this.messageToRecruiter,
+        job: this.job
+      })
+  
+      yield jobApplication.save()
+      this.set('jobApplication', jobApplication)
+      this.set('showApplyToJobModal', false)
+    } catch (err) {
+      
+      if (err.errors[0].title == 'Not eligible for this Job') {
+        this.set('notEligible', true)
+      }
+      this.set('showApplyToJobModal', false)
+    }
   }
 
   @action

@@ -117,6 +117,8 @@
             <div class="mt-4 red t-align-c">Last date to apply for this job has passed.</div>
           {{else if (not job.isAccepting)}}
             <div class="mt-4 yellow t-align-c">Applications are temporarily Closed.</div>
+          {{else if notEligible}}
+            <div class="mt-4 red t-align-c">Your are not eligible for this job.</div>
           {{else if (not isProfileCompleted)}}
             <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
               @callIfLoggedIn={{action 'takeToProfileEditor' 3}} 
