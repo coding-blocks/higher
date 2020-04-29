@@ -16,7 +16,12 @@
           {{successStory.stories}}
         </div>
         {{#if successStory.company}}
-          <div class="extra-bold">Placed at {{successStory.company.companyName}}</div>
+          <div class="extra-bold d-flex justify-content-between align-items-center">
+            <span>Placed at {{successStory.company.companyName}}</span>
+            {{#if successStory.company.logoUrl}}
+              <img class="success-story-company" src="{{successStory.company.logoUrl}}" alt="{{successStory.company.companyName}}">
+            {{/if}}
+          </div>
         {{/if}}
       </div>
     </div>
