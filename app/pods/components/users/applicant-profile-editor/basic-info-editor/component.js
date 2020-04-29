@@ -68,4 +68,9 @@ export default class BasicInfoEditoComponent extends Component {
   preventDefault(e) {
     e.preventDefault()
   }
+
+  @action
+  removeLocation(location) {
+    this.applicantProfile.locations.removeObject(location)
+  }
 }

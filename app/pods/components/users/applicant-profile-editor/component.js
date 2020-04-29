@@ -80,11 +80,6 @@ export default class ApplicantProfileEditor extends Component {
       await photoUpload.save()
     }
   }
-  
-  @action 
-  removeLocation (location) {
-    this.applicantProfile.locations.removeObject(location)
-  }
 
   @dropTask saveApplicantProfileTask = function* (currentPage) {
     try {
