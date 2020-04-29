@@ -22,6 +22,7 @@ export default class SuccessStoriesComponent extends Component {
       story.placements.every(placement => {
         if (placement.company.isTop) {
           story.company = placement.company
+          story.type = 'placement'
           return false
         }
         return true
@@ -30,6 +31,7 @@ export default class SuccessStoriesComponent extends Component {
         story.internships.every(internship => {
           if (internship.company.isTop) {
             story.company = internship.company
+            story.type = 'internship'
             return false
           }
           return true
@@ -38,8 +40,10 @@ export default class SuccessStoriesComponent extends Component {
       if(!story.company) {
         if(story.placements.length) {
           story.company = story.placements[0].company
+          story.type = 'placement'
         } else if (story.internships.length){
           story.company = story.internships[0].company
+          story.type = 'internship'
         }
       }
     })
