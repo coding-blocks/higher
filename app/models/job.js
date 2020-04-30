@@ -14,15 +14,18 @@ export default DS.Model.extend({
   status: DS.attr(),
   experience: DS.attr(),
   deadline: DS.attr(),
-  hasDeadlinePassed: Ember.computed('deadline', function() {
-    return moment().isAfter(moment.unix(this.deadline))
-  }),
   postedOn: DS.attr(),
   isAccepting: DS.attr(),
   coverImage: DS.attr(),
-  form: DS.attr(),
   locations: DS.hasMany('location'),
   company: DS.belongsTo('company'),
   myApplication: DS.belongsTo('job-application', {inverse: null}),
-  jobApplications: DS.hasMany('job-application', { inverse: 'job' })
+  jobApplications: DS.hasMany('job-application', { inverse: 'job' }),
+  hasDeadlinePassed: Ember.computed('deadline', function() {
+    return moment().isAfter(moment.unix(this.deadline))
+  }),
+  form: DS.attr(),
+  formJSON: Ember.computed('form', function () {
+    return JSON.parse(this.form)
+  }),
 });

@@ -1,0 +1,32 @@
+{{#if (eq question.type 'text-field')}}
+  <h6>{{question.title}}
+    {{#if question.required}}
+    <span class="red">*</span>
+    {{/if}}
+  </h6>
+  <Input class="input-text" @placeholder={{question.placeholder}} @name={{question.name}} @required={{question.required}}
+    @value={{valueToSet}} />
+{{else if (eq question.type 'radio-group')}}
+  <h6>{{question.title}}
+    {{#if question.required}}
+    <span class="red">*</span>
+    {{/if}}
+  </h6>
+  {{#each radioOptions as |option|}}
+    <label for="{{option}}" class="mr-4">
+      <input id="{{option}}" type="radio" name={{question.name}} value={{option}} required={{question.required}}
+      onclick={{action (mut valueToSet) option}}>
+      {{option}}
+      <span></span>
+    </label>
+  {{/each}}
+
+{{else if (eq question.type 'checkbox-group')}}
+  <h6>{{question.title}}</h6>
+  <label for="{{question.name}}" class="input-checkbox gradient-tick font-sm mt-4 display-block">
+    <input id="{{question.name}}" type="checkbox" name="{{question.name}}" 
+    onClick={{action (mut valueToSet) (not valueToSet)}}/>
+    {{question.title}}
+    <span></span>
+  </label>
+{{/if}}

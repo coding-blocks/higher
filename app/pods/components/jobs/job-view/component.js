@@ -13,6 +13,7 @@ export default class JobViewComponent extends Component {
   showApplyToJobModal = false
   messageToRecruiter = ''
   notEligible = false
+  jobApplicationForm = {}
 
   @computed('myApplication', 'jobApplication')
   get allreadyApplied() {
@@ -33,10 +34,17 @@ export default class JobViewComponent extends Component {
     try {
       this.set('notEligible', false)
 
+      const form = $('#job-application-form')
+      if(!form[0].checkValidity()) {
+        form.find(':submit').click()
+        return
+      }
+
       let jobApplication = this.store.createRecord('job-application', {
         applicantProfile: this.applicantProfile,
         message: this.messageToRecruiter,
-        job: this.job
+        job: this.job,
+        applicationForm: JSON.stringify(this.jobApplicationForm)
       })
   
       yield jobApplication.save()

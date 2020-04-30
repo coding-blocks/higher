@@ -176,18 +176,21 @@
     wrapperClass='centered-scrolling-wrapper'
   }}
 
-<h4>What do you want to say to recruiter?</h4>
-<div class="divider-h my-3"></div>
-<Textarea class="input-textarea w-100" id="" rows="5" @value={{messageToRecruiter}}></Textarea>
+<div class="p-5">
+  <Jobs::JobApplicationForm 
+    @questions={{job.formJSON}}
+    @form={{jobApplicationForm}}
+    @messageToRecruiter={{messageToRecruiter}}
+    @applyToJobTask={{applyToJobTask}} />
 
-
-<div class="d-flex justify-content-end mt-5">
-  <button class="button-dashed button-orange mr-3" {{action (mut showApplyToJobModal) false}}>
-    Cancel
-  </button>
-  <button class="button-solid button-orange" {{action (perform applyToJobTask)}}>
-    Apply To Job
-  </button>
+  <div class="d-flex justify-content-end mt-5">
+    <button class="button-dashed button-orange mr-3" {{action (mut showApplyToJobModal) false}}>
+      Cancel
+    </button>
+    <button class="button-solid button-orange" {{action (perform applyToJobTask)}}>
+      Apply To Job
+    </button>
+  </div>
 </div>
 {{/modal-dialog}}
 {{/if}}
