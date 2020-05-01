@@ -1,6 +1,9 @@
+<h4>What do you want to say to recruiter?</h4>
+<div class="divider-h my-3"></div>
+<Textarea class="input-textarea w-100" id="" rows="5" @value={{messageToRecruiter}}></Textarea>
+
+
 <form id="job-application-form" action="">
-  <h6>Your Contact No. <span class="red">*</span> <span class="card-md dark-grey">Must be 10 digit number</span></h6>
-  <Input type="text" @pattern="[0-9]{10}" class="input-text" @value={{messageToRecruiter}} @required={{true}}/>
   {{#each questions as |question|}}
     <div class="my-4">
       <Jobs::JobApplicationForm::CustomFormField @question={{question}} @valueToSet={{get form question.name}}/>
