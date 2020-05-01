@@ -52,7 +52,7 @@ export default class SkillSelectorComponent extends Component {
 
   @dropTask saveSkillsTask = function *() {
     try {
-      yield this.saveApplicantProfileTask.perform(2)
+      yield this.saveApplicantProfileTask.perform(1)
       let newApplicantProfileSkills = yield this.store.query('applicant-profile-skill', {
         custom: {
           ext: 'url',
