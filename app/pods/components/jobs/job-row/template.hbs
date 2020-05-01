@@ -13,6 +13,10 @@
         <div class="font-normal mt-2 dark-grey">
           {{job.company.name}}
           <span class="black">Posted {{moment-from-now (unix job.postedOn)}}</span>
+          {{#if job.isCbOnly}}
+            <br>
+            <span class="orange card-sm">* For CB students only</span>
+          {{/if}}
         </div>
       </div>
     </div>

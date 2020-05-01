@@ -16,6 +16,7 @@ export default DS.Model.extend({
   deadline: DS.attr(),
   postedOn: DS.attr(),
   isAccepting: DS.attr(),
+  isCbOnly: DS.attr('boolean'),
   coverImage: DS.attr(),
   locations: DS.hasMany('location'),
   company: DS.belongsTo('company'),
