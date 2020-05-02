@@ -105,6 +105,17 @@
           <div class="d-flex justify-content-between white mb-2 font-sm">
             <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>
           </div>
+          {{#if job.isCbOnly}}
+            <div class="orange">
+              This job is for Coding Blocks students only
+              <span class="hoverable">
+                <i class="far fa-question-circle"></i>
+                <div class="black p-4 border-card pop-up w-200">
+                  You must have been enrolled in an Online or Classroom Coding Blocks course.
+                </div>
+              </span>
+            </div>
+          {{/if}}
           {{!-- <div class="d-flex justify-content-between mb-2 {{if job.eligible "green" "red"}}">
             Status:
             <span class="extra-bold">
