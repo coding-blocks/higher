@@ -12,11 +12,11 @@ export default class SkillSelectorComponent extends Component {
 
   showSkillTestError = false
   showSkillSelectorModal = false
+  showTakeTestModal = false
   skillTestErrorMsg = ''
   
   didReceiveAttrs() {
     this._super(...arguments) 
-    this.set('showTakeTestModal', true)
     this.fetchSkillsTask.perform()
   }
 
@@ -72,6 +72,7 @@ export default class SkillSelectorComponent extends Component {
     try {
       this.set('showSkillTestError', false)
       this.set('skillTestErrorMsg', '')
+      this.set('showTakeTestModal', true)
       let newApplicantProfileSkill = yield this.store.queryRecord('applicant-profile-skill', {
         custom: {
           ext: 'url',

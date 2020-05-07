@@ -27,13 +27,9 @@
         {{/each}}
       </div>
       {{else}}
-      No verified skills.
+        No verified skills.
       {{/if}}
 
-      {{#if showSkillTestError}}
-      <div class="divider-h my-3"></div>
-      <div class="t-align-c red">{{skillTestErrorMsg}}</div>
-      {{/if}}
     </div>
   </div>
   <div class="col-lg-6 mt-lg-0 mt-5">
@@ -109,7 +105,24 @@
         </button>
       </div>
     </div>
+  {{/modal-dialog}}
+{{/if}}
 
-
+{{#if showTakeTestModal}}
+  {{#modal-dialog
+    onClose=(action (mut showTakeTestModal) false)
+    targetAttachment="none"
+    translucentOverlay=true
+    containerClass='centered-scrolling-container hiring-modal mt-3'
+    overlayClass='centered-scrolling-overlay'
+    wrapperClass='centered-scrolling-wrapper'
+  }}
+    <div class="p-5">
+      {{#if showSkillTestError}}
+        <div class="red">{{skillTestErrorMsg}}</div>
+      {{else}}
+        <span class="font-xl bold">Hang on</span> while we are preparing a test for you.
+      {{/if}}
+    </div>
   {{/modal-dialog}}
 {{/if}}
