@@ -10,12 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Installing Dependencies
-        run: nvmrc=$(cat .nvmrc)
-        uses: setup-node@v1
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
         with:
-          node-version: $nvmrc
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+      - name: Installing Dependencies
         run: yarn install
+      - name: Build
         run: ember build --env=production
       - name: Create temp Directory
         uses: appleboy/ssh-action@master
