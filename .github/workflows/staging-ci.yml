@@ -1,0 +1,45 @@
+name: deploy
+
+on: 
+  push:
+    branches:
+      - development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+      - name: Installing Dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build --env production
+      - name: Create temp Directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_STAGING }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: mkdir -p ~/temp
+      - name: Upload Build
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST_STAGING }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          source: "dist"
+          target: "temp"
+      - name: Replace New Build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_STAGING }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: rm -rf ~/frontends/hiringblocks.staging/* && cp -rf ~/temp/dist/* ~/frontends/hiringblocks.staging && rm -rf ~/temp
