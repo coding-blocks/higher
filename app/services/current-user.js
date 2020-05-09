@@ -16,9 +16,9 @@ export default Service.extend({
     return this.store.queryRecord('user', { custom: { ext: 'url', url: 'me' } })
       .then(user => {
         this.set('user', user)
-        // window.gtag('set', { userId: user.oneauthId })
-        // window.gtag('set', { user_id: user.oneauthId })
-        // window.gtag('set', { uid: user.oneauthId })
+        window.gtag('set', { userId: user.oneauthId })
+        window.gtag('set', { user_id: user.oneauthId })
+        window.gtag('set', { uid: user.oneauthId })
         return user
       })
   },
