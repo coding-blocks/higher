@@ -7,18 +7,16 @@ export default class IndexRoute extends Route {
   @service sidenav
   
   beforeModel() {
-    this.transitionTo('applicants')
     this.sidenav.set('isHidden', true)
-
+    
     if(this.session.isAuthenticated) {
       const redirectionPath = window.localStorage.getItem('redirection_path')
       if (redirectionPath) {
         window.localStorage.removeItem('redirection_path')
-        this.transitionTo(redirectionPath)
-      } else {
-        this.transitionTo('applicants')
+        return this.transitionTo(redirectionPath)
       }
     }
+    this.transitionTo('applicants')
   }
 
   @action

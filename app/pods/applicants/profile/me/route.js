@@ -14,7 +14,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   beforeModel() {
     if (this.session.isAuthenticated) {
-      this.transitionTo('applicants.profile.id', this.currentUser.user.id)
+      return this.transitionTo('applicants.profile.id', this.currentUser.user.id)
     }
     window.localStorage.setItem('redirection_path', '/applicants/profile/me')
     this._super(...arguments)

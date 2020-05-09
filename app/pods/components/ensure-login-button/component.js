@@ -11,7 +11,7 @@ export default class EnsureLoginButtonComponent extends Component {
 
   click() {
     if (!this.session.isAuthenticated) {
-      window.localStorage.setItem('redirection_path', this.redirectionPath || this.router.get('currentURL') || window.location.pathname)
+      window.localStorage.setItem('redirection_path', this.redirectionPath || window.location)
       this.router.transitionTo('login')
     } else {
       this.callIfLoggedIn()
