@@ -20,7 +20,7 @@ jobs:
       - name: Installing Dependencies
         run: yarn install
       - name: Build
-        run: ember build --env=production
+        run: yarn build --env production
       - name: Create temp Directory
         uses: appleboy/ssh-action@master
         with:
