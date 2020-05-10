@@ -4,6 +4,10 @@ import { action } from '@ember/object';
 
 export default class RecruiterIndexRoute extends Route {
   @service sidenav
+
+  activate() {
+    window.scrollTo(0, 0)
+  }
   
   beforeModel() {
     this.sidenav.set('isHidden', true)
