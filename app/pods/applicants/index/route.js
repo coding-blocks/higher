@@ -6,6 +6,10 @@ export default class ApplicantIndexRoute extends Route {
   @service session
   @service sidenav
 
+  activate() {
+    window.scrollTo(0, 0)
+  }
+
   beforeModel() {
     if(this.session.isAuthenticated) {
       this.transitionTo('applicants.profile.me')
