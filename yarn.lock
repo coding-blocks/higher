@@ -1541,9 +1541,9 @@
     minimist "^1.2.0"
 
 "@coding-blocks/motley@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@coding-blocks/motley/-/motley-0.8.0.tgz#576116eca9495a9d1e8c725605534a82d4bcabf1"
-  integrity sha512-E0FTYqGcX2IAO6SoknNIuhr1JyahjkpJNMcaIu2/oXKUg533hHgJABi9G/wKxVXg20jl1Gk3Cpv3Xl31AFjfDw==
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/@coding-blocks/motley/-/motley-0.8.7.tgz#50f437a21e8c7ac18fe105c87582d7faa976f761"
+  integrity sha512-1iMR0xog60gZCNwGGmXYLTHM0x+vjVa6OtRsdztBrAOTreC49CYHYMj/l3PtUOEO1dFPCOnbMTqu2jMxDAEUeg==
   dependencies:
     build "^0.1.4"
     run "^1.4.0"
@@ -5360,6 +5360,14 @@ ember-concurrency@^1.1.2:
     ember-cli-babel "^7.1.0"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
 
+ember-cookies@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.5.2.tgz#06e33463f2f83254fefaf224cc944dec3fb9d3ba"
+  integrity sha512-nZ7oG97kBcO9UHjO95ryABpnVx62Bhxo7lIsBJNmWvFXleILm9DGueiAynzXxuYWWPuKIeeSbYakrS1869tNTw==
+  dependencies:
+    ember-cli-babel "^7.1.0"
+    ember-getowner-polyfill "^1.1.0 || ^2.0.0"
+
 ember-cp-validations@^4.0.0-beta.10:
   version "4.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.10.tgz#756f3a136b30c1fe745dc724c2421e88153e595a"
@@ -5642,20 +5650,18 @@ ember-simple-auth@^1.6.0:
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
     silent-error "^1.0.0"
 
-ember-simple-auth@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-2.1.0.tgz#d81802746852c68a52c18475a98a82d0d3c3779b"
-  integrity sha512-iHgi7wkYac8v+Ogxs6gyfoSpFV3QuVT9FjeB9FDka0ZQMRonSji8wfR1w5cIV2enYTqhh5CFa0aDHYVCUrCkyw==
+ember-simple-auth@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-3.0.0.tgz#d994f512cda1a8a5a6ef5a853fac60c0c0d6acd6"
+  integrity sha512-JaEw5W/Z9+HIH9I2BmE/JD4KofH4rp79Y51zJpt3UQI1OwWFOzFa+ulN0rK/DVLpGOz7uL7hBIE/rtEcEN1eqA==
   dependencies:
     base-64 "^0.1.0"
     broccoli-file-creator "^2.0.0"
     broccoli-funnel "^1.2.0 || ^2.0.0"
     broccoli-merge-trees "^2.0.0 || ^3.0.0"
-    ember-cli-babel "^6.8.2"
+    ember-cli-babel "^7.12.0"
     ember-cli-is-package-missing "^1.0.0"
-    ember-cookies "^0.3.0 || ^0.4.0"
-    ember-fetch "^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
-    ember-getowner-polyfill "^1.1.0 || ^2.0.0"
+    ember-cookies "^0.5.0"
     silent-error "^1.0.0"
 
 ember-source-channel-url@^2.0.1:
