@@ -9,6 +9,8 @@ export default class PagerComponent extends Component {
   @computed.alias('pages.length') totalPages
 
   didReceiveAttrs() {
+    this._super(...arguments)
+    
     const pages = this.pages
     pages.map(p => this.skippable ? p.skippable = true : p.skippable = false)
     for (var i = 0; i < this.currentPage; i++) {

@@ -97,10 +97,11 @@ export default class ApplicantProfileEditor extends Component {
         // this.applicantProfile.set('resumeLink', null)
       }
 
-      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
+      this.set('applicantProfile.stepNumber', currentPage + 2)
 
       yield this.applicantProfile.save()
-      if (this.applicantProfile.profileCompletion === 100) {
+
+      if (this.applicantProfile.stepNumber === 5) {
         this.set('step', null)
       }
 
@@ -119,15 +120,14 @@ export default class ApplicantProfileEditor extends Component {
 
   setCurrentPage() {
     const step = +this.step
-    const profileCompletion = this.applicantProfile.profileCompletion
     const totalSteps = 4
-    const stepFromProfileCompletion = profileCompletion / 25
+    const profileStep = this.applicantProfile.stepNumber
     
     if (step >= 1 && step <= totalSteps) {
-      return this.set('currentPage', Math.min(step - 1, stepFromProfileCompletion))
+      return this.set('currentPage', Math.min(step - 1, profileStep - 1))
     }
 
-    this.set('currentPage', stepFromProfileCompletion % 4)
+    this.set('currentPage', profileStep - 1)
   }
 
   async handleResumeUpload() {

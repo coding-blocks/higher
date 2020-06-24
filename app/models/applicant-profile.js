@@ -152,6 +152,7 @@ const Validations = buildValidations({
 export default DS.Model.extend(Validations, {
   about: DS.attr(),
   photo: DS.attr(),
+  stepNumber: DS.attr('number'),
   githubLink: DS.attr(),
   stackoverflowLink: DS.attr(),
   linkedinLink: DS.attr(),
