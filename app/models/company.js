@@ -1,8 +1,37 @@
 import DS from 'ember-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-export default DS.Model.extend({
+const Validations = buildValidations({
+  name: {
+    description: 'Name',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  description: {
+    description: 'Company Description',
+    validators: [
+      validator('presence', {
+        presence: true
+      })
+    ]
+  },
+  website: {
+    description: 'Website',
+    validators: [
+      validator('format', {
+        type: 'url'
+      })
+    ]
+  }
+})
+
+export default DS.Model.extend(Validations, {
   name: DS.attr(),
   logo: DS.attr(),
+  website: DS.attr(),
   description: DS.attr(),
   role: DS.attr(),
   type: DS.attr(),
@@ -13,9 +42,16 @@ export default DS.Model.extend({
   deadline: DS.attr(),
   postedOn: DS.attr(),
   isAccepting: DS.attr(),
+  isActive: DS.attr(),
   coverImage: DS.attr(),
   form: DS.attr(),
+  contacts: DS.attr(),
+  contactsJSON: Ember.computed('contacts', function () {
+    return JSON.parse(this.contacts)
+  }),
   logoUpload: DS.belongsTo('upload', { inverse: null }),
   videoUpload: DS.belongsTo('upload', { inverse: null }),
-  brochureUpload: DS.belongsTo('upload', { inverse: null })
+  brochureUpload: DS.belongsTo('upload', { inverse: null }),
+  jobs: DS.hasMany('job'),
+  recruiterProfile: DS.belongsTo('recruiter-profile')
 });

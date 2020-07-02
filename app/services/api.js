@@ -7,6 +7,7 @@ import { computed } from '@ember/object';
 export default AjaxService.extend({
   session: service(),
   host: ENV.API_HOST,
+  contentType: 'application/json; charset=utf-8',
   headers: computed('session.data.authenticated.jwt', function () {
     let headers = {};
     const jwt = this.get('session.data.authenticated.jwt');

@@ -19,7 +19,7 @@
     <ul>
       {{#if sidenav.isHidden}}
       <li>
-        <LinkTo class="navbar-brand font-md black" @route="{{if isCompanyRouteActive 'recruiter' 'index'}}">
+        <LinkTo class="navbar-brand font-md black" @route="{{if isRecruiterRouteActive 'recruiter' 'index'}}">
           <!-- <img src="https://minio.codingblocks.com/amoeba/hellointern.svg" class="d-inline-block align-top" alt /> -->
           Coding Blocks | <span class="gradient-red bold">Hire</span>
         </LinkTo>
@@ -41,43 +41,43 @@
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
-      {{#if isCompanyRouteActive}}
-      <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-        <LinkTo @route="applicants" class="orange font-sm">
-          Are you a student?
-        </LinkTo>
-      </li>
+      {{#if isCurrentUserApplicant}}
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="recruiter" class="orange font-sm">
+            Are you hiring?
+          </LinkTo>
+        </li>
       {{else}}
-      <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-        <LinkTo @route="recruiter" class="orange font-sm">
-          Are you hiring?
-        </LinkTo>
-      </li>
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="applicants" class="orange font-sm">
+            Are you a student?
+          </LinkTo>
+        </li>
       {{/if}}
       <li class="top-nav-option hoverable px-3 d-sm-block d-none">
         {{#if session.isAuthenticated}}
-        <div class="img-desc align-items-center font-sm pt-1">
-          <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}"
-            alt="Profile Pic">
-          <div class="description ml-3">
-            Hi, {{currentUser.user.firstname}}
+          <div class="img-desc align-items-center font-sm pt-1">
+            <img class="round s-30x30" src="{{if currentUser.user.photo currentUser.user.photo '/images/user.svg'}}"
+              alt="Profile Pic">
+            <div class="description ml-3">
+              Hi, {{currentUser.user.firstname}}
+            </div>
           </div>
-        </div>
-        <div class="pop-up border-card p-3 br-5">
-          <ul class="t-align-l">
-            <li>
-              {{#link-to "applicants.profile.id" currentUser.user.id}}Profile{{/link-to}}
-            </li>
-            <div class="divider-h my-3"></div>
-            <li>
-              <a class="dark-grey" href={{logoutLink}}>
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-        {{else if (not isCompanyRouteActive)}}
-        <LoginButton class="font-sm" />
+          <div class="pop-up border-card p-3 br-5">
+            <ul class="t-align-l">
+              <li>
+                {{#link-to "applicants.profile.id" currentUser.user.id}}Profile{{/link-to}}
+              </li>
+              <div class="divider-h my-3"></div>
+              <li>
+                <a class="dark-grey" href={{logoutLink}}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        {{else}}
+          <LoginButton class="font-sm" />
         {{/if}}
       </li>
     </ul>
@@ -117,11 +117,11 @@
         </div>
       </div>
     </div>
-    {{else if (not isCompanyRouteActive)}}
+    {{else if (not isRecruiterRouteActive)}}
     <LoginButton class="font-sm t-align-c px-4 mt-4" />
     {{/if}}
 
-    {{#if isCompanyRouteActive}}
+    {{#if isRecruiterRouteActive}}
     <div class="hoverable mt-4 t-align-c">
       <LinkTo @route="applicants" class="orange font-sm" {{action 'toggleHamburgerNav'}}>
         Are you a student?
