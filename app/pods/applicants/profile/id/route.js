@@ -5,6 +5,7 @@ import RSVP from 'rsvp';
 export default class UsersIdRoute extends Route {
   @service currentUser
   @service session
+  @service sidenav
 
   queryParams = {
     job_id: {
@@ -13,6 +14,10 @@ export default class UsersIdRoute extends Route {
     step: {
       refreshModel: false
     }
+  }
+
+  beforeModel() {
+    this.sidenav.set('for', this.currentUser.user.userType || 'applicant')
   }
 
   afterModel(model) {

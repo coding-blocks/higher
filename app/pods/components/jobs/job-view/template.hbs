@@ -101,50 +101,54 @@
       <div class="position-relative br-10 overflow-hidden">
         <div class="back-div br-10"></div>
 
-        <div class="bg-gradient-black-bt p-5">
-          <div class="d-flex justify-content-between white mb-2 font-sm">
-            <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>
-          </div>
-          {{#if job.isCbOnly}}
-            <div class="orange">
-              This job is for Coding Blocks students only
-              <span class="hoverable">
-                <i class="far fa-question-circle"></i>
-                <div class="black p-4 border-card pop-up w-200">
-                  You must have been enrolled in an Online or Classroom Coding Blocks course.
-                </div>
-              </span>
+        {{#if (and isCurrentUserRecruiter isRecruiterHimself)}}
+          <LinkTo class="button-dashed" @route="jobs.id.edit" @model={{job.id}}>Edit</LinkTo>
+        {{else if (not isCurrentUserRecruiter)}}
+          <div class="bg-gradient-black-bt p-5">
+            <div class="d-flex justify-content-between white mb-2 font-sm">
+              <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>
             </div>
-          {{/if}}
-          {{!-- <div class="d-flex justify-content-between mb-2 {{if job.eligible "green" "red"}}">
-            Status:
-            <span class="extra-bold">
-              {{if job.eligible "Eligible" "Not Eligible"}}
-            </span>
-          </div> --}}
-          {{#if allreadyApplied}}
-            <div class="mt-4 green t-align-c">You've already applied for this Job.</div>
-          {{else if job.hasDeadlinePassed}}
-            <div class="mt-4 red t-align-c">Last date to apply for this job has passed.</div>
-          {{else if (not job.isAccepting)}}
-            <div class="mt-4 yellow t-align-c">Applications are temporarily Closed.</div>
-          {{else if notEligible}}
-            <div class="mt-4 red t-align-c">Your are not eligible for this job as this job is for Coding Blocks students only.</div>
-          {{else if (not isProfileCompleted)}}
-            <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
-              @callIfLoggedIn={{action 'takeToProfileEditor' 3}} 
-              @redirectionPath={{completeProfileRedirectionPath}}
-              disabled={{not job.isAccepting}}>
-                Complete Profile and Apply
-            </EnsureLoginButton>
-          {{else}}
-            <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
-              @callIfLoggedIn={{action (mut showApplyToJobModal) true}} 
-              disabled={{not job.isAccepting}}>
-                Apply To Job
-            </EnsureLoginButton>
-          {{/if}}
-        </div>
+            {{#if job.isCbOnly}}
+              <div class="orange">
+                This job is for Coding Blocks students only
+                <span class="hoverable">
+                  <i class="far fa-question-circle"></i>
+                  <div class="black p-4 border-card pop-up w-200">
+                    You must have been enrolled in an Online or Classroom Coding Blocks course.
+                  </div>
+                </span>
+              </div>
+            {{/if}}
+            {{!-- <div class="d-flex justify-content-between mb-2 {{if job.eligible "green" "red"}}">
+              Status:
+              <span class="extra-bold">
+                {{if job.eligible "Eligible" "Not Eligible"}}
+              </span>
+            </div> --}}
+            {{#if allreadyApplied}}
+              <div class="mt-4 green t-align-c">You've already applied for this Job.</div>
+            {{else if job.hasDeadlinePassed}}
+              <div class="mt-4 red t-align-c">Last date to apply for this job has passed.</div>
+            {{else if (not job.isAccepting)}}
+              <div class="mt-4 yellow t-align-c">Applications are temporarily Closed.</div>
+            {{else if notEligible}}
+              <div class="mt-4 red t-align-c">Your are not eligible for this job as this job is for Coding Blocks students only.</div>
+            {{else if (not isProfileCompleted)}}
+              <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
+                @callIfLoggedIn={{action 'takeToProfileEditor' 3}} 
+                @redirectionPath={{completeProfileRedirectionPath}}
+                disabled={{not job.isAccepting}}>
+                  Complete Profile and Apply
+              </EnsureLoginButton>
+            {{else}}
+              <EnsureLoginButton class="button-solid button-orange card-md mt-4 mx-auto display-block"
+                @callIfLoggedIn={{action (mut showApplyToJobModal) true}} 
+                disabled={{not job.isAccepting}}>
+                  Apply To Job
+              </EnsureLoginButton>
+            {{/if}}
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>
