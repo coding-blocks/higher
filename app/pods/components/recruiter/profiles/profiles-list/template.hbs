@@ -1,0 +1,65 @@
+{{!-- <div class="border-card p-md-5 p-4">
+  <div class="horizontal-scrolling-table">
+    <table class="w-100">
+      <thead>
+        <th>Student Name</th>
+        <th>Status</th>
+        <th>Mobile No.</th>
+        <th>Email Address</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        {{#if fetchProfilesTask.isRunning}}
+        <LoadingComponent />
+        {{else}}
+        {{#each profiles as |profile|}}
+        <tr>
+          <td class="py-3">
+            <div class="row no-gutters align-items-center">
+              <div class="col-lg-3 col-12 mb-lg-0 mb-2 t-align-lg-l t-align-c">
+                {{#if profile.photoUpload}}
+                <img class="round s-30x30" src="{{profile.photoUpload.url}}" alt="">
+                {{else if profile.photo}}
+                <img class="round s-30x30" src="{{profile.photo}}" alt="">
+                {{else}}
+                <img class="round s-30x30" src="/images/user.svg" alt="">
+                {{/if}}
+              </div>
+              <div class="flex-1 ml-lg-2 t-align-lg-l t-align-c">
+                {{profile.user.firstname}} {{profile.user.lastname}}
+              </div>
+            </div>
+          </td>
+          <td>
+            {{#if profile.isActive}}
+            <span class="gradient-text-green bold">Active</span>
+            {{else}}
+            <span class="dark-grey bold">Inactive</span>
+            {{/if}}
+          </td>
+          <td>{{profile.user.mobile}}</td>
+          <td>{{profile.user.email}}</td>
+          <td class="py-3">
+            <LinkTo @route="applicants.profile.id" @model={{profile.user.id}}>
+              <a class="gradient-text-orange bold">View</a>
+            </LinkTo>
+          </td>
+        </tr>
+        {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div> --}}
+
+{{#each profiles as |profile|}}
+  <Users::ApplicantProfile::TalentCard @profile={{profile}} />
+{{/each}}
+
+<WPagination class="my-4" 
+  @nextOffset={{pagination.nextOffset}} 
+  @prevOffset={{pagination.prevOffset}}
+  @count={{pagination.count}} 
+  @limit={{limit}} 
+  @offset={{offset}} 
+  @onChange={{action 'paginate'}} />

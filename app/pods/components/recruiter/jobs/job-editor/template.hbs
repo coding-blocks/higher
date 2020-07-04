@@ -1,0 +1,377 @@
+<div
+  class="bg-grey position-absolute w-100 tl row no-gutters justify-content-between align-items-center py-4 px-lg-5 px-4">
+  <div class="font-md bold">Add New Job</div>
+  <div>
+    {{!-- <button class="button-orange button-dashed mr-2">Cancel</button> --}}
+    <button class="button-solid button-orange" {{action (perform saveJobTask)}} disabled={{saveJobTask.isRunning}}>Save
+      Job</button>
+  </div>
+</div>
+
+<div class="border-card" style="margin-top: 7.5rem;">
+  <div class="row no-gutters justify-content-between align-items-center mb-5">
+    <h6 class="mb-sm-0 mb-3">Set Status:</h6>
+
+    <label class="input-checkbox toggle">
+      <input type="checkbox" checked={{job.isAccepting}}
+        onClick={{action (mut job.isAccepting) (not job.isAccepting)}} />
+      <span class="inactive-text">Not Accepting</span>
+      <span class="checkbox"></span>
+      <span class="active-text">Accepting <span class="d-sm-inline-block d-none">Applications</span></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 pr-lg-5 pr-md-4">
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Title</h6>
+          <WFormValidations @model={{job}} @attributeName='title' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <Input class="search-bar w-100" @type="text" @value={{job.title}} @required="true" @placeholder="Name" />
+      </div>
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Job Locations</h6>
+          <WFormValidations @model={{job}} @attributeName='locations' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
+          @selected={{job.locations}} @placeholder="Select Locations"
+          @triggerComponent={{component "trigger-component"}} @onChange={{action (mut job.locations)}} as |location|>
+          <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes job.locations location}} />
+          {{location.name}}
+        </PowerSelectMultiple>
+
+        {{#each job.locations as |location|}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">{{location.name}}
+          <button {{action 'removeLocation' location}}>&#10005;</button>
+        </span>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-12 col-md-6 pl-lg-5 pl-md-4">
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Company</h6>
+          <WFormValidations @model={{job}} @attributeName='company' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{companies}} @selected={{job.company}}
+          @placeholder="Select Company" @onChange={{action (mut job.company)}} as |company|>
+          {{company.name}}
+        </PowerSelect>
+      </div>
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Job Roles</h6>
+          <WFormValidations @model={{job}} @attributeName='jobRoles' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{jobRoles}}
+          @selected={{job.jobRoles}} @placeholder="Select Job Roles" @triggerComponent={{component 'trigger-component'}}
+          @onChange={{action (mut job.jobRoles)}} as |jobRole|>
+          <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes job.jobRoles jobRole}} />
+          {{jobRole.name}}
+        </PowerSelectMultiple>
+
+        {{#each job.jobRoles as |jobRole|}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">{{jobRole.name}}
+          <button {{action 'removeJobRole' jobRole}}>&#10005;</button>
+        </span>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-12 col-md-6 pr-lg-5 pr-md-4">
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Job Description</h6>
+          <WFormValidations @model={{job}} @attributeName='description' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <div class="border-card p-0">
+          <PellEditor @value={{job.description}} @onChange={{action (mut job.description)}} />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 pl-lg-5 pl-md-4">
+      <h6 class="mb-4">Rendered Job Description</h6>
+      <div class="bg-grey br-10 w-100 h-90 p-4">
+        {{markdown-to-html job.description}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 pr-lg-5 pr-md-4">
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Job Type</h6>
+          <WFormValidations @model={{job}} @attributeName="type" as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <PowerSelect @options={{jobTypes}} @selected={{job.type}} @placeholder="Select Job Type"
+          @onChange={{action (mut job.type)}} as |jobType|>
+          {{jobType}}
+        </PowerSelect>
+
+        <label class="input-checkbox gradient-tick font-sm mt-4 display-block">
+          <input type="checkbox" checked={{job.isWorkFromHomeAllowed}}
+            onClick={{action (mut job.isWorkFromHomeAllowed) (not job.isWorkFromHomeAllowed)}} />
+          Allow Work From Home
+          <span></span>
+        </label>
+      </div>
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>CTC (Min & Max) in LPA</h6>
+          {{!-- <WFormValidations @model={{job}} @attributeName='ctc' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations> --}}
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="font-sm">Min Ctc(LPA)</div>
+            <WFormValidations @model={{job}} @attributeName='minCtc' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <Input @type="number" @value={{job.minCtcString}} class="search-bar w-100 mt-3" />
+          </div>
+          <div class="col-6">
+            <div class="font-sm">Max Ctc(LPA)</div>
+            <WFormValidations @model={{job}} @attributeName='maxCtc' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <Input @type="number" @value={{job.maxCtcString}} class="search-bar w-100 mt-3" />
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6>Deadline</h6>
+          <WFormValidations @model={{job}} @attributeName='deadline' as |validation|>
+            {{#if (and validation.isInvalid)}}
+            <span class="gradient-text-orange card-md">{{validation.message}}</span>
+            {{/if}}
+          </WFormValidations>
+        </div>
+        <PikadayInput @class="search-bar w-100 t-align-l" @value="{{job.deadlineString}}"
+          @onSelection={{action (mut job.deadlineString)}} />
+
+        <label class="input-checkbox gradient-tick mt-4 d-block">
+          <input type="checkbox" checked={{eq job.deadline 1000000000000}}
+            onClick={{action (mut job.deadlineString) "33658-09-27 07:16:40+05:30"}} />
+          Set Deadline as Infinite
+          <span></span>
+        </label>
+
+      </div>
+    </div>
+    <div class="col-12 col-md-6 pl-lg-5 pl-md-4">
+      <h6 class="mb-4">Experience Type</h6>
+      <div class="mb-5">
+        <label class="input-radio checked-input mr-4 display-inline-block mb-3 font-sm">
+          <input type="radio" name="experience" checked={{eq job.experienceType 'not_required'}}
+            onClick={{action (mut job.experienceType) 'not_required'}} />
+          Not Required
+          <span></span>
+        </label>
+        <label class="input-radio checked-input mr-4 display-inline-block mb-3 font-sm">
+          <input type="radio" name="experience" checked={{eq job.experienceType 'fresher'}}
+            onClick={{action (mut job.experienceType) 'fresher'}} />
+          Fresher
+          <span></span>
+        </label>
+        <label class="input-radio checked-input mr-4 display-inline-block mb-3 font-sm">
+          <input type="radio" name="experience" checked={{eq job.experienceType 'experienced'}}
+            onClick={{action (mut job.experienceType) 'experienced'}} />
+          Experienced
+          <span></span>
+        </label>
+        <br>
+
+        {{#if (eq job.experienceType 'fresher')}}
+        <div class="row">
+          <div class="col-6">
+            <WFormValidations @model={{job}} @attributeName='fresherGraduationYear' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <div class="select-container mt-3">
+              <select class="rounded-select" name="graduation_year"
+                onchange={{action (mut job.fresherGraduationYear) value="target.value"}}>
+                <option selected disabled>Graduation Year</option>
+                {{#each (range 2000 maxEndYear) as |year|}}
+                <option value="{{year}}" selected={{lite-eq job.fresherGraduationYear year}}>{{year}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <WFormValidations @model={{job}} @attributeName='fresherBranches' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <div class="mt-3">
+              <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{branches}}
+                @selected={{selectedFresherBranches}} @placeholder="Select Branch"
+                @triggerComponent={{component 'trigger-component'}} @onChange={{action (mut selectedFresherBranches)}}
+                as |branch|>
+                <input type="checkbox" onclick={{action "preventDefault"}}
+                  checked={{includes selectedFresherBranches branch}} />
+                {{branch.name}}
+              </PowerSelectMultiple>
+            </div>
+
+          </div>
+        </div>
+        {{#if job.fresherGraduationYear}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">{{job.fresherGraduationYear}}</span>
+        {{/if}}
+        {{#each selectedFresherBranches as |branch|}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">{{branch.name}}
+          <button {{action 'removeFresherBranch' branch}}>&#10005;</button>
+        </span>
+        {{/each}}
+        {{else if (eq job.experienceType 'experienced')}}
+        <div class="row">
+          <div class="col-6">
+            <div class="font-sm">Min Experience(years)</div>
+            <WFormValidations @model={{job}} @attributeName='minExperience' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <Input @type="number" @value={{job.minExperienceString}} class="search-bar w-100 mt-3" />
+          </div>
+          <div class="col-6">
+            <div class="font-sm">Max Experience(years)</div>
+            <WFormValidations @model={{job}} @attributeName='maxExperience' as |validation|>
+              {{#if (and validation.isInvalid)}}
+              <span class="gradient-text-orange card-md">{{validation.message}}</span>
+              {{/if}}
+            </WFormValidations>
+            <Input @type="number" @value={{job.maxExperienceString}} class="search-bar w-100 mt-3" />
+          </div>
+        </div>
+        {{/if}}
+
+      </div>
+
+      <div class="mb-5">
+        <h6>Notice Period</h6>
+        <WFormValidations class="mb-4" @model={{job}} @attributeName='joiningThreshold' as |validation|>
+          {{#if (and validation.isInvalid)}}
+          <span class="gradient-text-orange card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+        <select name="joning-threshold" id="" class="search-bar w-100" onchange={{action (mut job.joiningThreshold) 
+                value="target.value"}}>
+          <option selected disabled>Select Notice Period</option>
+          <option value="0" selected={{lite-eq 0 job.joiningThreshold}}>Join Immediately</option>
+          <option value="1" selected={{lite-eq 1 job.joiningThreshold}}>0 - 1 Month</option>
+          <option value="2" selected={{lite-eq 2 job.joiningThreshold}}>0 - 2 Month</option>
+          <option value="3" selected={{lite-eq 3 job.joiningThreshold}}>0 - 3 Month</option>
+          <option value="4" selected={{lite-eq 4 job.joiningThreshold}}>0 - 4 Month</option>
+          <option value="5" selected={{lite-eq 5 job.joiningThreshold}}>0 - 5 Month</option>
+          <option value="6" selected={{lite-eq 6 job.joiningThreshold}}>0 - 6 Month</option>
+        </select>
+        {{#if (lite-eq 0 job.joiningThreshold)}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">Join Immediately</span>
+        {{else if job.joiningThreshold}}
+        <span class="pointer pill pill-dashed mt-3 mr-2">0 - {{job.joiningThreshold}} Month</span>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h6 class="mb-4">Choose Skills</h6>
+    <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{skills}} @selected={{job.skills}}
+      @placeholder="Select Skills" @triggerComponent={{component 'trigger-component'}}
+      @onChange={{action (mut job.skills)}} as |skill|>
+      <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes job.skills skill}} />
+      {{skill.name}}
+    </PowerSelectMultiple>
+
+    {{#each job.skills as |skill|}}
+    <span class="pointer pill pill-dashed mt-3 mr-2">{{skill.name}}
+      <button {{action 'removeSkill' skill}}>&#10005;</button>
+    </span>
+    {{/each}}
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 pr-lg-5 pr-md-4 mb-md-0 mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h6>Job Posting Date</h6>
+        <WFormValidations @model={{job}} @attributeName='postedOn' as |validation|>
+          {{#if (and validation.isInvalid)}}
+          <span class="gradient-text-orange card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      </div>
+
+      <PikadayInput @class="search-bar w-100 t-align-l" @value="{{job.postedOnString}}"
+        @onSelection={{action (mut job.postedOnString)}} />
+    </div>
+    <div class="col-12 col-md-6 pl-lg-5 pl-md-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h6>Is the job open for non CB Students?</h6>
+        <WFormValidations @model={{job}} @attributeName='isCbOnly' as |validation|>
+          {{#if (and validation.isInvalid)}}
+          <span class="gradient-text-orange card-md">{{validation.message}}</span>
+          {{/if}}
+        </WFormValidations>
+      </div>
+
+      <label class="input-radio checked-input mr-5">
+        <input type="radio" name="is-for-non-cb" checked={{not job.isCbOnly}}
+          onClick={{action (mut job.isCbOnly) false}} />
+        Yes
+        <span></span>
+      </label>
+      <label class="input-radio checked-input">
+        <input type="radio" name="is-for-non-cb" checked={{job.isCbOnly}} onClick={{action (mut job.isCbOnly) true}} />
+        No
+        <span></span>
+      </label>
+
+    </div>
+  </div>
+
+  {{!-- <Jobs::JobsEditor::CustomFormsList class="my-5" @forms={{job.formJSON}} /> --}}
+</div>
