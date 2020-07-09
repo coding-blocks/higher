@@ -74,8 +74,13 @@
             {{/if}}
           </WFormValidations>
         </div>
-        <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{companies}} @selected={{job.company}}
-          @placeholder="Select Company" @onChange={{action (mut job.company)}} as |company|>
+        <PowerSelect 
+          @searchEnabled={{true}} 
+          @searchField={{"name"}} 
+          @options={{companies}} 
+          @selected={{job.company}}
+          @placeholder="Select Company" 
+          @onChange={{action (mut job.company)}} as |company|>
           {{company.name}}
         </PowerSelect>
       </div>
@@ -93,9 +98,9 @@
           @searchField={{"name"}} 
           @options={{jobRoles}}
           @selected={{job.jobRoles}} 
+          @placeholder="Select Job Roles" 
           @onCreate={{action 'onCreateJobRole'}}
           @showCreateWhen={{action "showCreateJobRoleWhen"}}
-          @placeholder="Select Job Roles" 
           @triggerComponent={{component 'trigger-component'}}
           @onChange={{action (mut job.jobRoles)}} as |jobRole|>
             <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes job.jobRoles jobRole}} />

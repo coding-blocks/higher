@@ -47,6 +47,21 @@ Router.map(function () {
       this.route('my');
     });
   });
+  this.route('recruiter', function () {
+    this.route('jobs', function () {
+      this.route('id', { path: '/:job_id' });
+    });
+    this.route('profiles', function() {});
+  });
+  this.route('companies', function() {
+    this.route('id', { path: '/:company_id' }, function() {
+      this.route('edit');
+    });
+
+    this.route('search', function() {
+      this.route('my');
+    });
+  });
 });
 
 export default Router;

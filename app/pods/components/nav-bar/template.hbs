@@ -41,19 +41,35 @@
       <li class="top-nav-option px-3 mt-2 d-none d-md-block">
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
-      {{#if isCurrentUserApplicant}}
-        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-          <LinkTo @route="recruiter" class="orange font-sm">
-            Are you hiring?
-          </LinkTo>
-        </li>
+      {{#unless session.isAuthenticated}}
+        {{#if isRecruiterRouteActive}} 
+          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+            <LinkTo @route="applicants" class="orange font-sm">
+              Are you a student?
+            </LinkTo>
+          </li>
+        {{else}}
+          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+            <LinkTo @route="recruiter" class="orange font-sm">
+              Are you hiring?
+            </LinkTo>
+          </li>
+        {{/if}}
       {{else}}
-        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-          <LinkTo @route="applicants" class="orange font-sm">
-            Are you a student?
-          </LinkTo>
-        </li>
-      {{/if}}
+        {{#if isCurrentUserApplicant}}
+          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+            <LinkTo @route="recruiter" class="orange font-sm">
+              Are you hiring?
+            </LinkTo>
+          </li>
+        {{else}}
+          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+            <LinkTo @route="applicants" class="orange font-sm">
+              Are you a student?
+            </LinkTo>
+          </li>
+        {{/if}}
+      {{/unless}}
       <li class="top-nav-option hoverable px-3 d-sm-block d-none">
         {{#if session.isAuthenticated}}
           <div class="img-desc align-items-center font-sm pt-1">
@@ -103,37 +119,53 @@
 
   <div class="d-sm-none d-block">
     {{#if session.isAuthenticated}}
-    <div class="d-flex align-items-center my-4 pl-4">
-      <div class="img-ring s-50x50">
-        <img class="round img" src="{{currentUser.user.photo}}" alt="ProfilePic">
-      </div>
+      <div class="d-flex align-items-center my-4 pl-4">
+        <div class="img-ring s-50x50">
+          <img class="round img" src="{{currentUser.user.photo}}" alt="ProfilePic">
+        </div>
 
-      <div class="pl-4">
-        <div class="extra-bold gradient-text font-mds">{{currentUser.user.firstname}} {{currentUser.user.lastname}}
-        </div>
-        <div href='https://account.codingblocks.com'>
-          <a class="bold orange" href="https://account.codingblocks.com/users/me" {{action 'toggleHamburgerNav'}}>View
-            Profile</a>
+        <div class="pl-4">
+          <div class="extra-bold gradient-text font-mds">{{currentUser.user.firstname}} {{currentUser.user.lastname}}
+          </div>
+          <div href='https://account.codingblocks.com'>
+            <a class="bold orange" href="https://account.codingblocks.com/users/me" {{action 'toggleHamburgerNav'}}>View
+              Profile</a>
+          </div>
         </div>
       </div>
-    </div>
-    {{else if (not isRecruiterRouteActive)}}
+    {{/if}}
+
     <LoginButton class="font-sm t-align-c px-4 mt-4" />
-    {{/if}}
 
-    {{#if isRecruiterRouteActive}}
-    <div class="hoverable mt-4 t-align-c">
-      <LinkTo @route="applicants" class="orange font-sm" {{action 'toggleHamburgerNav'}}>
-        Are you a student?
-      </LinkTo>
-    </div>
+    {{#unless session.isAuthenticated}}
+      {{#if isRecruiterRouteActive}}
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="applicants" class="orange font-sm">
+            Are you a student?
+          </LinkTo>
+        </li>
+      {{else}}
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="recruiter" class="orange font-sm">
+            Are you hiring?
+          </LinkTo>
+        </li>
+      {{/if}}
     {{else}}
-    <div class="hoverable mt-4 t-align-c">
-      <LinkTo @route="recruiter" class="orange font-sm" {{action 'toggleHamburgerNav'}}>
-        Are you hiring?
-      </LinkTo>
-    </div>
-    {{/if}}
+      {{#if isCurrentUserApplicant}}
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="recruiter" class="orange font-sm">
+            Are you hiring?
+          </LinkTo>
+        </li>
+      {{else}}
+        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+          <LinkTo @route="applicants" class="orange font-sm">
+            Are you a student?
+          </LinkTo>
+        </li>
+      {{/if}}
+    {{/unless}}
   </div>
 
   <div class="mt-5 px-4 overflow-y-auto no-scrollbar">

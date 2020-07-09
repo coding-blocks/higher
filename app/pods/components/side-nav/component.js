@@ -34,14 +34,14 @@ export default class SideNavComponent extends Component {
     ],
     recruiter: [
       {
-        name: 'Search',
-        iconClass: 'fas fa-users font-xl',
-        route: 'applicants.profile'
-      },
-      {
         name: 'My Jobs',
         iconClass: 'fas fa-briefcase font-xl',
         route: 'jobs'
+      },
+      {
+        name: 'Search',
+        iconClass: 'fas fa-users font-xl',
+        route: 'applicants.profile'
       },
       {
         name: 'My Companies',
