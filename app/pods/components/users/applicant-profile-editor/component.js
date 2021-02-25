@@ -98,7 +98,7 @@ export default class ApplicantProfileEditor extends Component {
       }
 
       this.set('applicantProfile.stepNumber', currentPage + 2)
-
+      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
       yield this.applicantProfile.save()
 
       if (this.applicantProfile.stepNumber === 5) {
