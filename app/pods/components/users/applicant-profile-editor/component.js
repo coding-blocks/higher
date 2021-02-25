@@ -121,7 +121,7 @@ export default class ApplicantProfileEditor extends Component {
   setCurrentPage() {
     const step = +this.step
     const totalSteps = 4
-    const profileStep = this.applicantProfile.stepNumber
+    const profileStep = this.applicantProfile.stepNumber || 0;
     
     if (step >= 1 && step <= totalSteps) {
       return this.set('currentPage', Math.min(step - 1, profileStep - 1))
