@@ -11,6 +11,8 @@ export default DS.Model.extend({
   type: DS.attr(),
   eligibility: DS.attr(),
   ctc: DS.attr(),
+  minCtc: DS.attr(),
+  maxCtc: DS.attr(),
   status: DS.attr(),
   experience: DS.attr(),
   deadline: DS.attr(),
