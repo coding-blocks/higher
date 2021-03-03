@@ -25,7 +25,7 @@ export default class BasicInfoEditoComponent extends Component {
   @computed('applicantProfile.resumeLink', 'applicantProfile.resumeUpload')
   get showResumeDownloadButton() {
     const applicantProfile = this.applicantProfile
-    return isEmpty(this.applicantProfile.resumeLink) && !isEmpty(applicantProfile.get('resumeUpload.url'))
+    return !isEmpty(applicantProfile.get('resumeUpload.url'))
   }
 
   @dropTask fetchLocationsTask = function* () {
