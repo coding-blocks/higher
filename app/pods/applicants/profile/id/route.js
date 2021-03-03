@@ -39,6 +39,7 @@ export default class UsersIdRoute extends Route {
         isReviewed: false,
         isStudent: true,
         profileCompletion: 0,
+        stepNumber: 1,
         links: JSON.stringify({ github: "" }),
         user: this.get('currentUser.user'),
         photo: this.get('currentUser.user.photo')

@@ -11,6 +11,9 @@ export default class ApplicantsProfileIdController extends Controller {
 
   queryParams = ['job_id', 'step']
   job_id = null
+
+  /* variable `step` is used to set editor to selected step using query params
+  */
   step = null
 
   @computed('applicantProfile', 'currentUser')
