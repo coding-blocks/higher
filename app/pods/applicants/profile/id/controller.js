@@ -21,17 +21,17 @@ export default class ApplicantsProfileIdController extends Controller {
     return this.currentUser.get('user.id') === this.applicantProfile.get('user.id')
   }
 
-  @computed('step', 'applicantProfile.stepNumber', 'userHimself', 'currentUser.user.userType')
+  @computed('step', 'applicantProfile.stepNumber', 'userHimself')
   get editMode() {
     let step = +this.step
     let profileStep = this.applicantProfile.stepNumber
     const totalSteps = 4
 
     if (step >= 1 && step <= totalSteps) {//when step has precedence?
-      return this.userHimself && this.currentUser.get('user.userType') !== 'recruiter' //if user is visiting his/her own profile then let edit
+      return this.userHimself //if user is visiting his/her own profile then let edit
     }
 
-    return this.userHimself && profileStep <= 4 && this.currentUser.get('user.userType') !== 'recruiter'
+    return this.userHimself && profileStep <= 4
   }
 
   @action

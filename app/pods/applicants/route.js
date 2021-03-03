@@ -4,8 +4,9 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   sidenav: service(),
 
-  async beforeModel() {
+  beforeModel() {
     this.sidenav.set('isHidden', false)
+    this.sidenav.set('for', 'applicant')
 
     this._super(...arguments)
   }

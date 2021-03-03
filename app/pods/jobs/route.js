@@ -3,9 +3,8 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
   sidenav: service(),
-  currentUser: service(),
   
   beforeModel() {
-    this.sidenav.set('for', this.currentUser.get('user.userType') || 'applicant')
+    this.sidenav.set('for', 'applicant')
   }
 });

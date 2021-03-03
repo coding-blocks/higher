@@ -3,9 +3,7 @@
 {{else}}
   <div class="list-divided border-none mb-4">
     {{#each jobs as |job|}}
-      <Jobs::JobRow class="py-4 {{if job.hasDeadlinePassed 'fade-it'}}" 
-        @job={{job}}
-        @showRecruiterOptions={{showRecruiterOptions}}/>
+      <Jobs::JobRow class="py-4 {{if job.hasDeadlinePassed 'fade-it'}}" @job={{job}}/>
     {{/each}}
   </div>
 {{/if}}

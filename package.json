@@ -53,16 +53,13 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-modal-dialog": "^3.0.0-beta.4",
     "ember-moment": "^8.0.0",
-    "ember-pell": "^1.4.5",
     "ember-pikaday": "^2.4.1",
     "ember-power-select": "^4.0.0-beta.4",
-    "ember-power-select-with-create": "^0.8.0",
     "ember-qunit": "^4.5.1",
     "ember-resolver": "^5.3.0",
     "ember-simple-auth": "^3.0.0",
     "ember-simple-auth-token": "^4.0.7",
     "ember-source": "~3.13.0",
-    "ember-toastr": "^2.0.1",
     "ember-truth-helpers": "^2.1.0",
     "ember-welcome-page": "^4.0.0",
     "eslint-plugin-ember": "^7.1.0",
@@ -70,8 +67,7 @@
     "install": "^0.13.0",
     "loader.js": "^4.7.0",
     "qunit-dom": "^0.9.0",
-    "sass": "^1.25.0",
-    "toastr": "^2.1.4"
+    "sass": "^1.25.0"
   },
   "engines": {
     "node": "8.* || >= 10.*"

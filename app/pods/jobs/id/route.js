@@ -9,11 +9,17 @@ export default class JobsIdRoute extends Route {
     const job = await this.store.findRecord('job', params.job_id, { reload: true })
     const myApplication = job.get('myApplication')
     const applicantProfile = this.currentUser.getApplicantProfile()
-  
+    
     return RSVP.hash({
       job,
       myApplication,
       applicantProfile
     })
+  }
+  
+  setupController(controller, model) {
+    controller.set('job', model.job)
+    controller.set('myApplication', model.myApplication)
+    controller.set('applicantProfile', model.applicantProfile)
   }
 }

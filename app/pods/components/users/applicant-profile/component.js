@@ -16,7 +16,6 @@ export default class ApplicantProfileComponent extends Component {
     return JSON.parse(this.profile.get('links'))
   }
 
-
   @dropTask generatePdfTask = function *() {
     try {
       $('html').css('font-size', '10px')

@@ -2,19 +2,10 @@
   background: #f3f3f3;
   border: none;
   height: 40px;
-  padding: 0.5rem 2rem 0.5rem 1.5rem;
-  border-radius: 50px;
+  padding: 8px;
+  border-radius: 0;
 }
 
 .ember-power-select-placeholder {
-  color: #666666;
-}
-
-.ember-power-select-status-icon {
-  right: 1.5rem;
-}
-
-.ember-basic-dropdown-trigger--above.ember-power-select-trigger[aria-expanded=true],
-.ember-basic-dropdown-trigger--below.ember-power-select-trigger[aria-expanded=true] {
-  border-radius: 50px !important;
+  color: #333333;
 }
