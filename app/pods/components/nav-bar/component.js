@@ -14,10 +14,13 @@ export default class NavBarComponent extends Component {
   mobileSelectedTab = "online";
 
   @computed('router.currentURL')
-  get isCompanyRouteActive() {
+  get isRecruiterRouteActive() {
     let currentURL = this.router.currentURL.split('/')[1]
     return currentURL === 'recruiter'
   }
+
+  @computed.equal('currentUser.user.userType', 'applicant') isCurrentUserApplicant 
+  
 
   @action
   toggleHamburgerNav() {

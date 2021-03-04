@@ -2,6 +2,7 @@ import DS from 'ember-data';
 import { computed } from '@ember/object';
 
 export default DS.Model.extend({
+  userType: DS.attr(),
   name: DS.attr(),
   username: DS.attr(),
   firstname: DS.attr(),
