@@ -7,6 +7,8 @@ export default class TalentCardComponent extends Component {
 
   editMode = false
 
+  @computed.equal('currentUser.user.userType', 'applicant') isUserApplicant
+
   @computed('currentUser')
   get userHimself() {
     return this.profile.get('user.id') === this.currentUser.get('user.id')

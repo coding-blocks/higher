@@ -98,7 +98,7 @@ export default class ApplicantProfileEditor extends Component {
       }
 
       this.set('applicantProfile.stepNumber', currentPage + 2)
-
+      this.set('applicantProfile.profileCompletion', (currentPage + 1) * 25)
       yield this.applicantProfile.save()
 
       if (this.applicantProfile.stepNumber === 5) {
@@ -121,7 +121,7 @@ export default class ApplicantProfileEditor extends Component {
   setCurrentPage() {
     const step = +this.step
     const totalSteps = 4
-    const profileStep = this.applicantProfile.stepNumber
+    const profileStep = this.applicantProfile.stepNumber || 1;
     
     if (step >= 1 && step <= totalSteps) {
       return this.set('currentPage', Math.min(step - 1, profileStep - 1))

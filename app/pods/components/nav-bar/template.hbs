@@ -42,7 +42,7 @@
         <a href="https://codingblocks.com/centres/" target="blank">Contact Us</a>
       </li> --}}
       {{#unless session.isAuthenticated}}
-        {{#if isRecruiterRouteActive}} 
+        {{#if isRecruiterRouteActive}}
           <li class="top-nav-option hoverable px-3 d-sm-block d-none">
             <LinkTo @route="applicants" class="orange font-sm">
               Are you a student?
@@ -52,20 +52,6 @@
           <li class="top-nav-option hoverable px-3 d-sm-block d-none">
             <LinkTo @route="recruiter" class="orange font-sm">
               Are you hiring?
-            </LinkTo>
-          </li>
-        {{/if}}
-      {{else}}
-        {{#if isCurrentUserApplicant}}
-          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-            <LinkTo @route="recruiter" class="orange font-sm">
-              Are you hiring?
-            </LinkTo>
-          </li>
-        {{else}}
-          <li class="top-nav-option hoverable px-3 d-sm-block d-none">
-            <LinkTo @route="applicants" class="orange font-sm">
-              Are you a student?
             </LinkTo>
           </li>
         {{/if}}

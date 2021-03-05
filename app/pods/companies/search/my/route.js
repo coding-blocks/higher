@@ -5,7 +5,7 @@ export default Route.extend({
   currentUser: service(),
 
   async model() {
-    await this.currentUser.setUserType('recruiter')
+    // await this.currentUser.setUserType('recruiter')
     return this.currentUser.getRecruiterProfile()
   },
 

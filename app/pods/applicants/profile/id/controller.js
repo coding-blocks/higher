@@ -11,6 +11,9 @@ export default class ApplicantsProfileIdController extends Controller {
 
   queryParams = ['job_id', 'step']
   job_id = null
+
+  /* variable `step` is used to set editor to selected step using query params
+  */
   step = null
 
   @computed('applicantProfile', 'currentUser')
@@ -20,15 +23,17 @@ export default class ApplicantsProfileIdController extends Controller {
 
   @computed('step', 'applicantProfile.stepNumber', 'userHimself', 'currentUser.user.userType')
   get editMode() {
+    console.log('changed')
     let step = +this.step
     let profileStep = this.applicantProfile.stepNumber
     const totalSteps = 4
 
     if (step >= 1 && step <= totalSteps) {//when step has precedence?
-      return this.userHimself && this.currentUser.get('user.userType') !== 'recruiter' //if user is visiting his/her own profile then let edit
-    }
+      return this.userHimself && this.currentUser.get('user.userType') == 'applicant' //if user is visiting his/her own profile then let edit
+    } 
 
-    return this.userHimself && profileStep <= 4 && this.currentUser.get('user.userType') !== 'recruiter'
+    return this.userHimself && profileStep <= totalSteps
+    // return this.userHimself && profileStep <= totalSteps && this.currentUser.get('user.userType') == 'applicant'
   }
 
   @action

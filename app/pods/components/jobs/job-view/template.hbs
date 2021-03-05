@@ -58,10 +58,19 @@
               </div>
               <div class="col-xl-6 mt-xl-0 mt-4">
                 <div class="mb-3">
-                  Experience: <span class="extra-bold">{{job.experience}} Years</span>
+                  Experience: 
+                  <span class="extra-bold">
+                    {{#if (eq job.experienceType 'experienced')}}
+                      {{job.minExperience}} - {{job.maxExperience}} Years
+                    {{else if (eq job.experienceType 'fresher')}}
+                      Fresher
+                    {{else}}
+                      Not Required
+                    {{/if}}
+                  </span>
                 </div>
                 <div>
-                  CTC: <span class="extra-bold">{{job.ctc}} LPA</span>
+                  CTC: <span class="extra-bold">{{job.minCtc}} - {{job.maxCtc}} LPA</span>
                 </div>
               </div>
             </div>
@@ -101,9 +110,7 @@
       <div class="position-relative br-10 overflow-hidden">
         <div class="back-div br-10"></div>
 
-        {{#if (and isCurrentUserRecruiter isRecruiterHimself)}}
-          <LinkTo class="button-dashed" @route="jobs.id.edit" @model={{job.id}}>Edit</LinkTo>
-        {{else if (not isCurrentUserRecruiter)}}
+        {{#if (not isCurrentUserRecruiter)}}
           <div class="bg-gradient-black-bt p-5">
             <div class="d-flex justify-content-between white mb-2 font-sm">
               <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>

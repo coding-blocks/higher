@@ -38,11 +38,11 @@ export default class SideNavComponent extends Component {
         iconClass: 'fas fa-briefcase font-xl',
         route: 'jobs'
       },
-      {
-        name: 'Search',
-        iconClass: 'fas fa-users font-xl',
-        route: 'applicants.profile'
-      },
+      // {
+      //   name: 'Search',
+      //   iconClass: 'fas fa-users font-xl',
+      //   route: 'applicants.profile'
+      // },
       {
         name: 'My Companies',
         iconClass: 'fas fa-building font-xl',

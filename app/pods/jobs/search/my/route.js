@@ -4,8 +4,14 @@ import { inject as service } from '@ember/service';
 export default class JobsSearchMyRoute extends Route {
   @service currentUser
 
+  beforeModel(transition) {
+    if(this.currentUser.user.userType !== 'recruiter') {
+      this.transitionTo('jobs')
+    }
+  }
+
   async model() {
-    await this.currentUser.setUserType('recruiter')
+    // await this.currentUser.setUserType('recruiter')
     return this.currentUser.getRecruiterProfile()
   }
 

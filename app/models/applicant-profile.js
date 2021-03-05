@@ -129,9 +129,14 @@ const Validations = buildValidations({
   resumeLink: {
     description: 'Resume',
     validators: [
-      // validator('presence', {
-      //   presence: true
-      // }),
+      validator('presence', {
+        presence: Ember.computed('model.resumeUpload', function() {
+          return !this.get('model.resumeUpload.url')
+        }),
+        disabled: Ember.computed('model.resumeUpload', function() {
+          return this.get("model.resumeUpload.url")
+        })
+      }),
       validator('format', {
         type: 'url',
         allowBlank: true
