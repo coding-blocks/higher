@@ -24,7 +24,15 @@
   <div class="col-md-2 col-sm-3 col-6 mt-sm-0 mt-3">
     <div class="font-normal">
       Experience:
-      <span class="bold">{{job.experience}} Years</span>
+      <span class="extra-bold">
+        {{#if (eq job.experienceType 'experienced')}}
+          {{job.minExperience}} - {{job.maxExperience}} Years
+        {{else if (eq job.experienceType 'fresher')}}
+          Fresher
+        {{else}}
+          Not Required
+        {{/if}}
+      </span>
     </div>
     <div class="font-normal mt-2">
       CTC:
