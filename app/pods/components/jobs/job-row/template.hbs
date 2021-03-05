@@ -67,5 +67,11 @@
     <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
       <LinkTo @route="jobs.id.applications" @model={{job.id}} class="orange">Applications ({{job.applicationsCount}})</LinkTo>
     </div>
+    <div class="d-md-block d-none">
+    <LinkTo @route="jobs.id.edit" @model={{job.id}} class="button-solid button-orange">Edit</LinkTo>
+  </div>
+  <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
+    <LinkTo @route="jobs.id.edit" @model={{job.id}} class="button-solid button-orange">Edit</LinkTo>
+  </div>
   {{/if}}
 </div>

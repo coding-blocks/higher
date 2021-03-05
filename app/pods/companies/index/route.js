@@ -6,7 +6,7 @@ export default Route.extend({
 
   beforeModel() {
     if (this.currentUser.get('user.userType') === 'recruiter') {
-      this.transitionTo('jobs.search.my')
+      this.transitionTo('companies.search.my')
     }
   }
 });

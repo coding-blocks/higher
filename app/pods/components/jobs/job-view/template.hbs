@@ -101,9 +101,7 @@
       <div class="position-relative br-10 overflow-hidden">
         <div class="back-div br-10"></div>
 
-        {{#if (and isCurrentUserRecruiter isRecruiterHimself)}}
-          <LinkTo class="button-dashed" @route="jobs.id.edit" @model={{job.id}}>Edit</LinkTo>
-        {{else if (not isCurrentUserRecruiter)}}
+        {{#if (not isCurrentUserRecruiter)}}
           <div class="bg-gradient-black-bt p-5">
             <div class="d-flex justify-content-between white mb-2 font-sm">
               <span>Eligibility:</span> <span class="extra-bold">{{job.eligibility}}</span>

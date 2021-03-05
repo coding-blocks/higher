@@ -15,7 +15,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   async beforeModel() {
     this.sidenav.set('for', 'applicant')
-    await this.currentUser.setUserType('applicant')
+    // await this.currentUser.setUserType('applicant')
 
     if (this.session.isAuthenticated) {
       return this.transitionTo('applicants.profile.id', this.currentUser.user.id)

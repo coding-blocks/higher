@@ -10,7 +10,7 @@ export default Route.extend({
   async beforeModel() {
     this.sidenav.set('for', 'recruiter')
 
-    await this.currentUser.setUserType('recruiter')
+    // await this.currentUser.setUserType('recruiter')
 
     if(this.session.isAuthenticated) {
       this.transitionTo('jobs.search.my')
