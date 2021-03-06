@@ -9,6 +9,7 @@ export default class JobsEditorComponent extends Component {
   @service store
   @service toast
   @service api
+  @service currentUser
 
   ctcStart = 0
   ctcEnd = 40
@@ -40,7 +41,12 @@ export default class JobsEditorComponent extends Component {
   }
 
   @dropTask fetchCompaniesTask = function* () {
-    return yield this.store.findAll('company')
+    const recruiterProfile = yield this.currentUser.getRecruiterProfile()
+    return yield this.store.query('company', {
+      filter: {
+        "recruiter_profile_id =": recruiterProfile.id
+      }
+    })
   }
 
   @dropTask fetchLocationsTask = function* () {
