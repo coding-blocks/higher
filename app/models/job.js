@@ -289,4 +289,5 @@ export default DS.Model.extend(Validations, {
   jobRoles: DS.hasMany('job-role'),
   skills: DS.hasMany('skill'),
   fresherBranches: DS.hasMany('branch'),
+  fresherGraduationYear: DS.attr('number'),
 });
