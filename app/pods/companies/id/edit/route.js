@@ -11,8 +11,8 @@ export default Route.extend({
     return this.modelFor('companies.id')
   },
 
-  afterModel(model) {
-    const isRecruiterHimself = model.get('recruiterProfile.user.id') == this.get('currentUser.user.id')
+  async afterModel(model) {
+    const isRecruiterHimself =  await model.get('recruiterProfile.user.id') == this.get('currentUser.user.id')
     if( !this.isCurrentUserRecruiter || !isRecruiterHimself ) {
       this.transitionTo('companies.id', model.id)
     }
