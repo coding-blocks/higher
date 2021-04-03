@@ -17,7 +17,8 @@ export default class JobSearchAppliedController extends Controller {
       page: {
         limit: this.limit,
         offset: this.offset
-      }
+      },
+      sort: "-job_applications.created_at"
     })
   }
 }
