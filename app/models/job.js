@@ -34,4 +34,5 @@ export default DS.Model.extend({
   formJSON: Ember.computed('form', function () {
     return JSON.parse(this.form)
   }),
+  skills: DS.hasMany('skill')
 });
