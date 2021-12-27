@@ -5,11 +5,16 @@ import AuthenticatedRouteMixin from 'hiring-front/mixins/authenticated-route-mix
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
+  webengage: service(),
 
   queryParams: {
     job_id: {
       refreshModel: false
     }
+  },
+
+  activate() {
+    webengage.trackEvent("Hire: Applicant Profile", {})
   },
 
   beforeModel() {

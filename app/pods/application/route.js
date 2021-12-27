@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
   session: service(),
+  webengage: service(),
   
   queryParams: {
     code: {
@@ -27,9 +28,10 @@ export default Route.extend(ApplicationRouteMixin, {
     }
   },
 
-  model() {
+  async model() {
     if(this.session.isAuthenticated) {
-      return this.currentUser.load()
+      await this.currentUser.load()
+      return this.webengage.trackUser(this.currentUser.user)
     }
   },
 });
