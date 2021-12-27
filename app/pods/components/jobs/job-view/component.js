@@ -8,6 +8,7 @@ export default class JobViewComponent extends Component {
   @service currentUser
   @service router
   @service store
+  @service webengage
 
   showTakeTestModal = false
   showApplyToJobModal = false
@@ -50,7 +51,7 @@ export default class JobViewComponent extends Component {
       yield jobApplication.save()
       this.set('jobApplication', jobApplication)
       this.set('showApplyToJobModal', false)
-      this.webengage.track("Hire: Apply To Job", {})
+      this.webengage.trackEvent("Hire: Apply To Job", {})
     } catch (err) {
       
       if (err.errors[0].title == 'Not eligible for this Job') {
@@ -62,7 +63,7 @@ export default class JobViewComponent extends Component {
 
   @action
   takeToProfileEditor(step = 3) {
-    this.webengage.track("Complete Profile and Apply", {})
+    this.webengage.trackEvent("Complete Profile and Apply", {})
     this.router.transitionTo('applicants.profile.me', { queryParams: { job_id: this.job.id, step } })
   }
 
