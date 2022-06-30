@@ -1,6 +1,6 @@
 <div class="c-sidenav bottom-nav  col-md-1 col-12">
   <div class="logo pb-5 pt-4 d-md-block d-none">
-    <LinkTo @route="index" class="font-md">
+    <LinkTo @route="{{if isRecruiterRouteActive 'recruiter' 'index'}}" class="font-md">
       {{!-- <img src="/app/images/logo_white.png" alt="Logo"> --}}
       <span class="white">CB |</span> <span class="gradient-red">Hire</span>
     </LinkTo>
@@ -11,7 +11,7 @@
       <div class="col-2 col-md-12">
         <LinkTo @route={{content.route}} class="nav-element py-4 px-2">
           <i class="{{content.iconClass}}"></i>
-          <h6 class="pt-2 d-none d-md-block font-sm">{{content.name}}</h6>
+          <h6 class="pt-2 d-none d-md-block">{{content.name}}</h6>
         </LinkTo>
       </div>
     {{/each}}
