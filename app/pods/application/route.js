@@ -21,7 +21,7 @@ export default Route.extend(ApplicationRouteMixin, {
       } else {
         const { code } = transition.to.queryParams
         if (code) {
-          this.get('session').authenticate('authenticator:jwt', { identification: code, password: code, code})
+          this.get('session').authenticate('authenticator:cookie', { identification: code, password: code, code})
             .then(r => this.transitionTo({ queryParams: { code: null } }))
         }
       }

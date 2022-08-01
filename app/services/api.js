@@ -9,7 +9,7 @@ export default AjaxService.extend({
   host: ENV.API_HOST,
   contentType: 'application/json; charset=utf-8',
   headers: computed('session.data.authenticated.jwt', function () {
-    let headers = {};
+    let headers = {"Content-Type": "application/json"};
     const jwt = this.get('session.data.authenticated.jwt');
     if (jwt) {
       headers['Authorization'] = `JWT ${jwt}`;
