@@ -7,12 +7,20 @@ import { computed } from '@ember/object';
 export default AjaxService.extend({
   session: service(),
   host: ENV.API_HOST,
-  headers: computed('session.data.authenticated.jwt', function () {
-    let headers = {};
-    const jwt = this.get('session.data.authenticated.jwt');
+  contentType: 'application/json; charset=utf-8',
+  headers: computed('session.data.token', function () {
+    let headers = {"Content-Type": "application/json"};
+    const jwt = this.get('session.data.token');
     if (jwt) {
       headers['Authorization'] = `JWT ${jwt}`;
     }
     return headers;
-  })
+  }),
+  options() {
+    const res = this._super(...arguments)
+    res.xhrFields = {
+      withCredentials: true,
+    }
+    return res
+  }
 });

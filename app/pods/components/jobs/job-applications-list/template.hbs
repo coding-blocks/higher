@@ -1,0 +1,37 @@
+<div class="border-card p-md-5 p-4">
+  <div class="horizontal-scrolling-table">
+    <table class="w-100">
+      <thead class="bold">
+        <th>S No.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact Number</th>
+        <th>Message To Company</th>
+      </thead>
+      <tbody>
+        {{#if fetchJobApplicationsTask.isRunning}}
+        <LoadingComponent />
+        {{else}}
+        {{#each jobApplications as |jobApplication index|}}
+        <tr>
+          <td>#{{inc index}}</td>
+          <td>{{jobApplication.applicantProfile.user.firstname}} {{jobApplication.applicantProfile.user.lastname}}</td>
+          <td>{{jobApplication.applicantProfile.user.email}}</td>
+          <td>{{jobApplication.applicantProfile.user.mobile}}</td>
+          <td>{{if jobApplication.message jobApplication.message 'None'}}</td>
+          <td class="py-3 t-align-r">
+            <LinkTo @route="applicants.profile.id" @model={{jobApplication.applicantProfile.user.id}}>
+              <button class="button-solid button-orange">Go To Profile</button>
+            </LinkTo>
+          </td>
+        </tr>
+        {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+  <div class="divider-h my-4"></div>
+
+  <WPagination @nextOffset={{pagination.nextOffset}} @prevOffset={{pagination.prevOffset}} @count={{pagination.count}}
+    @limit={{limit}} @offset={{offset}} @onChange={{action 'paginate'}} />
+</div>

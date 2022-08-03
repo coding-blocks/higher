@@ -7,17 +7,6 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
-    'ember-simple-auth-token': {
-      identificationField: 'code',
-      passwordField: 'code',
-      tokenPropertyName: 'jwt',
-      refreshAccessTokens: true,
-      tokenExpireName: 'exp',
-      refreshLeeway: 60, //send a request for refresh_token 60sec before actual expiration
-      refreshTokenPropertyName: 'refresh_token',
-      authorizationHeaderName: 'Authorization',
-      authorizationPrefix: 'JWT ',
-    },
     'simple-auth': {
       crossOriginWhitelist: ['*']
     },
@@ -88,9 +77,6 @@ module.exports = function(environment) {
     ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
     ENV.SCATTERSHOT_API_HOST = 'https://app.codingblocks.com'
   }
-
-  ENV['ember-simple-auth-token'].serverTokenEndpoint = `${ENV.API_HOST}/login`
-  ENV['ember-simple-auth-token'].serverTokenRefreshEndpoint = `${ENV.API_HOST}/refresh-token?client=web`
 
   return ENV;
 };

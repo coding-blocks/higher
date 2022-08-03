@@ -16,6 +16,14 @@ export default class JobViewComponent extends Component {
   notEligible = false
   jobApplicationForm = {}
 
+  @computed.equal('currentUser.user.userType', 'recruiter') isCurrentUserRecruiter
+  
+  @computed ('job.recruiterProfile.user.id', 'currentUser.user') 
+  get isRecruiterHimself() {
+    return this.get('job.recruiterProfile.user.id') == this.get('currentUser.user.id')
+  }
+  
+
   @computed('myApplication', 'jobApplication')
   get allreadyApplied() {
     return !isEmpty(this.myApplication) || !isEmpty(this.jobApplication)
@@ -26,9 +34,9 @@ export default class JobViewComponent extends Component {
     return `/applicants/profile/me?step=3&job_id=${this.job.id}`
   }
 
-  @computed('applicantProfile.profileCompletion')
+  @computed('applicantProfile.stepNumber')
   get isProfileCompleted() {
-    return this.applicantProfile && this.applicantProfile.profileCompletion === 100
+    return this.applicantProfile && this.applicantProfile.stepNumber > 4
   }
 
   @dropTask applyToJobTask = function* () {

@@ -6,6 +6,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
   webengage: service(),
+  sidenav: service(),
 
   queryParams: {
     job_id: {
@@ -17,10 +18,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
     webengage.trackEvent("Hire: Applicant Profile", {})
   },
 
-  beforeModel() {
+  async beforeModel() {
+    this.sidenav.set('for', 'applicant')
+    await this.currentUser.setUserType('applicant')
+
     if (this.session.isAuthenticated) {
       return this.transitionTo('applicants.profile.id', this.currentUser.user.id)
     }
+
     window.localStorage.setItem('redirection_path', '/applicants/profile/me')
     this._super(...arguments)
   }
