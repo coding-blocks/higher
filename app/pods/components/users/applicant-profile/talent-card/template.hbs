@@ -87,7 +87,7 @@
           </div>
         </div>
         <div class="ml-2 d-flex ignore-in-pdf">
-          {{#if (and editMode userHimself)}}
+          {{#if userHimself}}
           <div>
             <button class="button-dashed button-orange regular mr-2" {{action (mut profile.stepNumber) 1}}>&lt;
               Edit</button>

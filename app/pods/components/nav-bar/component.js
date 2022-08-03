@@ -27,7 +27,8 @@ export default class NavBarComponent extends Component {
     this.toggleProperty("hideHamburgerNav");
   }
 
-  get logoutLink() {
-    return ENV.ONEAUTH_URL + '/logout?redirect=' + ENV.PUBLIC_URL + 'logout'
+  @action
+  logout() {
+    this.session.invalidate()
   }
 }

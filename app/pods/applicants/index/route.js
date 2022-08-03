@@ -11,7 +11,6 @@ export default class ApplicantIndexRoute extends Route {
   }
 
   beforeModel() {
-    console.log('here', this.session.isAuthenticated)
     if(this.session.isAuthenticated) {
       this.transitionTo('applicants.profile.me')
     } else {

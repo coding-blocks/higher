@@ -1,9 +1,8 @@
 import { isEmpty } from '@ember/utils';
 import Route from '@ember/routing/route';
-import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(ApplicationRouteMixin, {
+export default Route.extend({
   currentUser: service(),
   session: service(),
   webengage: service(),
@@ -21,7 +20,7 @@ export default Route.extend(ApplicationRouteMixin, {
       } else {
         const { code } = transition.to.queryParams
         if (code) {
-          this.get('session').authenticate('authenticator:cookie', { identification: code, password: code, code})
+          this.get('session').authenticate({ identification: code, password: code, code})
             .then(r => this.transitionTo({ queryParams: { code: null } }))
         }
       }
