@@ -18,6 +18,8 @@
     "test": "ember test"
   },
   "devDependencies": {
+    "@babel/helper-environment-visitor": "^7.18.9",
+    "@babel/helper-string-parser": "^7.18.10",
     "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^1.0.0",
     "babel-eslint": "^10.0.3",
@@ -59,7 +61,6 @@
     "ember-power-select-with-create": "^0.8.0",
     "ember-qunit": "^4.5.1",
     "ember-resolver": "^5.3.0",
-    "ember-simple-auth": "^3.0.0",
     "ember-source": "~3.13.0",
     "ember-toastr": "^2.0.1",
     "ember-truth-helpers": "^2.1.0",
@@ -77,6 +78,7 @@
   },
   "dependencies": {
     "@coding-blocks/motley": "^0.8.0",
+    "@jridgewell/gen-mapping": "^0.3.2",
     "jspdf": "^1.5.3"
   },
   "ember-addon": {
