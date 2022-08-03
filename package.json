@@ -79,7 +79,7 @@
   "dependencies": {
     "@coding-blocks/motley": "^0.8.0",
     "@jridgewell/gen-mapping": "^0.3.2",
-    "jspdf": "^1.5.3"
+    "jspdf": "^2.3.1"
   },
   "ember-addon": {
     "paths": [
