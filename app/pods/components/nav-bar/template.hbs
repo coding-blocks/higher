@@ -69,11 +69,11 @@
           </LinkTo>
         </li>
       {{else}}
-        <li class="top-nav-option hoverable px-3 d-sm-block d-none">
+        {{!-- <li class="top-nav-option hoverable px-3 d-sm-block d-none">
           <LinkTo @route="recruiter" class="orange font-sm">
             Are you hiring?
           </LinkTo>
-        </li>
+        </li> --}}
       {{/if}}
       <li class="top-nav-option hoverable px-3 d-sm-block d-none">
         {{#if session.isAuthenticated}}
