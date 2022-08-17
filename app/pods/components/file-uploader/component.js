@@ -45,7 +45,7 @@ export default class FileUploaderComponent extends Component {
   get requestHeaders() {
 
     return {
-      Authorization: 'JWT ' + this.session.data.authenticated.jwt
+      Authorization: 'JWT ' + this.session.data.token
     }
   }
 
