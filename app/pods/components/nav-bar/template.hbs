@@ -98,7 +98,9 @@
             </ul>
           </div>
         {{else}}
-          <LoginButton class="font-sm" />
+          <button class="button-solid button-orange" {{action (mut showLoginDialog) true}}>
+            Login
+          </button>
         {{/if}}
       </li>
     </ul>

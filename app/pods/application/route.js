@@ -14,6 +14,7 @@ export default Route.extend({
   },
 
   beforeModel(transition) {
+    this.set('showLoginDialog', false)
     if(!isEmpty(transition.to.queryParams.code)) {
       if(this.session.isAuthenticated) {
         return this.transitionTo({ queryParams: { code: null }})
@@ -21,12 +22,12 @@ export default Route.extend({
         const { code } = transition.to.queryParams
         if (code) {
           this.get('session').authenticate({ identification: code, password: code, code})
-            .then(r => this.transitionTo({ queryParams: { code: null } }))
+          .then(r => this.transitionTo({ queryParams: { code: null } }))
         }
       }
     }
   },
-
+  
   async model() {
     if(this.session.isAuthenticated) {
       await this.currentUser.load()

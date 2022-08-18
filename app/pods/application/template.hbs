@@ -1,4 +1,16 @@
-<NavBar />
+<NavBar @showLoginDialog={{showLoginDialog}}/>
+{{#if (and showLoginDialog (not session.isAuthenticated))}}
+  {{#modal-dialog
+          onClose=(action (mut showLoginDialog) false)
+          targetAttachment="none"
+          translucentOverlay=true
+          containerClass='centered-scrolling-container w-40 mt-3'
+          overlayClass='centered-scrolling-overlay'
+          wrapperClass='centered-scrolling-wrapper'
+        }}
+    <LoginDialog />
+  {{/modal-dialog}}
+{{/if}}
 {{#unless sidenav.isHidden}}
   <SideNav />
 
