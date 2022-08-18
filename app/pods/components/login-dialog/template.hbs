@@ -1,0 +1,30 @@
+<div class="d-flex flex-col align-items-center p-4">
+  <h3 class="t-align-c">Login / Signup</h3>
+
+  <div class="d-flex">
+    <button class="button-dashed button-orange mt-5 mr-2" {{action 'loginGoogle'}}><i class="fab fa-google fa-lg px-2 pr-4"></i>Login with Google</button>
+    <button class="button-dashed button-orange mt-5" {{action 'loginFacebook'}}><i class="fab fa-facebook fa-lg px-2 pr-4"></i>Login with Facebook</button>
+  </div>
+
+  <div class="my-4 font-md">OR</div>
+
+  <div class="row w-100">
+    <div class="col-9">
+      {{#if otpId}}
+        <Input @type="text" class="input-text t-align-l" @placeholder="OTP" @value={{otp}}/>
+      {{else}}
+        <Input @type="text" class="input-text t-align-l" @placeholder="Email" @value={{email}}/>
+      {{/if}}
+    </div>
+    <div class="col-3">
+      {{#if otpId}} 
+        <button class="button-solid button-orange" disabled={{verifyOTPTask.isRunning}} {{action (perform verifyOTPTask)}}>Verify OTP</button>
+      {{else}}
+        <button class="button-solid button-orange" disabled={{or sendOTPTask.isRunning disableOTP}} {{action (perform sendOTPTask)}}>Send OTP</button>
+      {{/if}}
+    </div>
+  </div>
+  {{#if errorMessage}}
+    <div class="red mt-4 font-sm">{{errorMessage}}</div>
+  {{/if}}
+</div>
