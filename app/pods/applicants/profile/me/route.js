@@ -5,7 +5,6 @@ import AuthenticatedRouteMixin from 'hiring-front/mixins/authenticated-route-mix
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
   session: service(),
-  webengage: service(),
   sidenav: service(),
 
   queryParams: {
@@ -13,11 +12,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       refreshModel: false
     }
   },
-
-  activate() {
-    webengage.trackEvent("Hire: Applicant Profile", {})
-  },
-
+  
   async beforeModel() {
     this.sidenav.set('for', 'applicant')
     await this.currentUser.setUserType('applicant')
