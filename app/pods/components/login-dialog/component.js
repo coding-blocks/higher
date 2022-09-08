@@ -23,12 +23,12 @@ export default class LoginDialog extends Component {
 
   @action
   loginFacebook() {
-    window.location.href = `${ENV.ONEAUTH_URL}/login/facebook/v2?client=hiring-blocks&redirect_uri=${ENV.PUBLIC_URL}`
+    window.location.href = `${ENV.ONEAUTH_URL}/login/facebook/v2?client=hiring-blocks&redirect_uri=${ENV.PUBLIC_URL}&client_id=${ENV.CLIENT_ID}`
   }
 
   @action
   loginGoogle() {
-    window.location.href = `${ENV.ONEAUTH_URL}/login/google/v2?client=hiring-blocks&redirect_uri=${ENV.PUBLIC_URL}`
+    window.location.href = `${ENV.ONEAUTH_URL}/login/google/v2?client=hiring-blocks&redirect_uri=${ENV.PUBLIC_URL}&client_id=${ENV.CLIENT_ID}`
   }
 
   @dropTask sendOTPTask = function* () {
