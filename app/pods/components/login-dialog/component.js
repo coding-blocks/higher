@@ -36,7 +36,7 @@ export default class LoginDialog extends Component {
     this.set('errorMessage', null)
     yield this.api.post('/login/otp/email', {
       data: {
-        email: this.email
+        email: this.email.toLowerCase()
       }
     }).then(response => {
       this.set('otpId', response.id)
@@ -52,7 +52,7 @@ export default class LoginDialog extends Component {
       this.set('errorMessage', null)
       yield this.api.post('/login/otp/email/verify', {
         data: {
-          email: this.email,
+          email: this.email.toLowerCase(),
           otp: this.otp,
           otp_id: this.otpId
         }
