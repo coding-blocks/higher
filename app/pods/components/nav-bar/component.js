@@ -31,4 +31,9 @@ export default class NavBarComponent extends Component {
   logout() {
     this.session.invalidate()
   }
+
+  @action
+  showLoginPrompt() {
+    document.getElementsByTagName('cb-login-signup')[0].classList.remove('hide-cb-login-signup-prompt')
+  }
 }

@@ -24,9 +24,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700,800" rel="stylesheet">
 
+    <script src="https://unpkg.com/@coding-blocks/web-components@0.2.3/dist/index.js" async></script>
+
     {{content-for "head-footer"}}
   </head>
   <body class="a-hire">
+    <cb-login-signup class="hide-cb-login-signup-prompt"/>
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>
