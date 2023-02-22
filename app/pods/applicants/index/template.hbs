@@ -154,7 +154,11 @@
             <div class="d-flex font-sm mb-3">
               <div class="col-6 pl-0">
                 <div class="mb-3">
-                  Job Location: <span class="extra-bold">{{job.location}}</span>
+                  Job Location: <span class="extra-bold">
+                    {{#each job.locations as |location|}}
+                      {{location.name}}&nbsp;
+                    {{/each}}
+                  </span>
                 </div>
                 <div class="mb-3 pl-0">
                   Job Type: <span class="extra-bold">{{job.type}}</span>
@@ -165,7 +169,7 @@
                   Experience: <span class="extra-bold">{{job.experience}}</span>
                 </div>
                 <div>
-                  CTC: <span class="extra-bold">{{job.ctc}}</span>
+                  CTC: <span class="extra-bold">{{job.maxCtc}}</span>
                 </div>
               </div>
             </div>
