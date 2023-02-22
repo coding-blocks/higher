@@ -11,8 +11,8 @@ export default class EnsureLoginButtonComponent extends Component {
 
   click() {
     if (!this.session.isAuthenticated) {
-      window.localStorage.setItem('redirection_path', this.redirectionPath || window.location)
-      this.router.transitionTo('login')
+      window.localStorage.setItem('redirection_path', this.redirectionPath || window.location.pathname)
+      document.getElementsByTagName('cb-login-signup')[0].classList.remove('hide-cb-login-signup-prompt')
     } else {
       this.callIfLoggedIn()
     }
