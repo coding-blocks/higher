@@ -111,7 +111,7 @@
         <div class="back-div br-10"></div>
 
         {{#if (and isCurrentUserRecruiter isRecruiterHimself)}}
-          <LinkTo class="button-dashed" @route="jobs.id.edit" @model={{job.id}}>Edit</LinkTo>
+          <LinkTo class="button-dashed" @route="recruiter.jobs.id.edit" @model={{job.id}}>Edit</LinkTo>
         {{else if (not isCurrentUserRecruiter)}}
           <div class="bg-gradient-black-bt p-5">
             <div class="d-flex justify-content-between white mb-2 font-sm">

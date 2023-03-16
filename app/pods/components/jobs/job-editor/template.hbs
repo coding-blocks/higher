@@ -43,7 +43,7 @@
             {{/if}}
           </WFormValidations>
         </div>
-        <PowerSelectMultipleWithCreate 
+        <PowerSelectMultiple 
           @searchEnabled={{true}} 
           @searchField={{"name"}} 
           @options={{locations}}
@@ -55,7 +55,7 @@
           @onChange={{action (mut job.locations)}} as |location|>
             <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes job.locations location}} />
             {{location.name}}
-        </PowerSelectMultipleWithCreate>
+        </PowerSelectMultiple>
 
         {{#each job.locations as |location|}}
         <span class="pointer pill pill-dashed mt-3 mr-2">{{location.name}}
