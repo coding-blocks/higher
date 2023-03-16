@@ -3,6 +3,11 @@ import { inject as service } from '@ember/service';
 
 export default class JobsSearchMyRoute extends Route {
   @service currentUser
+  @service sidenav
+
+  beforeModel(){
+    this.sidenav.set('for', 'recruiter')
+  }
 
   async model() {
     await this.currentUser.setUserType('recruiter')

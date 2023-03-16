@@ -34,6 +34,7 @@ export default class NavBarComponent extends Component {
 
   @action
   showLoginPrompt() {
+    localStorage.setItem('redirection_path', window.location.pathname)
     document.getElementsByTagName('cb-login-signup')[0].classList.remove('hide-cb-login-signup-prompt')
   }
 }

@@ -34,9 +34,13 @@ Router.map(function () {
   });
   this.route('recruiter', function () {
     this.route('jobs', function () {
-      this.route('id', { path: '/:job_id' });
+      this.route('id', { path: '/:job_id' }, function() {
+        this.route('edit');
+      });
+      this.route('new');
     });
     this.route('profiles', function() {});
+    this.route('company');
   });
   this.route('companies', function() {
     this.route('id', { path: '/:company_id' }, function() {

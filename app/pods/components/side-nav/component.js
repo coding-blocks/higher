@@ -36,17 +36,17 @@ export default class SideNavComponent extends Component {
       {
         name: 'Search',
         iconClass: 'fas fa-users font-xl',
-        route: 'applicants.profile'
+        route: 'recruiter.profiles'
       },
       {
         name: 'My Jobs',
         iconClass: 'fas fa-briefcase font-xl',
-        route: 'jobs'
+        route: 'recruiter.jobs'
       },
       {
-        name: 'My Companies',
+        name: 'My Company',
         iconClass: 'fas fa-building font-xl',
-        route: 'companies'
+        route: 'recruiter.company'
       },
     ]
   }

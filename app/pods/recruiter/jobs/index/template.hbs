@@ -1,1 +1,9 @@
-<Jobs::JobsList @filter={{filter}} />
+<div
+  class="bg-grey position-absolute w-100 tl row no-gutters justify-content-between align-items-center py-4 px-lg-5 px-4">
+  <div class="font-md bold">Add New Job</div>
+  <LinkTo @route="recruiter.jobs.new">
+    <button class="button-solid button-orange">+ Add New</button>
+  </LinkTo>
+</div>
+
+<Jobs::JobsList class="my-5 pt-4" @filter={{filter}} @showRecruiterOptions=true />

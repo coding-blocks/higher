@@ -61,19 +61,25 @@
       </span>
     </div>
   </div>
-
-  <div class="d-md-block d-none">
-    <LinkTo @route="jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
-  </div>
-  <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
-    <LinkTo @route="jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
-  </div>
   {{#if (and showRecruiterOptions isCurrentUserRecruiter isRecruiterHimself)}}
+    <div class="d-md-block d-none">
+      <LinkTo @route="recruiter.jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
+    </div>
+    <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
+      <LinkTo @route="recruiter.jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
+    </div>
     <div class="d-md-block d-none">
       <LinkTo @route="jobs.id.applications" @model={{job.id}} class="orange">Applications ({{job.applicationsCount}})</LinkTo>
     </div>
     <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
       <LinkTo @route="jobs.id.applications" @model={{job.id}} class="orange">Applications ({{job.applicationsCount}})</LinkTo>
     </div>
+  {{else}}
+  <div class="d-md-block d-none">
+    <LinkTo @route="jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
+  </div>
+  <div class="d-md-none d-block d-flex justify-content-center w-100 mt-3">
+    <LinkTo @route="jobs.id" @model={{job.id}} class="button-dashed button-orange">View Details</LinkTo>
+  </div>
   {{/if}}
 </div>
