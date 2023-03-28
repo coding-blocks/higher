@@ -12,7 +12,7 @@
       wrapperClass='centered-scrolling-wrapper'
     }}
     <div class="p-5">
-      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
+      <PowerSelectMultiple @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
         @selected={{selectedLocations}} @placeholder="Select Location" @triggerComponent={{component 'trigger-component'}}
         @onChange={{action 'setLocations'}} as |location|>
         <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedLocations location}} />
@@ -26,7 +26,7 @@
 
       <div class="divider-h my-4"></div>
 
-      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{jobRoles}}
+      <PowerSelectMultiple @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{jobRoles}}
         @selected={{selectedJobRoles}} @placeholder="Select Job Role" @triggerComponent={{component 'trigger-component'}}
         @onChange={{action 'setJobRoles'}} as |jobRole|>
         <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes selectedJobRoles jobRole}} />

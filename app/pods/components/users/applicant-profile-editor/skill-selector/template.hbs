@@ -84,7 +84,7 @@
     }}
 
     <div class="p-sm-5 p-4">
-      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{skills}} @selected={{profile.skills}}
+      <PowerSelectMultiple @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{skills}} @selected={{profile.skills}}
         @placeholder="Select Skills" @triggerComponent={{component 'trigger-component'}}
         @onChange={{action (mut profile.skills)}} as |skill|>
         <input type="checkbox" onclick={{action "preventDefault"}} checked={{includes profile.skills skill}} />

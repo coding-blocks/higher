@@ -16,6 +16,7 @@
 
   {{#if isCBOnlineCourse}}
     <PowerSelect class="mb-4" 
+      @renderInPlace=true
       @options={{onlineCourses}} 
       @searchEnabled={{true}} @searchField={{"title"}}
       @selected={{selectedOnlineCourse}} 
@@ -38,6 +39,7 @@
     </WFormValidations>
 
     <PowerSelect class="mb-4" 
+      @renderInPlace=true
       @options={{skills}} 
       @searchEnabled={{true}} 
       @searchField={{"name"}}

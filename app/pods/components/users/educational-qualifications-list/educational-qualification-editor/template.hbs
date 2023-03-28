@@ -42,6 +42,7 @@
     
       {{#unless educationalQualification.isOtherCollege}}
         <PowerSelect 
+          @renderInPlace=true
           @searchEnabled={{true}} 
           @searchField={{"name"}}
           @options={{colleges}} 
@@ -80,6 +81,7 @@
         </WFormValidations>
       </div>
       <PowerSelect 
+        @renderInPlace=true
         @searchEnabled={{true}} 
         @options={{if (eq educationalQualification.type 'xii_senior_secondary') seniorSecondaryStreams branches}} 
         @selected={{selectedBranch}}
