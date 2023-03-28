@@ -28,7 +28,7 @@
   <div class="row align-items-center mb-4 pt-2">
     <div class="col-12 col-md-5 mb-md-0 mb-2">Where are you currently located? <span class="red">*</span></div>
     <div class="col-12 col-md-7">
-      <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
+      <PowerSelect @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
         @selected={{applicantProfile.currentLocation}} @placeholder="Select Location"
         @onChange={{action (mut applicantProfile.currentLocation)}} as |location|>
         {{location.name}}
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="col-12 col-md-7">
-      <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
+      <PowerSelectMultiple @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{locations}}
         @selected={{applicantProfile.locations}} @placeholder="Select Location"
         @triggerComponent={{component 'trigger-component'}} @onChange={{action (mut applicantProfile.locations)}} as
         |location|>
@@ -110,7 +110,7 @@
   <div class="row align-items-center mb-4 pt-2">
     <div class="col-12 col-md-5 mb-md-0 mb-2">What type of job are you looking for? <span class="red">*</span></div>
     <div class="col-12 col-md-7">
-      <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{jobTypes}}
+      <PowerSelect @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{jobTypes}}
         @selected={{applicantProfile.desiredJobType}} @placeholder="Full Time / Internship / Part Time"
         @onChange={{action (mut applicantProfile.desiredJobType)}} as |jobType|>
         {{#if (eq jobType 'fulltime')}}

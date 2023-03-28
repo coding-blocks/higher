@@ -44,6 +44,7 @@
           </WFormValidations>
         </div>
         <PowerSelectMultipleWithCreate 
+          @renderInPlace=true
           @searchEnabled={{true}} 
           @searchField={{"name"}} 
           @options={{locations}}
@@ -74,7 +75,7 @@
             {{/if}}
           </WFormValidations>
         </div>
-        <PowerSelect @searchEnabled={{true}} @searchField={{"name"}} @options={{companies}} @selected={{job.company}}
+        <PowerSelect @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{companies}} @selected={{job.company}}
           @placeholder="Select Company" @onChange={{action (mut job.company)}} as |company|>
           {{company.name}}
         </PowerSelect>
@@ -89,6 +90,7 @@
           </WFormValidations>
         </div>
         <PowerSelectMultipleWithCreate 
+          @renderInPlace=true
           @searchEnabled={{true}} 
           @searchField={{"name"}} 
           @options={{jobRoles}}
@@ -147,7 +149,7 @@
             {{/if}}
           </WFormValidations>
         </div>
-        <PowerSelect @options={{jobTypes}} @selected={{job.type}} @placeholder="Select Job Type"
+        <PowerSelect @renderInPlace=true @options={{jobTypes}} @selected={{job.type}} @placeholder="Select Job Type"
           @onChange={{action (mut job.type)}} as |jobType|>
           {{jobType}}
         </PowerSelect>
@@ -260,7 +262,7 @@
               {{/if}}
             </WFormValidations>
             <div class="mt-3">
-              <PowerSelectMultiple @searchEnabled={{true}} @searchField={{"name"}} @options={{branches}}
+              <PowerSelectMultiple @renderInPlace=true @searchEnabled={{true}} @searchField={{"name"}} @options={{branches}}
                 @selected={{selectedFresherBranches}} @placeholder="Select Branch"
                 @triggerComponent={{component 'trigger-component'}} @onChange={{action (mut selectedFresherBranches)}}
                 as |branch|>
@@ -335,6 +337,7 @@
   <div class="mb-5">
     <h6 class="mb-4">Choose Skills</h6>
     <PowerSelectMultipleWithCreate 
+      @renderInPlace=true
       @searchEnabled={{true}} 
       @searchField={{"name"}} 
       @options={{skills}} 
