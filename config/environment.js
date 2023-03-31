@@ -50,9 +50,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.API_HOST = 'https://hire-api.codingblocks.xyz'
     ENV.PUBLIC_URL = 'https://hire.codingblocks.xyz/'
-    ENV.CLIENT_ID = 4190457915
-    ENV.ONEAUTH_URL = 'https://account.codingblocks.com'
-    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.com'
+    ENV.CLIENT_ID = 1
+    ENV.ONEAUTH_URL = 'https://account.codingblocks.xyz'
+    ENV.HACKER_BLOCKS_PUBLIC_URL = 'https://hack.codingblocks.xyz'
     ENV.SCATTERSHOT_API_HOST = 'https://app.codingblocks.com'
   }
 
