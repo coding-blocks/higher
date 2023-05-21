@@ -1,3 +1,4 @@
+<cb-mobile-verification class="hide-cb-mobile-verification-prompt" />
 <NavBar @showLoginDialog={{showLoginDialog}}/>
 {{#if (and showLoginDialog (not session.isAuthenticated))}}
   {{#modal-dialog
@@ -27,3 +28,8 @@
   <Footer />
 {{/unless}}
 
+{{#if (not currentUser.user.verifiedmobile)}}
+<script>
+  document.getElementsByTagName('cb-mobile-verification')[0].classList.remove('hide-cb-mobile-verification-prompt')  
+</script>
+{{/if}}

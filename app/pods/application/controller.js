@@ -4,5 +4,6 @@ import { inject as service } from '@ember/service';
 
 export default Controller.extend({
   sidenav: service(),
+  currentUser: service(),
   showLoginDialog: false
 });
