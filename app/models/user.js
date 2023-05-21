@@ -18,6 +18,6 @@ export default DS.Model.extend({
   photo: DS.attr(),
   oneauthId: DS.attr(),
   verifiedemail: DS.attr(),
-  verifiedmobile: DS.attr(),
+  verifiedMobile: DS.attr(),
   applicantProfile: DS.belongsTo('applicant-profile')
 });
