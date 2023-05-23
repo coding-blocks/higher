@@ -5,5 +5,9 @@ import { inject as service } from '@ember/service';
 export default Controller.extend({
   sidenav: service(),
   currentUser: service(),
-  showLoginDialog: false
+  showLoginDialog: false,
+  showMobileVerificationDialog: computed('currentUser.user', function() {
+    const user = this.get('currentUser.user')
+    return user.id && !user.verifiedMobile
+  })
 });
