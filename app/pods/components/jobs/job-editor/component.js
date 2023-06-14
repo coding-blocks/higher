@@ -34,7 +34,7 @@ export default class JobsEditorComponent extends Component {
   }
 
   @dropTask fetchBranchesTask = function* () {
-    const branches = yield this.api.request('/branches/oneauth-branches')
+    const branches = yield this.api.request('/branches/0/oneauth-branches')
     this.setSelectedFresherBranches()
     return branches
   }
