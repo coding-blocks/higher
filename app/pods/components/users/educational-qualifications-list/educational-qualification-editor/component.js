@@ -33,7 +33,7 @@ export default class EducationalQualificationEditorComponent extends Component {
   }
 
   @dropTask fetchCollegesTask = function* () {
-    return yield this.api.request('/colleges/oneauth-colleges')
+    return yield this.api.request('/colleges/0/oneauth-colleges')
   }
 
   @dropTask saveRecordTask = function* () {
